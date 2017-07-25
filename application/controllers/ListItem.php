@@ -6,12 +6,12 @@
  * Date: 25/07/2017
  * Time: 10.01
  */
-class DaftarListItem extends CI_Controller
+class ListItem extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('DaftarListItemModel');
+        $this->load->model('ListItemModel');
     }
 
     public function index()
@@ -22,7 +22,7 @@ class DaftarListItem extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $resp = $this->DaftarListItemModel->get_all_item();
+                $resp = $this->ListItemModel->get_all_item();
                 json_output($response['status'],$resp);
             }
         }

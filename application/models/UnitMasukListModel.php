@@ -4,50 +4,38 @@
  * Created by PhpStorm.
  * User: harfi
  * Date: 25/07/2017
- * Time: 10.01
+ * Time: 15.45
  */
-class DaftarListItemModel extends CI_Model
+class UnitMasukListModel extends CI_Model
 {
-
     public function get_all_item()
     {
-        $data = new stdClass();
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
+							  ";
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        $run_auc = mysql_query($query_nilai);
+        $no = 1;
+
         $arrData = array();
-        $i = 0;
 
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-
-        $query_auc .= " ORDER BY a.idauction_item DESC LIMIT 5";
-
-        $run_auc = mysql_query($query_auc);
         while ($row_auc = mysql_fetch_assoc($run_auc)) {
-            $idauction_item = $row_auc['idauction_item'];
-            echo $idauction_item;
-            $data->alfas = 'TERDAFTAR';
 
-            if ($row_auc['sold'] == 'y') {
-                $data->alfas = 'TERJUAL';
-            }
-            if ($row_auc['sold'] == 'n' AND $row_auc['sts_tarik'] == 1) {
-                $data->alfas = 'DITARIK';
-            }
-            $query_hs = mysql_query("SELECT id_auctionitem FROM webid_history_manajemenlot WHERE id_auctionitem = '" . $row_auc['idauction_item'] . "' ");
-            $count_hs = mysql_num_rows($query_hs);
-            if ($count_hs > 0 and $row_auc['sold'] == 'n' AND $row_auc['sts_tarik'] == 0) {
-                $data->alfas = 'TD TERJUAL';
-            }
+            $data = new stdClass();
+            $idauction_item = $row_auc['id_auctionitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
 								  WHERE c.name_attribute = 'MERK' AND b.idauction_item = '" . $idauction_item . "' ";
             $run_idmerk = mysql_query($query_idmerk);
             $row_idmerk = mysql_fetch_assoc($run_idmerk);
-            $data->id_merk = $row_idmerk['value'];
+            $id_merk = $row_idmerk['value'];
 
             $query_merk = "SELECT attributedetail FROM webid_msattrdetail 
-									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $data->id_merk . "'";
+									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $id_merk . "'";
             $run_merk = mysql_query($query_merk);
             $row_merk = mysql_fetch_assoc($run_merk);
             $data->nama_merk = $row_merk['attributedetail'];
@@ -70,7 +58,7 @@ class DaftarListItemModel extends CI_Model
                 $asc = "$asc $join_tipe";
             }
 
-            $data->code_b = $asc;
+            $data->code_b = str_replace('-', '', $asc);
 
             $query_transmisi = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -93,15 +81,10 @@ class DaftarListItemModel extends CI_Model
             $row_mdl = mysql_fetch_assoc($run_mdl);
             $data->model = $row_mdl['value'];
 
-            $query_checklistin = "SELECT id_auctionitem FROM webid_pemeriksaan_item
-								  WHERE id_auctionitem = '" . $idauction_item . "' and sts_deleted = 0 ";
-            $run_checklistin = mysql_query($query_checklistin);
-            $data->count_checklist = mysql_num_rows($run_checklistin);
-
-            $i++;
-            $data->no = $i;
+            $no++;
+            $data->no = $no;
             array_push($arrData, $data);
         }
-        return (object)$arrData;
+        return $arrData;
     }
 }

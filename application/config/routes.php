@@ -58,9 +58,9 @@ $route['book/detail/(:num)']['get']    = 'book/detail/$1';
 $route['book/create']['post']   	   = 'book/create';
 $route['book/update/(:num)']['put']    = 'book/update/$1';
 $route['book/delete/(:num)']['delete'] = 'book/delete/$1';
-$route['company']['get']          	   = 'company';
 $route['auctions']['get']          	   = 'auctions';
-$route['daftarlisitem']['get']         = 'daftarlistitem';
+$route['lisitem']['get']         = 'daftarlistitem';
+$route['unitmasuklist']['get']   = 'unitmasuklist';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
