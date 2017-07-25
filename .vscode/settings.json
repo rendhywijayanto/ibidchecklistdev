@@ -1,0 +1,5 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "php.validate.executablePath": "C:/php7/php.exe",
+    "files.autoSave": "afterDelay"
+}
