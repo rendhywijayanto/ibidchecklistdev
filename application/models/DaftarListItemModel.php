@@ -13,6 +13,7 @@ class DaftarListItemModel extends CI_Model
     {
         $data = new stdClass();
         $arrData = array();
+        $i = 0;
 
         $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
 						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
@@ -21,7 +22,6 @@ class DaftarListItemModel extends CI_Model
         $query_auc .= " ORDER BY a.idauction_item DESC LIMIT 5";
 
         $run_auc = mysql_query($query_auc);
-        $data->no = 1;
         while ($row_auc = mysql_fetch_assoc($run_auc)) {
             $idauction_item = $row_auc['idauction_item'];
             echo $idauction_item;
@@ -98,6 +98,8 @@ class DaftarListItemModel extends CI_Model
             $run_checklistin = mysql_query($query_checklistin);
             $data->count_checklist = mysql_num_rows($run_checklistin);
 
+            $i++;
+            $data->no = $i;
             array_push($arrData, $data);
         }
         return (object)$arrData;
