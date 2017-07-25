@@ -103,6 +103,6 @@ class ListItemModel extends CI_Model
 
             array_push($arrData, $data);
         }
-        return $arrData;
+        return (object)$arrData;
     }
 }

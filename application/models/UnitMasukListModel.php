@@ -85,6 +85,6 @@ class UnitMasukListModel extends CI_Model
             $data->no = $no;
             array_push($arrData, $data);
         }
-        return $arrData;
+        return (object)$arrData;
     }
 }
