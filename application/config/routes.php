@@ -61,6 +61,7 @@ $route['book/delete/(:num)']['delete'] = 'book/delete/$1';
 $route['auctions']['get']          	   = 'auctions';
 $route['lisitem']['get']         = 'daftarlistitem';
 $route['unitmasuklist']['get']   = 'unitmasuklist';
+$route['unitkeluarlist']['get']   = 'unitkeluarlist';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

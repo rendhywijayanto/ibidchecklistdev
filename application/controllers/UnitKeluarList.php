@@ -6,7 +6,7 @@
  * Date: 25/07/2017
  * Time: 16.14
  */
-class UnitKeluarList
+class UnitKeluarList extends CI_Controller
 {
     public function __construct()
     {
