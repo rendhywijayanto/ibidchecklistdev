@@ -17,12 +17,12 @@ class UnitKeluarListModel extends CI_Model
 
         $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
 
-        $run_auc = mysql_query($query_nilai);
+        $run_auc = $this->db->query($query_nilai);
         $no = 1;
 
         $arrData = array();
 
-        while ($row_auc = mysql_fetch_assoc($run_auc)) {
+        while ($row_auc = $run_auc->result_array()) {
 
             $data = new stdClass();
             $idauction_item = $row_auc['id_auctionitem'];
