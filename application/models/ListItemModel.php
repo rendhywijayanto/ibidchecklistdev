@@ -24,6 +24,8 @@ class ListItemModel extends CI_Model
         foreach($run_auc->result_array() as $row_auc){
 
             $data = new stdClass();
+
+            $data->no_polisi = $row_auc['value'];
             $idauction_item = $row_auc['idauction_item'];
             $data->alfas = 'TERDAFTAR';
 
