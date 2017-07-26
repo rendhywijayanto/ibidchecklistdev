@@ -34,6 +34,38 @@ class ListItemModel extends CI_Model
         return $this->get_data($query_auc);
     }
 
+    public function get_auction_detail($id_item)
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+
+        $run_auc = $this->db->query($query_auc);
+        $data = new stdClass();
+
+        foreach($run_auc->result_array() as $row_auc) {
+
+
+            $query_lamp = "SELECT catatan FROM webid_pemeriksaan_item
+					WHERE sts_deleted = 0 AND id_item = '" . $id_item . "' AND id_auctionitem = '" . $row_auc['idauction_item'] . "' AND id_pemeriksaanitem = '" . $id_pemeriksaanmasuk . "'";
+            $run_lamp = mysql_query($query_lamp);
+            $row_lamp = mysql_fetch_assoc($run_lamp);
+            $catatan = $row_lamp['catatan'];
+
+            $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
+					JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
+					WHERE a.deleted = 0 AND a.master_item = '" . $id_item . "' AND b.idauction_item = '" . $row_auc['idauction_item'] . "' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
+            $run_subdetail = mysql_query($query_subdetail);
+            $row_subdetail = mysql_fetch_assoc($run_subdetail);
+
+            $data->nama_pntp = $row_subdetail['name_pntp'];
+            $data->almt_pntp = $row_subdetail['alamat_pntp'];
+            $data->kota_pntp = $row_subdetail['kota_pntp'];
+            $data->ponsel_pntp = $row_subdetail['ponsel_pntp'];
+        }
+    }
+
     private function get_data($query_auc)
     {
 
@@ -46,6 +78,7 @@ class ListItemModel extends CI_Model
 
             $data = new stdClass();
 
+            $data->idauction_item = $row_auc['idauction_item'];
             $data->no_polisi = $row_auc['value'];
             $idauction_item = $row_auc['idauction_item'];
             $data->alfas = 'TERDAFTAR';
@@ -81,7 +114,8 @@ class ListItemModel extends CI_Model
 								  WHERE c.hv_skemataksasi = 1 AND c.sbg_parent = 0 and c.hv_attdetail = 1 AND b.idauction_item = '" . $idauction_item . "' order by c.pst_order";
             $run_tipe = $this->db->query($query_tipe);
 
-            $asc = "";
+            $seri =  array();
+
             foreach($run_tipe->result_array() as $row_tipe){
                 $idtipe = $row_tipe['value'];
 
@@ -91,10 +125,9 @@ class ListItemModel extends CI_Model
                 $row_alltipe = $run_alltipe->row_array();
                 $join_tipe = $row_alltipe['attributedetail'];
 
-                $asc = "$asc $join_tipe";
+                array_push($seri, $join_tipe);
             }
-
-            $data->code_b = $asc;
+            $data->tipe = $seri;
 
             $query_transmisi = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -120,7 +153,10 @@ class ListItemModel extends CI_Model
             $query_checklistin = "SELECT id_auctionitem FROM webid_pemeriksaan_item
 								  WHERE id_auctionitem = '" . $idauction_item . "' and sts_deleted = 0 ";
             $run_checklistin = $this->db->query($query_checklistin);
-            $data->count_checklist = $run_checklistin->row_array();
+            if($run_checklistin->row_array() == null)
+            {
+                $data->count_checklist = 0 ;
+            }
 
             $no++;
             $data->no = $no;

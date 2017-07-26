@@ -3,10 +3,10 @@
 /**
  * Created by PhpStorm.
  * User: harfi
- * Date: 25/07/2017
- * Time: 15.45
+ * Date: 26/07/2017
+ * Time: 10.54
  */
-class UnitMasukListModel extends CI_Model
+class StockManagementModel extends CI_Model
 {
     public function get_all_item()
     {
@@ -26,7 +26,6 @@ class UnitMasukListModel extends CI_Model
 							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
 							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
 							  ";
-
         if ($id != "") {
             $str = str_replace(' ','',trim($id));
             $query_nilai .= "AND a.no_polisi LIKE '%".$str."%'";
@@ -37,17 +36,16 @@ class UnitMasukListModel extends CI_Model
         return $this->get_data($query_nilai);
     }
 
-    private function get_data($query_nilai){
+    private function get_data($query_nilai)
+    {
+        $arrData = array();
+
         $run_auc = $this->db->query($query_nilai);
         $no = 1;
-
-        $arrData = array();
 
         foreach($run_auc->result_array() as $row_auc){
 
             $data = new stdClass();
-            $data->no_polisi = $row_auc['no_polisi'];
-            $data->tgl_serah_msk = $row_auc['tgl_serah_msk'];
             $idauction_item = $row_auc['id_auctionitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
@@ -104,25 +102,24 @@ class UnitMasukListModel extends CI_Model
             $row_mdl = $run_mdl->row_array();
             $data->model = $row_mdl['value'];
 
-            $no++;
+            $query_pgg = "SELECT b.value FROM webid_auction_detail b 
+								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
+								  WHERE c.name_attribute = 'PENGGERAK' AND b.idauction_item = '" . $idauction_item . "' ";
+            $run_pgg = $this->db->query($query_pgg);
+            $row_pgg = $run_pgg->row_array();
+            $data->penggerak = $row_pgg['value'];
+
+            $query_subdetail = "SELECT b.name_pntp FROM webid_auction_item a
+										JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
+										WHERE a.deleted = 0 AND a.master_item = 6 AND b.idauction_item = '" . $idauction_item . "' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
+            $run_subdetail = $this->db->query($query_subdetail);
+            $row_subdetail = $run_subdetail->row_array();
+
+            $data->pemilik = $row_subdetail['name_pntp'];
             $data->no = $no;
+            $no++;
             array_push($arrData, $data);
         }
         return $arrData;
-    }
-
-    public function get_auction_detail($id)
-    {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-
-        if ($id != "")
-        {
-            $query_auc .=" AND b.value LIKE '%".$id."%' ";
-        }
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
-
-        return $this->get_data($query_auc);
     }
 }

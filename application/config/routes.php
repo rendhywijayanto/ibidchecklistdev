@@ -62,6 +62,7 @@ $route['auctions']['get']          	   = 'auctions';
 $route['lisitem']['get']         = 'daftarlistitem';
 $route['unitmasuklist']['get']   = 'unitmasuklist';
 $route['unitkeluarlist']['get']   = 'unitkeluarlist';
+$route['stockmanagement']['get']   = 'stockmanagement';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
