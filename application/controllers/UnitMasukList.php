@@ -27,4 +27,18 @@ class UnitMasukList extends CI_Controller
             }
         }
     }
+
+    public function search($id)
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'GET' || $this->uri->segment(3) == ''){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $response = $this->AuthModel->auth();
+            if($response['status'] == 200){
+                $resp = $this->UnitMasukListModel->get_search_item($id);
+                json_output($response['status'],$resp);
+            }
+        }
+    }
 }

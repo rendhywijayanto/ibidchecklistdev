@@ -16,6 +16,27 @@ class ListItemModel extends CI_Model
 						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
         $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
 
+        return $this->get_data($query_auc);
+    }
+
+    public function get_search_item($id)
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+
+        if ($id != "")
+        {
+            $query_auc .=" AND b.value LIKE '%".$id."%' ";
+        }
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+
+        return $this->get_data($query_auc);
+    }
+
+    private function get_data($query_auc)
+    {
+
         $run_auc = $this->db->query($query_auc);
         $no = 1;
 
