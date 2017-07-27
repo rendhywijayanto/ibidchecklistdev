@@ -3,12 +3,37 @@
 /**
  * Created by PhpStorm.
  * User: harfi
- * Date: 25/07/2017
- * Time: 15.45
+ * Date: 27/07/2017
+ * Time: 14.21
  */
-class UnitMasukListModel extends CI_Model
+class UnitListModel extends CI_Model
 {
-    public function get_all_item()
+    public function get_item_list()
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+
+        return $this->get_data($query_auc);
+    }
+
+    public function get_list_search($id)
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+
+        if ($id != "")
+        {
+            $query_auc .=" AND b.value LIKE '%".$id."%' ";
+        }
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+
+        return $this->get_data($query_auc);
+    }
+
+    public function get_unitmasuk_list()
     {
         $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
 							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
@@ -20,13 +45,85 @@ class UnitMasukListModel extends CI_Model
         return $this->get_data($query_nilai);
     }
 
-    public function get_search_item($id)
+    public function get_unitmasuk_search($id)
     {
         $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
 							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
 							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
 							  ";
 
+        if ($id != "") {
+            $str = str_replace(' ','',trim($id));
+            $query_nilai .= "AND a.no_polisi LIKE '%".$str."%'";
+        }
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        return $this->get_data($query_nilai);
+    }
+
+    public function get_auction_detail($id)
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+
+        if ($id != "")
+        {
+            $query_auc .=" AND b.value LIKE '%".$id."%' ";
+        }
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+
+        return $this->get_data($query_auc);
+    }
+
+    public function get_unitkeluar_list()
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND a.id_pemeriksaan_klr = 1 AND b.deleted = 0
+							  ";
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        return $this->get_data($query_nilai);
+    }
+
+    public function get_unitkeluar_search($id)
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND a.id_pemeriksaan_klr = 1 AND b.deleted = 0
+							  ";
+
+        if ($id != "") {
+            $str = str_replace(' ','',trim($id));
+            $query_nilai .= "AND a.no_polisi LIKE '%".$str."%'";
+        }
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        return $this->get_data($query_nilai);
+    }
+
+    public function get_stock_list()
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
+							  ";
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        return $this->get_data($query_nilai);
+    }
+
+    public function get_stock_search($id)
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
+							  ";
         if ($id != "") {
             $str = str_replace(' ','',trim($id));
             $query_nilai .= "AND a.no_polisi LIKE '%".$str."%'";
@@ -127,38 +224,17 @@ class UnitMasukListModel extends CI_Model
                 }
             }
 
-            $query_lamp3 = "SELECT catatan FROM webid_pemeriksaan_item
-					WHERE sts_deleted = 0 AND id_item = '".$id_item."' AND id_auctionitem = '".$idauction_item."' AND id_pemeriksaanitem = '".$id_pemeriksaanmasuk."'";
-            $run_lamp3 = $this->db->query($query_lamp3);
-            $row_lamp3 = $run_lamp3->row_array();
-            $data->catatan = $row_lamp3['catatan'];
-
             $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
                 JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
                 WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
 
             $run_komponen = $this->db->query($query_komponen);
             $data->komponen = $run_komponen->result_array();
-            
+
             $no++;
             $data->no = $no;
             array_push($arrData, $data);
         }
         return $arrData;
-    }
-
-    public function get_auction_detail($id)
-    {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-
-        if ($id != "")
-        {
-            $query_auc .=" AND b.value LIKE '%".$id."%' ";
-        }
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
-
-        return $this->get_data($query_auc);
     }
 }

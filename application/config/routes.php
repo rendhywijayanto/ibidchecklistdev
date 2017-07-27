@@ -59,9 +59,9 @@ $route['book/create']['post']   	   = 'book/create';
 $route['book/update/(:num)']['put']    = 'book/update/$1';
 $route['book/delete/(:num)']['delete'] = 'book/delete/$1';
 $route['auctions']['get']          	   = 'auctions';
-$route['lisitem']['get']         = 'daftarlistitem';
-$route['unitmasuklist']['get']   = 'unitmasuklist';
-$route['unitkeluarlist']['get']   = 'unitkeluarlist';
+$route['lisitem']['get']         = 'persiapan';
+$route['unitmasuk']['get']   = 'unitmasuk';
+$route['unitkeluar']['get']   = 'unitkeluar';
 $route['stockmanagement']['get']   = 'stockmanagement';
 
 $route['default_controller'] = 'welcome';

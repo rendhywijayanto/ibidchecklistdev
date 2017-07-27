@@ -6,12 +6,12 @@
  * Date: 25/07/2017
  * Time: 16.14
  */
-class UnitKeluarList extends CI_Controller
+class UnitKeluar extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('UnitKeluarListModel');
+        $this->load->model('UnitListModel');
     }
 
     public function index()
@@ -22,7 +22,7 @@ class UnitKeluarList extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $resp = $this->UnitKeluarListModel->get_all_item();
+                $resp = $this->UnitListModel->get_unitkeluar_list();
                 json_output($response['status'],$resp);
             }
         }
@@ -36,7 +36,7 @@ class UnitKeluarList extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $resp = $this->UnitKeluarListModel->get_search_item($id);
+                $resp = $this->UnitListModel->get_unitkeluar_search($id);
                 json_output($response['status'],$resp);
             }
         }
