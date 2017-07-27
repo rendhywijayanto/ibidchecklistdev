@@ -34,43 +34,32 @@ class ListItemModel extends CI_Model
         return $this->get_data($query_auc);
     }
 
-    public function get_auction_detail($id_item)
+    public function get_pemilik($id_auctionitem) // testing
     {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
-
-        $run_auc = $this->db->query($query_auc);
+        $id_item = 6;
         $data = new stdClass();
 
-        foreach($run_auc->result_array() as $row_auc) {
+        $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
+                JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
+                WHERE a.deleted = 0 AND a.master_item = '".$id_item."' AND b.idauction_item = '".$id_auctionitem."' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
+        $run_subdetail = $this->db->query($query_subdetail);
+        $row_subdetail = $run_subdetail->result_array();
 
+        //print_r($row_subdetail);
 
-            $query_lamp = "SELECT catatan FROM webid_pemeriksaan_item
-					WHERE sts_deleted = 0 AND id_item = '" . $id_item . "' AND id_auctionitem = '" . $row_auc['idauction_item'] . "' AND id_pemeriksaanitem = '" . $id_pemeriksaanmasuk . "'";
-            $run_lamp = $this->db->query($query_lamp);
-            $row_lamp = $run_lamp;
-            $catatan = $row_lamp['catatan'];
+        $data->nama_pntp = $row_subdetail[0]['name_pntp'];
+        $data->almt_pntp = $row_subdetail[0]['alamat_pntp'];
+        $data->kota_pntp = $row_subdetail[0]['kota_pntp'];
+        $data->ponsel_pntp = $row_subdetail[0]['ponsel_pntp'];
 
-            $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
-					JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
-					WHERE a.deleted = 0 AND a.master_item = '" . $id_item . "' AND b.idauction_item = '" . $row_auc['idauction_item'] . "' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
-            $run_subdetail = $this->db->query($query_subdetail);
-            $row_subdetail = $run_subdetail->result_array();
-
-            $data->nama_pntp = $row_subdetail['name_pntp'];
-            $data->almt_pntp = $row_subdetail['alamat_pntp'];
-            $data->kota_pntp = $row_subdetail['kota_pntp'];
-            $data->ponsel_pntp = $row_subdetail['ponsel_pntp'];
-        }
+        return $data;
     }
 
     private function get_data($query_auc)
     {
-
         $run_auc = $this->db->query($query_auc);
         $no = 1;
+        $id_item = 6;
 
         $arrData = array();
 
@@ -157,6 +146,19 @@ class ListItemModel extends CI_Model
             {
                 $data->count_checklist = 0 ;
             }
+
+            $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
+                JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
+                WHERE a.deleted = 0 AND a.master_item = '".$id_item."' AND b.idauction_item = '".$idauction_item."' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
+            $run_subdetail = $this->db->query($query_subdetail);
+            $row_subdetail = $run_subdetail->row_array();
+
+            //print_r($row_subdetail);
+
+            $data->nama_pntp = $row_subdetail['name_pntp'];
+            $data->almt_pntp = $row_subdetail['alamat_pntp'];
+            $data->kota_pntp = $row_subdetail['kota_pntp'];
+            $data->ponsel_pntp = $row_subdetail['ponsel_pntp'];
 
             $no++;
             $data->no = $no;

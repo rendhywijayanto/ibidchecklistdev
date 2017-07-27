@@ -40,15 +40,16 @@ class UnitMasukListModel extends CI_Model
     private function get_data($query_nilai){
         $run_auc = $this->db->query($query_nilai);
         $no = 1;
+        $id_item = 6;
 
         $arrData = array();
 
         foreach($run_auc->result_array() as $row_auc){
 
             $data = new stdClass();
-            $data->no_polisi = $row_auc['no_polisi'];
-            $data->tgl_serah_msk = $row_auc['tgl_serah_msk'];
+            $data->auction = $row_auc;
             $idauction_item = $row_auc['id_auctionitem'];
+            $id_pemeriksaanmasuk = $row_auc['id_pemeriksaanitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -68,7 +69,8 @@ class UnitMasukListModel extends CI_Model
 								  WHERE c.hv_skemataksasi = 1 AND c.sbg_parent = 0 and c.hv_attdetail = 1 AND b.idauction_item = '" . $idauction_item . "' order by c.pst_order";
             $run_tipe = $this->db->query($query_tipe);
 
-            $asc = "";
+            $seri =  array();
+
             foreach($run_tipe->result_array() as $row_tipe){
                 $idtipe = $row_tipe['value'];
 
@@ -78,10 +80,9 @@ class UnitMasukListModel extends CI_Model
                 $row_alltipe = $run_alltipe->row_array();
                 $join_tipe = $row_alltipe['attributedetail'];
 
-                $asc = "$asc $join_tipe";
+                array_push($seri, $join_tipe);
             }
-
-            $data->code_b = str_replace('-', '', $asc);
+            $data->tipe = $seri;
 
             $query_transmisi = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -104,6 +105,41 @@ class UnitMasukListModel extends CI_Model
             $row_mdl = $run_mdl->row_array();
             $data->model = $row_mdl['value'];
 
+            $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
+                JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
+                WHERE a.deleted = 0 AND a.master_item = '".$id_item."' AND b.idauction_item = '".$idauction_item."' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
+            $run_subdetail = $this->db->query($query_subdetail);
+            $data->pntp = $run_subdetail->row_array();
+
+            $query_km="SELECT a.value, c.name_attribute FROM webid_auction_detail a
+			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
+			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
+			WHERE b.`deleted` = 0 AND b.`master_item` = '".$id_item."' AND a.idauction_item = '".$idauction_item."' AND c.hv_periksa = 1
+			ORDER BY c.pst_order ASC";
+            $run_km = $this->db->query($query_km);
+            $data->km = $run_km->row_array();
+
+            foreach($run_km->result_array() as $row2){
+                if ($row2['name_attribute'] == 'KM') {
+                    $msg[] = number_format($row2['value'],0,',','.')."^";
+                } else {
+                    $msg[] = $row2['value']."^";
+                }
+            }
+
+            $query_lamp3 = "SELECT catatan FROM webid_pemeriksaan_item
+					WHERE sts_deleted = 0 AND id_item = '".$id_item."' AND id_auctionitem = '".$idauction_item."' AND id_pemeriksaanitem = '".$id_pemeriksaanmasuk."'";
+            $run_lamp3 = $this->db->query($query_lamp3);
+            $row_lamp3 = $run_lamp3->row_array();
+            $data->catatan = $row_lamp3['catatan'];
+
+            $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
+                JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
+                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
+
+            $run_komponen = $this->db->query($query_komponen);
+            $data->komponen = $run_komponen->result_array();
+            
             $no++;
             $data->no = $no;
             array_push($arrData, $data);

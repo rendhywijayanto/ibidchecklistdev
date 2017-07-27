@@ -42,7 +42,7 @@ class ListItem extends CI_Controller
         }
     }
 
-    public function auctions($id)
+    public function pemilik($id)
     {
         $method = $_SERVER['REQUEST_METHOD'];
         if($method != 'GET' || $this->uri->segment(3) == ''){
@@ -50,7 +50,7 @@ class ListItem extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $resp = $this->ListItemModel->get_auction_detail($id);
+                $resp = $this->ListItemModel->get_pemilik($id);
                 json_output($response['status'],$resp);
             }
         }
