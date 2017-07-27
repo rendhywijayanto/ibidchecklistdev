@@ -49,15 +49,15 @@ class ListItemModel extends CI_Model
 
             $query_lamp = "SELECT catatan FROM webid_pemeriksaan_item
 					WHERE sts_deleted = 0 AND id_item = '" . $id_item . "' AND id_auctionitem = '" . $row_auc['idauction_item'] . "' AND id_pemeriksaanitem = '" . $id_pemeriksaanmasuk . "'";
-            $run_lamp = mysql_query($query_lamp);
-            $row_lamp = mysql_fetch_assoc($run_lamp);
+            $run_lamp = $this->db->query($query_lamp);
+            $row_lamp = $run_lamp;
             $catatan = $row_lamp['catatan'];
 
             $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
 					JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
 					WHERE a.deleted = 0 AND a.master_item = '" . $id_item . "' AND b.idauction_item = '" . $row_auc['idauction_item'] . "' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
-            $run_subdetail = mysql_query($query_subdetail);
-            $row_subdetail = mysql_fetch_assoc($run_subdetail);
+            $run_subdetail = $this->db->query($query_subdetail);
+            $row_subdetail = $run_subdetail->result_array();
 
             $data->nama_pntp = $row_subdetail['name_pntp'];
             $data->almt_pntp = $row_subdetail['alamat_pntp'];
