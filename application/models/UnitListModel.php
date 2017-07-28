@@ -224,6 +224,13 @@ class UnitListModel extends CI_Model
                 }
             }
 
+            $query_pgg = "SELECT b.value FROM webid_auction_detail b 
+								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
+								  WHERE c.name_attribute = 'PENGGERAK' AND b.idauction_item = '".$idauction_item."' ";
+            $run_pgg = $this->db->query($query_pgg);
+            $row_pgg = $run_pgg->row_array();
+            $data->penggerak = $row_pgg['value'];
+
             $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
                 JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
                 WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
