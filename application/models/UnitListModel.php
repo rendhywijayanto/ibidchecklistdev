@@ -6,8 +6,13 @@
  * Date: 27/07/2017
  * Time: 14.21
  */
+
 class UnitListModel extends CI_Model
 {
+
+
+    // METHOD GET //
+
     public function get_item_list()
     {
         $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
@@ -244,4 +249,28 @@ class UnitListModel extends CI_Model
         }
         return $arrData;
     }
+
+    // METHOD POST //
+    public function post_unit_masuk()
+    {
+        $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_msk`,`waktu_msk`,`nama_pengemudi_msk`,`alamat_pengemudi_msk`,`kota_msk`,`telepon_msk`,`catatan`,`cases`,`poolkota`, `id_user` , `id_usercreatemsk`) 
+			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_msk."','".$time_msk."','".trim($_POST['namapengemudi'])."','".trim($_POST['alamatpengemudi'])."','".trim($_POST['kotapengemudi'])."','".trim($_POST['teleponpengemudi'])."','".trim($_POST['catatan'])."','".trim($_POST['cases'])."','".trim($_POST['poolkota'])."','".$_SESSION['WEBID_LOGGED_IN']."' , '".$_SESSION['WEBID_LOGGED_IN']."') ";
+
+        $run_nilai_item = $this->db->query($query_nilai_item);
+
+        $id_pemeriksaan_item = mysql_insert_id();
+
+        for ($ti = 1; $ti <= $batas_komponen; $ti++) {
+            $tampilbaik_t =  $_POST['CekTampilkanbaik_'.$ti];
+            $tampilrusak_t =  $_POST['CekTampilkanrusak_'.$ti];
+            $tampiltidakada_t =  $_POST['CekTampilkantidakada_'.$ti];
+            $id_komponenpemeriksaan_t = $_POST['idkomponenpemeriksaan_'.$ti];
+
+            $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
+				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
+            $run_add_detail = $this->db->query($query_add_detail);
+
+        }
+    }
 }
+
