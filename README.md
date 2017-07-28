@@ -1,3 +1,9 @@
+
+===== Documentation ibid_ims_api =====
+
+Home Dashboard :
+- http://localhost/ibid-ims-api/index.php/home/
+
 Daftar List Item : 
 - http://localhost/ibid-ims-api/index.php/persiapan/
 - http://localhost/ibid-ims-api/index.php/persiapan/search/{no_polisi} (search)

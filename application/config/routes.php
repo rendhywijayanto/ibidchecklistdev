@@ -53,17 +53,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['auth/login']['post']           = 'auth/login';
 $route['auth/logout']['post']          = 'auth/logout';
-$route['book']['get']          	       = 'book';
-$route['book/detail/(:num)']['get']    = 'book/detail/$1';
-$route['book/create']['post']   	   = 'book/create';
-$route['book/update/(:num)']['put']    = 'book/update/$1';
-$route['book/delete/(:num)']['delete'] = 'book/delete/$1';
+//$route['book']['get']          	       = 'book';
+//$route['book/detail/(:num)']['get']    = 'book/detail/$1';
+//$route['book/create']['post']   	   = 'book/create';
+//$route['book/update/(:num)']['put']    = 'book/update/$1';
+//$route['book/delete/(:num)']['delete'] = 'book/delete/$1';
+$route['home']['get']          	   = 'home';
 $route['auctions']['get']          	   = 'auctions';
 $route['listitem']['get']         = 'persiapan';
 $route['unitmasuk']['get']   = 'unitmasuk';
 $route['unitkeluar']['get']   = 'unitkeluar';
 $route['stockmanagement']['get']   = 'stockmanagement';
 
-$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
