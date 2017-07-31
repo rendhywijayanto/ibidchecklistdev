@@ -58,12 +58,16 @@ $route['auth/logout']['post']          = 'auth/logout';
 //$route['book/create']['post']   	   = 'book/create';
 //$route['book/update/(:num)']['put']    = 'book/update/$1';
 //$route['book/delete/(:num)']['delete'] = 'book/delete/$1';
-$route['home']['get']          	   = 'home';
-$route['auctions']['get']          	   = 'auctions';
-$route['listitem']['get']         = 'persiapan';
+$route['home']['get']        = 'home';
+$route['auctions']['get']    = 'auctions';
+$route['persiapan']['get']    = 'persiapan';
 $route['unitmasuk']['get']   = 'unitmasuk';
-$route['unitkeluar']['get']   = 'unitkeluar';
+$route['unitkeluar']['get']  = 'unitkeluar';
 $route['stockmanagement']['get']   = 'stockmanagement';
+
+$route['persiapan']['post'] = 'persiapan/insert';
+$route['unitmasuk']['post'] = 'unitmasuk/insert';
+$route['unitkeluar']['post'] = 'unitkeluar/insert';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

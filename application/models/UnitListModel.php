@@ -251,26 +251,190 @@ class UnitListModel extends CI_Model
     }
 
     // METHOD POST //
-    public function post_unit_masuk()
+    public function post_unit($data)
     {
-        $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_msk`,`waktu_msk`,`nama_pengemudi_msk`,`alamat_pengemudi_msk`,`kota_msk`,`telepon_msk`,`catatan`,`cases`,`poolkota`, `id_user` , `id_usercreatemsk`) 
-			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_msk."','".$time_msk."','".trim($_POST['namapengemudi'])."','".trim($_POST['alamatpengemudi'])."','".trim($_POST['kotapengemudi'])."','".trim($_POST['teleponpengemudi'])."','".trim($_POST['catatan'])."','".trim($_POST['cases'])."','".trim($_POST['poolkota'])."','".$_SESSION['WEBID_LOGGED_IN']."' , '".$_SESSION['WEBID_LOGGED_IN']."') ";
 
-        $run_nilai_item = $this->db->query($query_nilai_item);
+        $id_item = 6;
+        $id_pemeriksaanitem = $data->idpemeriksaanitem;
+        $id_auctionitem = $data->idauctionitem;
+        $batas_komponen = $data->bataskomponen;
 
-        $id_pemeriksaan_item = mysql_insert_id();
+        $fuel = trim($data->fuel);
+        $cat_body = trim($data->catbody);
+        $cttn = trim($data->catatan);
 
-        for ($ti = 1; $ti <= $batas_komponen; $ti++) {
-            $tampilbaik_t =  $_POST['CekTampilkanbaik_'.$ti];
-            $tampilrusak_t =  $_POST['CekTampilkanrusak_'.$ti];
-            $tampiltidakada_t =  $_POST['CekTampilkantidakada_'.$ti];
-            $id_komponenpemeriksaan_t = $_POST['idkomponenpemeriksaan_'.$ti];
+        date_default_timezone_set("Asia/Jakarta");
+        $time = time();
+        $tglall = date("Y-m-d", $time); // dapat digunakan untuk tgl edit dan insert
 
-            $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
-				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
-            $run_add_detail = $this->db->query($query_add_detail);
+        $tglpemeriksaan_msk = date('Y-m-d', strtotime($data->tglpemeriksaan));
+        $jam_msk = $data->jampemeriksaan;
+        $menit_msk = $data->menitpemeriksaan;
+        $time_msk = $jam_msk.':'.$menit_msk.':'.'00';
 
+        $no_polisi = trim($data->nopolisi);
+        $cek_polisi = str_replace(' ','',$no_polisi);
+
+        $nama_pengemudi = $data->namapengemudi;
+        $alamat_pengemudi = $data->alamatpengemudi;
+        $kota_pengemudi = $data->kotapengemudi;
+        $telepon_pengemudi = $data->teleponpengemudi;
+
+        $catatan = $data->catatan;
+
+//        if($no_polisi == ""){
+//            echo "Maaf.'$data->nopolisi'.!! Tidak ada data yang anda masukkan||error";
+//            exit();
+//        }
+//
+//        if($tglpemeriksaan_msk == ""){
+//            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda masukkan||error";
+//            exit();
+//        }
+//
+//        if($nama_pengemudi == ""){
+//            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda masukkan||error";
+//            exit();
+//        }
+
+        /*if($alamat_pengemudi == ""){
+                echo "Maaf Alamat Penyerah !! Tidak ada data yang anda masukkan||error";
+                exit();
         }
+
+        if($kota_pengemudi == ""){
+                echo "Maaf Kota Penyerah !! Tidak ada data yang anda masukkan||error";
+                exit();
+        }*/
+
+//        if($telepon_pengemudi == ""){
+//            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda masukkan||error";
+//            exit();
+//        }
+
+        if ($id_pemeriksaanitem != "") {
+            echo "Update Error||error";
+            exit();
+
+            $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
+            $run_soru = $this->db->query($query_soru);
+            $row_soru = $run_soru->row_array();
+
+            $abcUp = $data->abcup;
+            $id_user = $data->iduser;
+
+            if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
+                echo "Maaf !! data unit sudah dilakukan penarikan||error";
+                exit();
+            }
+
+            if ($row_soru['sold'] == 'y' and $row_soru['sts_tarik'] == 0) {
+                echo "Maaf !! data unit sudah terjual||error";
+                exit();
+            }
+
+            // Proses Update Auction Item
+            $querySvup = "SELECT * FROM webid_msattribute a
+				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 AND id_attribute != 10
+				ORDER BY pst_order ASC";
+            $runSvup = $this->db->query($querySvup);
+
+            while ($rowSvup = $runSvup->row_array())
+            {
+                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+                $arrayUp = trim($data->$abcUp);
+                $IDUp = $rowSvup['id_attribute'];
+                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."' 
+						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+                $run_upd = $this->db->query($query_upd);
+            }
+
+            $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
+			`tgl_serah_msk` = '".$tglpemeriksaan_msk_msk."',`waktu_msk` = '".$time_msk."',
+			`nama_pengemudi_msk` = '".trim($nama_pengemudi)."',`alamat_pengemudi_msk` = '".trim($alamat_pengemudi)."',
+			`kota_msk` = '".trim($kota_pengemudi)."', `telepon_msk` = '".trim($telepon_pengemudi)."',
+			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
+			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
+
+            $run_nilai_item = $this->db->query($query_nilai_item);
+            // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
+
+            for ($ti = 1; $ti <= $batas_komponen; $ti++) {
+                $tampilbaik_t =  $_POST['CekTampilkanbaik_'.$ti];
+                $tampilrusak_t =  $_POST['CekTampilkanrusak_'.$ti];
+                $tampiltidakada_t =  $_POST['CekTampilkantidakada_'.$ti];
+                $id_komponenpemeriksaan_t = $_POST['idkomponenpemeriksaan_'.$ti];
+
+                $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
+				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
+                $run_upd_detail = $this->db->query($query_upd_detail);
+
+            }
+
+            echo "Proses Update Pemeriksaan Item Masuk berhasil||success";
+            exit();
+
+        } else {
+
+            $query_ceknopolisi = "SELECT * FROM webid_pemeriksaan_item 
+		WHERE sts_deleted = 0 and id_item = '".$id_item."' and id_auctionitem = '".$id_auctionitem."' ";
+
+            $run_ceknopolisi = $this->db->query($query_ceknopolisi);
+            $row_ceknopolisi = $run_ceknopolisi->row_array();
+            $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
+
+            if ($count_ceknopolisi > 0) {
+                echo "Maaf Penambahan No Polisi Pemeriksaan Masuk sudah ada||error";
+                exit();
+            } else {
+
+                // Hanya KM Saja
+                $querySvup = "SELECT * FROM webid_msattribute
+				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 and id_attribute = 24
+				ORDER BY pst_order ASC";
+                $runSvup = $this->db->query($querySvup);
+                // $system->check_mysql($runSvup, $querySvup, __LINE__, __FILE__);
+
+                foreach($runSvup->result_array() as $rowSvup)
+                {
+                    $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+                    $arrayUp = trim($abcUp);
+                    $IDUp = $rowSvup['id_attribute'];
+                    $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."' 
+						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+                    $run_upd = $this->db->query($query_upd);
+                }
+
+                $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_msk`,`waktu_msk`,`nama_pengemudi_msk`,`alamat_pengemudi_msk`,`kota_msk`,`telepon_msk`,`catatan`,`cases`,`poolkota`, `id_user` , `id_usercreatemsk`) 
+			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_msk."','".$time_msk."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."','".trim($catatan)."','".trim($_POST['cases'])."','".trim($_POST['poolkota'])."','".$_SESSION['WEBID_LOGGED_IN']."' , '".$_SESSION['WEBID_LOGGED_IN']."') ";
+
+                $run_nilai_item = $this->db->query($query_nilai_item);
+
+                $id_pemeriksaan_item = mysql_insert_id();
+                $cek_tampilkan_baik =  $data->cektampilkanbaik;
+                $cek_tampilkan_rusak = $data->cektampilkanrusak;
+                $cek_tampilkan_tidakada = $data->cektampilkantidakada;
+                $id_komponen_pemeriksaan = $data->idkomponenpemeriksaan;
+
+                for ($ti = 1; $ti <= $batas_komponen; $ti++) {
+                    
+                    $tampilbaik_t =  $cek_tampilkan_baik.$ti;
+                    $tampilrusak_t =  $cek_tampilkan_rusak.$ti;
+                    $tampiltidakada_t =  $cek_tampilkan_tidakada.$ti;
+                    $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan.$ti;
+
+                    $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
+				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
+                    $run_add_detail = $this->db->query($query_add_detail);
+                }
+
+            echo "Proses Penambahan Pemeriksaan Item Masuk berhasil||success";
+            exit();
+
+            }
+        }
+        print_r($data);
+        return array('status' => 201,'message' => 'Data has been created.');
     }
 }
 
