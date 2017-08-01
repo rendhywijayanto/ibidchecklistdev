@@ -19,12 +19,12 @@ class AuthModel extends CI_Model {
     public function login($email,$password)
     {
         $password = md5($password);
-        $query = "SELECT id, hash, suspended,scan_id_karyawan,setuju_peraturan,level_group FROM ms_user WHERE
+        $query = "SELECT id, hash, suspended,scan_id_karyawan,setuju_peraturan,level_group FROM webid_users WHERE
                 email = '" .$email . "'
                 AND password = '" . $password . "'";
         $res = $this->db->query($query);
 
-        if($res.row_array() > 0){
+        if($res->row_array() > 0){
             return array('status' => 200,'message' => 'Successfully login.','email' => $email);
         }else{
             return array('status' => 204,'message' => 'Wrong password.');
@@ -41,21 +41,21 @@ class AuthModel extends CI_Model {
 
     public function auth()
     {
-        /* $users_id  = $this->input->get_request_header('User-ID', TRUE);
-        $token     = $this->input->get_request_header('Authorization', TRUE);
-        $q  = $this->db->select('expired_at')->from('users_authentication')->where('users_id',$users_id)->where('token',$token)->get()->row();
-        if($q == ""){
-            return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
-        } else {
-            if($q->expired_at < date('Y-m-d H:i:s')){
-                return json_output(401,array('status' => 401,'message' => 'Your session has been expired.'));
-            } else {
-                $updated_at = date('Y-m-d H:i:s');
-                $expired_at = date("Y-m-d H:i:s", strtotime('+12 hours'));
-                $this->db->where('users_id',$users_id)->where('token',$token)->update('users_authentication',array('expired_at' => $expired_at,'updated_at' => $updated_at));
-                return array('status' => 200,'message' => 'Authorized.');
-            }
-        } */
+//        $users_id  = $this->input->get_request_header('User-ID', TRUE);
+//        $token     = $this->input->get_request_header('Authorization', TRUE);
+//        $q  = $this->db->select('expired_at')->from('users_authentication')->where('users_id',$users_id)->where('token',$token)->get()->row();
+//        if($q == ""){
+//            return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
+//        } else {
+//            if($q->expired_at < date('Y-m-d H:i:s')){
+//                return json_output(401,array('status' => 401,'message' => 'Your session has been expired.'));
+//            } else {
+//                $updated_at = date('Y-m-d H:i:s');
+//                $expired_at = date("Y-m-d H:i:s", strtotime('+12 hours'));
+//                $this->db->where('users_id',$users_id)->where('token',$token)->update('users_authentication',array('expired_at' => $expired_at,'updated_at' => $updated_at));
+//                return array('status' => 200,'message' => 'Authorized.');
+//            }
+//        }
         return array('status' => 200,'message' => 'Authorized.');
     }
 
