@@ -19,20 +19,25 @@ class AuthModel extends CI_Model {
     public function login($email,$password)
     {
         $password = md5($password);
-        $query = "SELECT id, hash, suspended,scan_id_karyawan,setuju_peraturan,level_group FROM users WHERE
-                email = '" . $system->cleanvars($email) . "'
+        $query = "SELECT id, hash, suspended,scan_id_karyawan,setuju_peraturan,level_group FROM ms_user WHERE
+                email = '" .$email . "'
                 AND password = '" . $password . "'";
-        $res = mysql_query($query);
-        $system->check_mysql($res, $query, __LINE__, __FILE__);
+        $res = $this->db->query($query);
+
+        if($res.row_array() > 0){
+            return array('status' => 200,'message' => 'Successfully login.','email' => $email);
+        }else{
+            return array('status' => 204,'message' => 'Wrong password.');
+        }
     }
 
-    public function logout()
-    {
-        $users_id  = $this->input->get_request_header('User-ID', TRUE);
-        $token     = $this->input->get_request_header('Authorization', TRUE);
-        $this->db->where('users_id',$users_id)->where('token',$token)->delete('users_authentication');
-        return array('status' => 200,'message' => 'Successfully logout.');
-    }
+//    public function logout()
+//    {
+//        $users_id  = $this->input->get_request_header('User-ID', TRUE);
+//        $token     = $this->input->get_request_header('Authorization', TRUE);
+//        $this->db->where('users_id',$users_id)->where('token',$token)->delete('users_authentication');
+//        return array('status' => 200,'message' => 'Successfully logout.');
+//    }
 
     public function auth()
     {

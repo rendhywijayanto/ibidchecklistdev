@@ -50,7 +50,9 @@ class Persiapan extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $params = json_decode(file_get_contents('php://input'), TRUE);
+
+                $json = file_get_contents('php://input');
+                $params = json_decode($json, TRUE);
                 $data = new stdClass();
 
                 $data->cabangtaksasi = $params['cabangtaksasi'];
@@ -87,6 +89,7 @@ class Persiapan extends CI_Controller
                 $data->alamatpic = $params['alamatpic'];
                 $data->kotapic = $params['kotapic'];
                 $data->telppic = $params['telppic'];
+                $data->abc = $params['abc'];
                 $data->ponselpic = $params['ponselpic'];
                 $data->faxpic = $params['faxpic'];
                 $data->mailpi = $params['mailpi'];
@@ -96,8 +99,9 @@ class Persiapan extends CI_Controller
                 $data->lotnumb = $params['lotnumb'];
                 $data->nopolisi = $params['nopolisi'];
 
-                $resp = $this->PersiapanModel->post_persiapan_unit($data);
-                json_output($response['status'],$resp);
+                print_r($json);
+                //$resp = $this->PersiapanModel->post_persiapan_unit($data);
+                //json_output($response['status'],$resp);
             }
         }
     }

@@ -14,118 +14,42 @@
       <file leaf-file-name="Persiapan.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/Persiapan.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="60" column="26" lean-forward="false" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="26" />
+            <state relative-caret-position="187">
+              <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PersiapanModel.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/models/PersiapanModel.php">
+      <file leaf-file-name="database.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/config/database.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="314" column="43" lean-forward="true" selection-start-line="314" selection-start-column="43" selection-end-line="314" selection-end-column="43" />
+            <state relative-caret-position="232">
+              <caret line="80" column="24" lean-forward="false" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthModel.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/models/AuthModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="21" column="103" lean-forward="false" selection-start-line="21" selection-start-column="103" selection-end-line="21" selection-end-column="103" />
               <folding>
-                <element signature="n#get_item_list#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_list_search#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_data#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-                <marker date="1501495049853" expanded="true" signature="194:385" ph="SELECT a.* ,... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="573:764" ph="SELECT a.* ,... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="1729:1842" ph="SELECT id_au... webid_history_manajemenlot" />
-                <marker date="1501495049853" expanded="true" signature="2077:2281" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="2469:2590" ph="SELECT attri... webid_msattrdetail" />
-                <marker date="1501495049853" expanded="true" signature="2785:3050" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="3282:3402" ph="SELECT attri... webid_msattrdetail" />
-                <marker date="1501495049853" expanded="true" signature="3718:3927" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="4129:4334" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="4510:4715" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="4899:5027" ph="SELECT id_au... webid_pemeriksaan_item" />
-                <marker date="1501495049853" expanded="true" signature="5260:5605" ph="SELECT b.nam... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="6544:6631" ph="SELECT id_wa... webid_warna" />
-                <marker date="1501495049853" expanded="true" signature="7120:7207" ph="SELECT id_wa... webid_warna" />
-                <marker date="1501495049853" expanded="true" signature="7669:7756" ph="SELECT biaya... webid_msitem" />
-                <marker date="1501495049853" expanded="true" signature="10942:11024" ph="SELECT idauc... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="11361:11470" ph="SELECT lot_n... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="11857:12009" ph="SELECT name_... webid_msattribute" />
-                <marker date="1501495049853" expanded="true" signature="13578:13975" ph="SELECT a.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="14731:14823" ph="SELECT sold webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="15234:15956" ph="UPDATE webid... " />
-                <marker date="1501495049853" expanded="true" signature="16273:16388" ph="SELECT close... webid_auctions" />
-                <marker date="1501495049853" expanded="true" signature="16743:16816" ph="SELECT sched... webid_schedule" />
-                <marker date="1501495049853" expanded="true" signature="17445:17566" ph="SELECT lot_n... webid_auction_item" />
-                <marker date="1501495049853" expanded="true" signature="17957:18264" ph="UPDATE webid... " />
-                <marker date="1501495049853" expanded="true" signature="18339:18620" ph="UPDATE webid... " />
-                <marker date="1501495049853" expanded="true" signature="18993:19110" ph="SELECT * FRO... webid_msattribute" />
-                <marker date="1501495049853" expanded="true" signature="19755:19850" ph="SELECT idauc... webid_auction_subdetail" />
-                <marker date="1501495049853" expanded="true" signature="20002:21406" ph="INSERT INTO webid_auction_subdetail... " />
-                <marker date="1501495049853" expanded="true" signature="21530:22905" ph="UPDATE webid... " />
-                <marker date="1501495049853" expanded="true" signature="23224:23585" ph="SELECT a.val... webid_auction_detail" />
-                <marker date="1501495049853" expanded="true" signature="24353:24474" ph="SELECT * FRO... webid_msattribute" />
-                <marker date="1501495049853" expanded="true" signature="24670:24996" ph="INSERT INTO webid_auction_item... " />
-                <marker date="1501495049853" expanded="true" signature="25066:25320" ph="INSERT INTO webid_auction_item... " />
-                <marker date="1501495049853" expanded="true" signature="25908:26043" ph="INSERT INTO webid_auction_detail... " />
-                <marker date="1501495049853" expanded="true" signature="26224:27617" ph="INSERT INTO webid_auction_subdetail... " />
-                <marker date="1501495049853" expanded="true" signature="27858:27975" ph="SELECT * FRO... webid_msattribute" />
-                <marker date="1501495049853" expanded="true" signature="28159:28486" ph="INSERT INTO webid_auction_item... " />
-                <marker date="1501495049853" expanded="true" signature="28548:28802" ph="INSERT INTO webid_auction_item... " />
-                <marker date="1501495049853" expanded="true" signature="29294:29427" ph="INSERT INTO webid_auction_detail... " />
-                <marker date="1501495049853" expanded="true" signature="29548:30945" ph="INSERT INTO webid_auction_subdetail... " />
+                <marker date="1501578922953" expanded="true" signature="732:849" ph="SELECT id, h... users" />
+                <marker date="1501578922953" expanded="true" signature="732:914" ph="SELECT id, h... users" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UnitListModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/models/UnitListModel.php">
+      <file leaf-file-name="Auth.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/Auth.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="253" column="29" lean-forward="false" selection-start-line="253" selection-start-column="29" selection-end-line="253" selection-end-column="29" />
-              <folding>
-                <element signature="n#get_item_list#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_list_search#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_unitmasuk_list#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_unitmasuk_search#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_auction_detail#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_unitkeluar_list#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_unitkeluar_search#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_stock_list#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_stock_search#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <element signature="n#get_data#0;n#UnitListModel#0;n#!!top" expanded="false" />
-                <marker date="1501480718184" expanded="true" signature="217:408" ph="SELECT a.* ,... webid_auction_item" />
-                <marker date="1501480718184" expanded="true" signature="596:787" ph="SELECT a.* ,... webid_auction_item" />
-                <marker date="1501480718184" expanded="true" signature="1080:1265" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="1482:1667" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="2031:2222" ph="SELECT a.* ,... webid_auction_item" />
-                <marker date="1501480718184" expanded="true" signature="2516:2728" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="2946:3158" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="3517:3702" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="3915:4100" ph="SELECT a.* F... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="4842:5046" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="5234:5355" ph="SELECT attri... webid_msattrdetail" />
-                <marker date="1501480718184" expanded="true" signature="5550:5815" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="6047:6167" ph="SELECT attri... webid_msattrdetail" />
-                <marker date="1501480718184" expanded="true" signature="6483:6692" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="6894:7099" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="7275:7480" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="7662:8007" ph="SELECT b.nam... webid_auction_item" />
-                <marker date="1501480718184" expanded="true" signature="8154:8509" ph="SELECT a.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="8927:9132" ph="SELECT b.val... webid_auction_detail" />
-                <marker date="1501480718184" expanded="true" signature="9317:9661" ph="SELECT a.* ,... webid_komponen_pemeriksaan" />
-                <marker date="1501480718184" expanded="true" signature="12093:12185" ph="SELECT sold webid_auction_item" />
-                <marker date="1501480718184" expanded="true" signature="12803:12968" ph="SELECT * FRO... webid_msattribute" />
-                <marker date="1501480718184" expanded="true" signature="13294:13433" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="13541:13919" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="13541:13966" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="13541:14103" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="14656:14921" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="15160:15293" ph="SELECT * FRO... webid_pemeriksaan_item" />
-                <marker date="1501480718184" expanded="true" signature="15729:15891" ph="SELECT * FRO... webid_msattribute" />
-                <marker date="1501480718184" expanded="true" signature="16326:16465" ph="UPDATE webid... " />
-                <marker date="1501480718184" expanded="true" signature="16585:17243" ph="INSERT INTO webid_pemeriksaan_item... " />
-                <marker date="1501480718184" expanded="true" signature="17107:17243" ph="INSERT INTO webid_pemeriksaan_item... " />
-                <marker date="1501480718184" expanded="true" signature="18052:18312" ph="INSERT INTO webid_pemeriksaan_item_detail... " />
-              </folding>
+            <state relative-caret-position="347">
+              <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -134,9 +58,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$id_item</find>
-      <find>$id_auctionitem</find>
-      <find>get</find>
       <find>id_item</find>
       <find>code_</find>
       <find>code</find>
@@ -156,7 +77,6 @@
       <find>$_POST['catatan']</find>
       <find>$id_user</find>
       <find>$_POST</find>
-      <find>data</find>
       <find>$arrayUp</find>
       <find>$abcUp</find>
       <find>mysql_query(</find>
@@ -164,6 +84,10 @@
       <find>$data</find>
       <find>$biaya_admin</find>
       <find>bia</find>
+      <find>$abc</find>
+      <find>data</find>
+      <find>tidak ada</find>
+      <find>username</find>
     </findStrings>
     <replaceStrings>
       <replace>unit_lelang</replace>
@@ -192,6 +116,7 @@
       <replace>$catatan</replace>
       <replace>$this-&gt;db-&gt;query(</replace>
       <replace>)</replace>
+      <replace>email</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -205,7 +130,6 @@
         <option value="$PROJECT_DIR$/application/config/autoload.php" />
         <option value="$PROJECT_DIR$/application/controllers/DaftarListItem.php" />
         <option value="$PROJECT_DIR$/application/models/DaftarListItemModel.php" />
-        <option value="$PROJECT_DIR$/application/config/database.php" />
         <option value="$PROJECT_DIR$/application/config/config.php" />
         <option value="$PROJECT_DIR$/application/models/UnitKeluarListModel.php" />
         <option value="$PROJECT_DIR$/application/models/StockManagementModel.php" />
@@ -226,10 +150,13 @@
         <option value="$PROJECT_DIR$/application/config/routes.php" />
         <option value="$PROJECT_DIR$/application/models/UnitListModel.php" />
         <option value="$PROJECT_DIR$/application/controllers/UnitKeluar.php" />
-        <option value="$PROJECT_DIR$/application/controllers/UnitMasuk.php" />
         <option value="$PROJECT_DIR$/application/controllers/StockManagement.php" />
-        <option value="$PROJECT_DIR$/application/controllers/Persiapan.php" />
         <option value="$PROJECT_DIR$/application/models/PersiapanModel.php" />
+        <option value="$PROJECT_DIR$/application/config/database.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Persiapan.php" />
+        <option value="$PROJECT_DIR$/application/controllers/UnitMasuk.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Auth.php" />
+        <option value="$PROJECT_DIR$/application/models/AuthModel.php" />
       </list>
     </option>
   </component>
@@ -412,26 +339,27 @@
       <workItem from="1501210974031" duration="13970000" />
       <workItem from="1501300010073" duration="660000" />
       <workItem from="1501463396133" duration="26321000" />
+      <workItem from="1501540554695" duration="18489000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107125000" />
+    <option name="totallyTimeSpent" value="125614000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2569546" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2306003" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39905363" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -468,7 +396,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -560,20 +488,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/models/CompanyModel.php" />
     <entry file="file://$PROJECT_DIR$/application/controllers/Company.php" />
-    <entry file="file://$PROJECT_DIR$/application/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1360">
-          <caret line="25" column="62" lean-forward="false" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Auth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/AuctionDetail.php" />
     <entry file="file://$PROJECT_DIR$/application/models/AuctionDetailModel.php" />
     <entry file="file://$PROJECT_DIR$/application/models/StockManagementModel.php" />
@@ -581,13 +495,6 @@
     <entry file="file://$PROJECT_DIR$/application/models/UnitMasukListModel.php" />
     <entry file="file://$PROJECT_DIR$/application/models/UnitLelangModel.php" />
     <entry file="file://$PROJECT_DIR$/application/controllers/UnitLelang.php" />
-    <entry file="file://$PROJECT_DIR$/application/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="81" column="25" lean-forward="false" selection-start-line="81" selection-start-column="25" selection-end-line="81" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/Welcome.php" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -599,41 +506,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/AuthModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/data_mapper/Auction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/HomeModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="27" column="72" lean-forward="false" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="22" column="40" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/data_mapper/Unit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="4" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/application/data_mapper/Auction.php" />
+    <entry file="file://$PROJECT_DIR$/application/data_mapper/Unit.php" />
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/superglobals/_superglobals.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-767">
@@ -641,22 +515,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/data_mapper/Persiapan.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/application/data_mapper/Persiapan.php" />
     <entry file="file://$PROJECT_DIR$/application/controllers/UnitKeluar.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -673,17 +532,91 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/PersiapanModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3707">
+          <caret line="343" column="44" lean-forward="false" selection-start-line="343" selection-start-column="44" selection-end-line="343" selection-end-column="44" />
+          <folding>
+            <element signature="n#get_item_list#0;n#PersiapanModel#0;n#!!top" expanded="false" />
+            <element signature="n#get_list_search#0;n#PersiapanModel#0;n#!!top" expanded="false" />
+            <element signature="n#get_data#0;n#PersiapanModel#0;n#!!top" expanded="false" />
+            <marker date="1501553765811" expanded="true" signature="194:385" ph="SELECT a.* ,... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="573:764" ph="SELECT a.* ,... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="1729:1842" ph="SELECT id_au... webid_history_manajemenlot" />
+            <marker date="1501553765811" expanded="true" signature="2077:2281" ph="SELECT b.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="2469:2590" ph="SELECT attri... webid_msattrdetail" />
+            <marker date="1501553765811" expanded="true" signature="2785:3050" ph="SELECT b.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="3282:3402" ph="SELECT attri... webid_msattrdetail" />
+            <marker date="1501553765811" expanded="true" signature="3718:3927" ph="SELECT b.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="4129:4334" ph="SELECT b.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="4510:4715" ph="SELECT b.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="4899:5027" ph="SELECT id_au... webid_pemeriksaan_item" />
+            <marker date="1501553765811" expanded="true" signature="5260:5605" ph="SELECT b.nam... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="6545:6636" ph="SELECT id_wa... webid_warna" />
+            <marker date="1501553765811" expanded="true" signature="7127:7218" ph="SELECT id_wa... webid_warna" />
+            <marker date="1501553765811" expanded="true" signature="7682:7773" ph="SELECT biaya... webid_msitem" />
+            <marker date="1501553765811" expanded="true" signature="10966:11048" ph="SELECT idauc... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="11383:11496" ph="SELECT lot_n... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="11881:12037" ph="SELECT name_... webid_msattribute" />
+            <marker date="1501553765811" expanded="true" signature="13765:14170" ph="SELECT a.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="14982:15078" ph="SELECT sold webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="15521:16315" ph="UPDATE webid... " />
+            <marker date="1501553765811" expanded="true" signature="16640:16759" ph="SELECT close... webid_auctions" />
+            <marker date="1501553765811" expanded="true" signature="17142:17219" ph="SELECT sched... webid_schedule" />
+            <marker date="1501553765811" expanded="true" signature="17901:18030" ph="SELECT lot_n... webid_auction_item" />
+            <marker date="1501553765811" expanded="true" signature="18452:18787" ph="UPDATE webid... " />
+            <marker date="1501553765811" expanded="true" signature="18870:19171" ph="UPDATE webid... " />
+            <marker date="1501553765811" expanded="true" signature="19560:19681" ph="SELECT * FRO... webid_msattribute" />
+            <marker date="1501553765811" expanded="true" signature="20365:20464" ph="SELECT idauc... webid_auction_subdetail" />
+            <marker date="1501553765811" expanded="true" signature="20628:22188" ph="INSERT INTO webid_auction_subdetail... " />
+            <marker date="1501553765811" expanded="true" signature="22325:23844" ph="UPDATE webid... " />
+            <marker date="1501553765811" expanded="true" signature="24197:24566" ph="SELECT a.val... webid_auction_detail" />
+            <marker date="1501553765811" expanded="true" signature="25394:25519" ph="SELECT * FRO... webid_msattribute" />
+            <marker date="1501553765811" expanded="true" signature="25727:26085" ph="INSERT INTO webid_auction_item... " />
+            <marker date="1501553765811" expanded="true" signature="26163:26441" ph="INSERT INTO webid_auction_item... " />
+            <marker date="1501553765811" expanded="true" signature="27056:27203" ph="INSERT INTO webid_auction_detail... " />
+            <marker date="1501553765811" expanded="true" signature="27400:28949" ph="INSERT INTO webid_auction_subdetail... " />
+            <marker date="1501553765811" expanded="true" signature="29214:29335" ph="SELECT * FRO... webid_msattribute" />
+            <marker date="1501553765811" expanded="true" signature="29531:29890" ph="INSERT INTO webid_auction_item... " />
+            <marker date="1501553765811" expanded="true" signature="29960:30238" ph="INSERT INTO webid_auction_item... " />
+            <marker date="1501553765811" expanded="true" signature="30757:30902" ph="INSERT INTO webid_auction_detail... " />
+            <marker date="1501553765811" expanded="true" signature="31035:32588" ph="INSERT INTO webid_auction_subdetail... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/UnitMasuk.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="923">
-          <caret line="106" column="9" lean-forward="true" selection-start-line="68" selection-start-column="8" selection-end-line="106" selection-end-column="9" />
+        <state relative-caret-position="362">
+          <caret line="104" column="29" lean-forward="false" selection-start-line="104" selection-start-column="24" selection-end-line="104" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/HomeModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="27" column="72" lean-forward="false" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
+          <folding>
+            <marker date="1501208913595" expanded="true" signature="219:414" ph="SELECT a.ida... webid_auction_item" />
+            <marker date="1501208913595" expanded="true" signature="517:729" ph="SELECT a.ida... webid_auction_item" />
+            <marker date="1501208913595" expanded="true" signature="829:1023" ph="SELECT a.ida... webid_auction_item" />
+            <marker date="1501208913595" expanded="true" signature="1126:1347" ph="SELECT a.ida... webid_auction_item" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/models/UnitListModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
+        <state relative-caret-position="17">
           <caret line="253" column="29" lean-forward="false" selection-start-line="253" selection-start-column="29" selection-end-line="253" selection-end-column="29" />
           <folding>
             <element signature="n#get_item_list#0;n#UnitListModel#0;n#!!top" expanded="false" />
@@ -733,63 +666,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Persiapan.php">
+    <entry file="file://$PROJECT_DIR$/application/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="60" column="26" lean-forward="false" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="26" />
+        <state relative-caret-position="232">
+          <caret line="80" column="24" lean-forward="false" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/PersiapanModel.php">
+    <entry file="file://$PROJECT_DIR$/application/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="314" column="43" lean-forward="true" selection-start-line="314" selection-start-column="43" selection-end-line="314" selection-end-column="43" />
+        <state relative-caret-position="17">
+          <caret line="25" column="62" lean-forward="false" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Auth.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Persiapan.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/AuthModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="21" column="103" lean-forward="false" selection-start-line="21" selection-start-column="103" selection-end-line="21" selection-end-column="103" />
           <folding>
-            <element signature="n#get_item_list#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-            <element signature="n#get_list_search#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-            <element signature="n#get_data#0;n#PersiapanModel#0;n#!!top" expanded="false" />
-            <marker date="1501495049853" expanded="true" signature="194:385" ph="SELECT a.* ,... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="573:764" ph="SELECT a.* ,... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="1729:1842" ph="SELECT id_au... webid_history_manajemenlot" />
-            <marker date="1501495049853" expanded="true" signature="2077:2281" ph="SELECT b.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="2469:2590" ph="SELECT attri... webid_msattrdetail" />
-            <marker date="1501495049853" expanded="true" signature="2785:3050" ph="SELECT b.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="3282:3402" ph="SELECT attri... webid_msattrdetail" />
-            <marker date="1501495049853" expanded="true" signature="3718:3927" ph="SELECT b.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="4129:4334" ph="SELECT b.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="4510:4715" ph="SELECT b.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="4899:5027" ph="SELECT id_au... webid_pemeriksaan_item" />
-            <marker date="1501495049853" expanded="true" signature="5260:5605" ph="SELECT b.nam... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="6544:6631" ph="SELECT id_wa... webid_warna" />
-            <marker date="1501495049853" expanded="true" signature="7120:7207" ph="SELECT id_wa... webid_warna" />
-            <marker date="1501495049853" expanded="true" signature="7669:7756" ph="SELECT biaya... webid_msitem" />
-            <marker date="1501495049853" expanded="true" signature="10942:11024" ph="SELECT idauc... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="11361:11470" ph="SELECT lot_n... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="11857:12009" ph="SELECT name_... webid_msattribute" />
-            <marker date="1501495049853" expanded="true" signature="13578:13975" ph="SELECT a.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="14731:14823" ph="SELECT sold webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="15234:15956" ph="UPDATE webid... " />
-            <marker date="1501495049853" expanded="true" signature="16273:16388" ph="SELECT close... webid_auctions" />
-            <marker date="1501495049853" expanded="true" signature="16743:16816" ph="SELECT sched... webid_schedule" />
-            <marker date="1501495049853" expanded="true" signature="17445:17566" ph="SELECT lot_n... webid_auction_item" />
-            <marker date="1501495049853" expanded="true" signature="17957:18264" ph="UPDATE webid... " />
-            <marker date="1501495049853" expanded="true" signature="18339:18620" ph="UPDATE webid... " />
-            <marker date="1501495049853" expanded="true" signature="18993:19110" ph="SELECT * FRO... webid_msattribute" />
-            <marker date="1501495049853" expanded="true" signature="19755:19850" ph="SELECT idauc... webid_auction_subdetail" />
-            <marker date="1501495049853" expanded="true" signature="20002:21406" ph="INSERT INTO webid_auction_subdetail... " />
-            <marker date="1501495049853" expanded="true" signature="21530:22905" ph="UPDATE webid... " />
-            <marker date="1501495049853" expanded="true" signature="23224:23585" ph="SELECT a.val... webid_auction_detail" />
-            <marker date="1501495049853" expanded="true" signature="24353:24474" ph="SELECT * FRO... webid_msattribute" />
-            <marker date="1501495049853" expanded="true" signature="24670:24996" ph="INSERT INTO webid_auction_item... " />
-            <marker date="1501495049853" expanded="true" signature="25066:25320" ph="INSERT INTO webid_auction_item... " />
-            <marker date="1501495049853" expanded="true" signature="25908:26043" ph="INSERT INTO webid_auction_detail... " />
-            <marker date="1501495049853" expanded="true" signature="26224:27617" ph="INSERT INTO webid_auction_subdetail... " />
-            <marker date="1501495049853" expanded="true" signature="27858:27975" ph="SELECT * FRO... webid_msattribute" />
-            <marker date="1501495049853" expanded="true" signature="28159:28486" ph="INSERT INTO webid_auction_item... " />
-            <marker date="1501495049853" expanded="true" signature="28548:28802" ph="INSERT INTO webid_auction_item... " />
-            <marker date="1501495049853" expanded="true" signature="29294:29427" ph="INSERT INTO webid_auction_detail... " />
-            <marker date="1501495049853" expanded="true" signature="29548:30945" ph="INSERT INTO webid_auction_subdetail... " />
+            <marker date="1501578922953" expanded="true" signature="732:849" ph="SELECT id, h... users" />
+            <marker date="1501578922953" expanded="true" signature="732:914" ph="SELECT id, h... users" />
           </folding>
         </state>
       </provider>
