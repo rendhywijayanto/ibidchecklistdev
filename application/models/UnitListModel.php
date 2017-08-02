@@ -9,8 +9,6 @@
 
 class UnitListModel extends CI_Model
 {
-
-
     // METHOD GET //
 
     public function get_item_list()
@@ -213,17 +211,18 @@ class UnitListModel extends CI_Model
             $run_subdetail = $this->db->query($query_subdetail);
             $data->pntp = $run_subdetail->row_array();
 
-            $query_km="SELECT a.value, c.name_attribute FROM webid_auction_detail a
+            $run_km = $this->db->query("SELECT a.value, c.name_attribute FROM webid_auction_detail a
 			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
 			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
 			WHERE b.`deleted` = 0 AND b.`master_item` = '".$id_item."' AND a.idauction_item = '".$idauction_item."' AND c.hv_periksa = 1
-			ORDER BY c.pst_order ASC";
-            $run_km = $this->db->query($query_km);
-            $data->km = $run_km->row_array();
+			ORDER BY c.pst_order ASC");
+            $count = $run_km->row_array();
 
-            foreach($run_km->result_array() as $row2){
+            foreach($run_km->result_array() as $row2)
+            {
                 if ($row2['name_attribute'] == 'KM') {
                     $msg[] = number_format($row2['value'],0,',','.')."^";
+                    $data->km = number_format($row2['value'],0,',','.');
                 } else {
                     $msg[] = $row2['value']."^";
                 }
@@ -282,22 +281,22 @@ class UnitListModel extends CI_Model
 
         $catatan = $data->catatan;
 
-//        if($no_polisi == ""){
-//            echo "Maaf.'$data->nopolisi'.!! Tidak ada data yang anda masukkan||error";
-//            exit();
-//        }
-//
-//        if($tglpemeriksaan_msk == ""){
-//            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda masukkan||error";
-//            exit();
-//        }
-//
-//        if($nama_pengemudi == ""){
-//            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda masukkan||error";
-//            exit();
-//        }
+        if($no_polisi == ""){
+            echo "Maaf.'$data->nopolisi'.!! Tidak ada data yang anda masukkan||error";
+            exit();
+        }
 
-        /*if($alamat_pengemudi == ""){
+        if($tglpemeriksaan_msk == ""){
+            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda masukkan||error";
+            exit();
+        }
+
+        if($nama_pengemudi == ""){
+            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda masukkan||error";
+            exit();
+        }
+
+        if($alamat_pengemudi == ""){
                 echo "Maaf Alamat Penyerah !! Tidak ada data yang anda masukkan||error";
                 exit();
         }
@@ -305,16 +304,16 @@ class UnitListModel extends CI_Model
         if($kota_pengemudi == ""){
                 echo "Maaf Kota Penyerah !! Tidak ada data yang anda masukkan||error";
                 exit();
-        }*/
+        }
 
-//        if($telepon_pengemudi == ""){
-//            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda masukkan||error";
-//            exit();
-//        }
+        if($telepon_pengemudi == ""){
+            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda masukkan||error";
+            exit();
+        }
 
         if ($id_pemeriksaanitem != "") {
-            echo "Update Error||error";
-            exit();
+            echo "Update Error||error.$id_pemeriksaanitem";
+//          exit();
 
             $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
             $run_soru = $this->db->query($query_soru);
@@ -350,7 +349,7 @@ class UnitListModel extends CI_Model
             }
 
             $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
-			`tgl_serah_msk` = '".$tglpemeriksaan_msk_msk."',`waktu_msk` = '".$time_msk."',
+			`tgl_serah_msk` = '".$tglpemeriksaan_msk."',`waktu_msk` = '".$time_msk."',
 			`nama_pengemudi_msk` = '".trim($nama_pengemudi)."',`alamat_pengemudi_msk` = '".trim($alamat_pengemudi)."',
 			`kota_msk` = '".trim($kota_pengemudi)."', `telepon_msk` = '".trim($telepon_pengemudi)."',
 			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
@@ -360,10 +359,10 @@ class UnitListModel extends CI_Model
             // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
 
             for ($ti = 1; $ti <= $batas_komponen; $ti++) {
-                $tampilbaik_t =  $_POST['CekTampilkanbaik_'.$ti];
-                $tampilrusak_t =  $_POST['CekTampilkanrusak_'.$ti];
-                $tampiltidakada_t =  $_POST['CekTampilkantidakada_'.$ti];
-                $id_komponenpemeriksaan_t = $_POST['idkomponenpemeriksaan_'.$ti];
+                $tampilbaik_t =  $data->cektampilkanbaik.$ti;
+                $tampilrusak_t =  $data->cektampilkanrusak.$ti;
+                $tampiltidakada_t =  $data->cektampilkantidakada.$ti;
+                $id_komponenpemeriksaan_t = $data->idkomponenpemeriksaan.$ti;
 
                 $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
 				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
@@ -433,7 +432,6 @@ class UnitListModel extends CI_Model
 
             }
         }
-        print_r($data);
         return array('status' => 201,'message' => 'Data has been created.');
     }
 }

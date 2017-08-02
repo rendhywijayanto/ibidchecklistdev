@@ -72,8 +72,10 @@ class UnitMasuk extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
+
                 $json = file_get_contents('php://input');
                 $params = json_decode($json, TRUE);
+
                 $data = new stdClass();
 
                 $data->idpemeriksaanitem= $params['idpemeriksaanitem'];
@@ -102,10 +104,8 @@ class UnitMasuk extends CI_Controller
                 $data->cektampilkantidakada = $params['cektampilkantidakada'];
                 $data->idkomponenpemeriksaan = $params['idkomponenpemeriksaan'];
 
-                print_r($json);
-
-                //$resp = $this->UnitListModel->post_unit($data);
-                //json_output($response['status'],$resp);
+                $resp = $this->UnitListModel->post_unit($data);
+                json_output($response['status'],$resp);
             }
         }
     }

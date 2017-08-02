@@ -45,24 +45,9 @@ class PersiapanModel extends CI_Model
         foreach($run_auc->result_array() as $row_auc){
 
             $data = new stdClass();
-
-            $data->idauction_item = $row_auc['idauction_item'];
-            $data->no_polisi = $row_auc['value'];
+            $data->auction = $row_auc;
             $idauction_item = $row_auc['idauction_item'];
-            $data->alfas = 'TERDAFTAR';
-
-            if ($row_auc['sold'] == 'y') {
-                $data->alfas = 'TERJUAL';
-            }
-            if ($row_auc['sold'] == 'n' AND $row_auc['sts_tarik'] == 1) {
-                $data->alfas = 'DITARIK';
-            }
-            $query_hs = $this->db->query("SELECT id_auctionitem FROM webid_history_manajemenlot WHERE id_auctionitem = '" . $row_auc['idauction_item'] . "' ");
-            $count_hs = $query_hs->row_array();
-
-            if ($count_hs > 0 and $row_auc['sold'] == 'n' AND $row_auc['sts_tarik'] == 0) {
-                $data->alfas = 'TD TERJUAL';
-            }
+//            $id_pemeriksaanmasuk = $row_auc['id_pemeriksaanitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -118,23 +103,44 @@ class PersiapanModel extends CI_Model
             $row_mdl = $run_mdl->row_array();
             $data->model = $row_mdl['value'];
 
-            $query_checklistin = "SELECT id_auctionitem FROM webid_pemeriksaan_item
-								  WHERE id_auctionitem = '" . $idauction_item . "' and sts_deleted = 0 ";
-            $run_checklistin = $this->db->query($query_checklistin);
-            if($run_checklistin->row_array() == null)
-            {
-                $data->count_checklist = 0 ;
-            }
-
             $query_subdetail = "SELECT b.name_pntp , b.alamat_pntp , b.kota_pntp , b.ponsel_pntp FROM webid_auction_item a
                 JOIN webid_auction_subdetail b ON b.idauction_item = a.idauction_item 
                 WHERE a.deleted = 0 AND a.master_item = '".$id_item."' AND b.idauction_item = '".$idauction_item."' AND b.remove = 0 ORDER BY b.idauction_subdetail ASC";
             $run_subdetail = $this->db->query($query_subdetail);
-            $data->pntp =  $run_subdetail->row_array();
+            $data->pntp = $run_subdetail->row_array();
+
+            $run_km = $this->db->query("SELECT a.value, c.name_attribute FROM webid_auction_detail a
+			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
+			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
+			WHERE b.`deleted` = 0 AND b.`master_item` = '".$id_item."' AND a.idauction_item = '".$idauction_item."' AND c.hv_periksa = 1
+			ORDER BY c.pst_order ASC");
+            $count = $run_km->row_array();
+
+            foreach($run_km->result_array() as $row2)
+            {
+                if ($row2['name_attribute'] == 'KM') {
+                    $data->km = number_format($row2['value'],0,',','.')."";
+                } else {
+                    $msg[] = $row2['value']."^";
+                }
+            }
+
+            $query_pgg = "SELECT b.value FROM webid_auction_detail b 
+								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
+								  WHERE c.name_attribute = 'PENGGERAK' AND b.idauction_item = '".$idauction_item."' ";
+            $run_pgg = $this->db->query($query_pgg);
+            $row_pgg = $run_pgg->row_array();
+            $data->penggerak = $row_pgg['value'];
+
+//            $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
+//                JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan
+//                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
+//
+//            $run_komponen = $this->db->query($query_komponen);
+//            $data->komponen = $run_komponen->result_array();
 
             $no++;
             $data->no = $no;
-
             array_push($arrData, $data);
         }
         return $arrData;
@@ -145,7 +151,7 @@ class PersiapanModel extends CI_Model
     public function post_persiapan_unit($data)
     {
         $id_item = 6;
-        $id_auctionitem = ''; // var 2
+        $idauction_item = ''; // var 2
 
 //$sumlamp = $data->sumlamp'];
 //$jumbiaya = $data->jumbiaya'];
@@ -354,8 +360,8 @@ class PersiapanModel extends CI_Model
 
             }
 
-            if ($id_auctionitem != "") {
-                echo $id_auctionitem . ' ' . "Proses Update Item Gagal||error";
+            if ($idauction_item != "") {
+                echo $idauction_item . ' ' . "Proses Update Item Gagal||error";
                 exit();
 
                 $no_polisi = trim($data->nopolisi);
@@ -375,13 +381,13 @@ class PersiapanModel extends CI_Model
 
                 if ($count_ceknopolisi > 0) {
                     $idAuctionitem = $row_ceknopolisi['idauction_item'];
-                    if ($idAuctionitem != $id_auctionitem and $sold == 'n' and $unsold_tarik == 0) {
+                    if ($idAuctionitem != $idauction_item and $sold == 'n' and $unsold_tarik == 0) {
                         echo "Maaf !! No Polisi Sudah ada||error";
                         exit();
                     }
                 }
 
-                $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '" . $id_auctionitem . "' ";
+                $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '" . $idauction_item . "' ";
                 $run_soru = $this->db->query($query_soru);
                 $row_soru = $run_soru->result_array();
 
@@ -394,14 +400,14 @@ class PersiapanModel extends CI_Model
                     $query_updsubQ = "UPDATE webid_auction_subdetail SET 
 						`kode_anggota_pntp` = '" . $kode_penitip . "',`name_pntp` = '" . $nm_penitip . "',`nomor_idents_pntp` = '" . $nmrId_penitip . "',`tipe_idents_pntp` = '" . $tipeId_penitip . "',`telepon_pntp` = '" . $telepon_penitip . "',`ponsel_pntp` = '" . $ponsel_penitip . "',`alamat_pntp` = '" . $almt_penitip . "',`kota_pntp` = '" . $kota_penitip . "',`kodepos_pntp` = '" . $kodepos_penitip . "',
 						`tgl_edit`= '" . $tglall . "',`status_biodata` = '" . $sbg_perusahaan . "' ,`status_peserta` = '" . $status_peserta . "',`jenis_usaha` = '" . $jenis_usaha . "',`no_npwp` = '" . $nmr_NPWP . "',`groupBiodata` = '" . $group_biodata . "',id_biodata = '" . $id_biodata . "',biaya_parkir = '" . $biayaparkir . "'
-						WHERE idauction_item = '" . $id_auctionitem . "'";
+						WHERE idauction_item = '" . $idauction_item . "'";
                     $run_updsubQ = $this->db->query($query_updsubQ);
 
                     echo "Maaf !! unit sudah terjual , Proses Update Penitip , biaya Parkir dan Ekspedisi berhasil||success";
                     exit();
                 }
                 // Di Non Aktifkan Sementara
-                $query_auctions = "SELECT closed,id_schedule FROM webid_auctions WHERE idauction_item = '" . $id_auctionitem . "' order by id DESC LIMIT 1";
+                $query_auctions = "SELECT closed,id_schedule FROM webid_auctions WHERE idauction_item = '" . $idauction_item . "' order by id DESC LIMIT 1";
                 $run_auctions = $this->db->query($query_auctions);
                 $count_a = $run_auctions->row_array();
                 $row_auction = $run_auctions->result_array();
@@ -424,7 +430,7 @@ class PersiapanModel extends CI_Model
 
                 if ($id_schedule != "" or $id_schedule != 0) {
 
-                    $query_numb = "SELECT lot_numb FROM webid_auction_item WHERE idauction_item = '" . $id_auctionitem . "' and id_schedule = '" . $id_schedule . "' ";
+                    $query_numb = "SELECT lot_numb FROM webid_auction_item WHERE idauction_item = '" . $idauction_item . "' and id_schedule = '" . $id_schedule . "' ";
                     $run_numb = $this->db->query($query_numb);
                     $row_numb = $run_numb->result_array();
 
@@ -434,13 +440,13 @@ class PersiapanModel extends CI_Model
                         $lot_numb = $row_numb['lot_numb'];
                     }
 
-                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = '" . $lot_numb . "' , id_schedule = '" . $id_schedule . "' , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "', id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "',sts_lelang = 1 WHERE idauction_item = '" . $id_auctionitem . "'");
+                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = '" . $lot_numb . "' , id_schedule = '" . $id_schedule . "' , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "', id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "',sts_lelang = 1 WHERE idauction_item = '" . $idauction_item . "'");
                 } else {
-                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = NULL , id_schedule = 0 , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "' , id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "', sts_lelang = 0 WHERE idauction_item = '" . $id_auctionitem . "'");
+                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = NULL , id_schedule = 0 , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "' , id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "', sts_lelang = 0 WHERE idauction_item = '" . $idauction_item . "'");
                 }
 
                 //Update nilai item taksasi
-                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->NO_POLISI']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$_SESSION['WEBID_LOGGED_IN']."' WHERE id_auctionitem = '".$id_auctionitem."'");
+                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->NO_POLISI']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$_SESSION['WEBID_LOGGED_IN']."' WHERE idauction_item = '".$idauction_item."'");
 
                 $querySvup = "SELECT * FROM webid_msattribute
 			WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
@@ -452,18 +458,18 @@ class PersiapanModel extends CI_Model
                     $arrayUp = trim($_POST["$abcUp"]);
                     $IDUp = $rowSvup['id_attribute'];
                     $query_upd = "UPDATE " . $DBPrefix . "auction_detail SET `value` = '" . trim($arrayUp) . "' 
-						WHERE idauction_item = '" . $id_auctionitem . "' AND id_attribute = '" . $IDUp . "'";
+						WHERE idauction_item = '" . $idauction_item . "' AND id_attribute = '" . $IDUp . "'";
                     $run_upd = $this->db->query($query_upd);
                 }
 
-                $query_ceksubdetail = $this->db->query("SELECT idauction_item FROM webid_auction_subdetail WHERE idauction_item = '" . $id_auctionitem . "'");
+                $query_ceksubdetail = $this->db->query("SELECT idauction_item FROM webid_auction_subdetail WHERE idauction_item = '" . $idauction_item . "'");
                 $count_ceksubdetail = $query_ceksubdetail->row_array();
 
                 if ($count_ceksubdetail == 0) {
 
                     $query_addsubA = "INSERT INTO webid_auction_subdetail 
 				(`idauction_item`,`taksasi`,`biaya_admin`,`status`,`kode_anggota_pntp`, `name_pntp`,`nomor_idents_pntp`,`tipe_idents_pntp`,`telepon_pntp`,`ponsel_pntp`,`alamat_pntp`,`kota_pntp`,`kodepos_pntp`,`jadwal_lelang`,`tgl_lelang`,`cbng_lelang`,`lokasi_lelang`,`ikut_sesi`,`lokasi_brg_lelang`,`alamat_brg_lelang`,`kota_brg_lelang`,`lokasi_display_lelang`,`alamat_display_lelang`,`kota_display_lelang`,`namapic_display`,`telppic_display`,`nama_pic`,`jabatan_pic`,`ponsel_pic`,`mail_pic`,`cttn_pndftrn`,`tgl_register`,`status_biodata`,`status_peserta`,`jenis_usaha`,`no_npwp`,`groupBiodata`,id_biodata,biaya_parkir) 
-				VALUES ('" . $id_auctionitem . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
+				VALUES ('" . $idauction_item . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
 
                     $run_addsubA = $this->db->query($query_addsubA);
 
@@ -472,7 +478,7 @@ class PersiapanModel extends CI_Model
                     $query_updsub = "UPDATE webid_auction_subdetail SET 
 						`taksasi` = '" . $taks . "',`biaya_admin` = '" . $biaya . "',`kode_anggota_pntp` = '" . $kode_penitip . "',`name_pntp` = '" . $nm_penitip . "',`nomor_idents_pntp` = '" . $nmrId_penitip . "',`tipe_idents_pntp` = '" . $tipeId_penitip . "',`telepon_pntp` = '" . $telepon_penitip . "',`ponsel_pntp` = '" . $ponsel_penitip . "',`alamat_pntp` = '" . $almt_penitip . "',`kota_pntp` = '" . $kota_penitip . "',`kodepos_pntp` = '" . $kodepos_penitip . "',`jadwal_lelang` = '" . $jdwl_lelang . "',`tgl_lelang` = '" . $tgl_lelang . "',`cbng_lelang` = '" . $cbng_lelang . "',`lokasi_lelang` = '" . $lokasi_lelang . "',`ikut_sesi` = '" . $ikutsesi_lelang . "',
 						`lokasi_brg_lelang` = '" . $lks_brg_lelang . "' , `lokasi_display_lelang` = '" . $lks_display . "',`alamat_display_lelang` = '" . $almt_display . "',`kota_display_lelang` = '" . $kota_display . "',`namapic_display` = '" . $namapic_display . "',`telppic_display` = '" . $telppic_display . "',`nama_pic` = '" . $namapic . "',`jabatan_pic` = '" . $jbtnpic . "',`ponsel_pic` = '" . $ponselpic . "',`mail_pic` = '" . $mailpic . "',`cttn_pndftrn` = '" . $cttn . "',`tgl_edit`= '" . $tglall . "',`status_biodata` = '" . $sbg_perusahaan . "' ,`status_peserta` = '" . $status_peserta . "',`jenis_usaha` = '" . $jenis_usaha . "',`no_npwp` = '" . $nmr_NPWP . "',`groupBiodata` = '" . $group_biodata . "',`id_biodata` = '" . $id_biodata . "',`biaya_parkir` = '" . $biayaparkir . "'
-						WHERE idauction_item = '" . $id_auctionitem . "'";
+						WHERE idauction_item = '" . $idauction_item . "'";
                     $run_updsub = $this->db->query($query_updsub);
                 }
 
