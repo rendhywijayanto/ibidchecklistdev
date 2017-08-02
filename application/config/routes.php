@@ -59,6 +59,7 @@ $route['auth/logout']['post']          = 'auth/logout';
 //$route['book/update/(:num)']['put']    = 'book/update/$1';
 //$route['book/delete/(:num)']['delete'] = 'book/delete/$1';
 $route['home']['get']        = 'home';
+$route['home']['get']        = 'home';
 $route['auctions']['get']    = 'auctions';
 $route['persiapan']['get']    = 'persiapan';
 $route['unitmasuk']['get']   = 'unitmasuk';

@@ -12,6 +12,7 @@ class Persiapan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('PersiapanModel');
+        $this->load->model('DaftarUnitModel');
     }
 
     public function index()
@@ -37,6 +38,20 @@ class Persiapan extends CI_Controller
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
                 $resp = $this->PersiapanModel->get_list_search($id);
+                json_output($response['status'],$resp);
+            }
+        }
+    }
+
+    public function add_data()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'GET'){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $response = $this->AuthModel->auth();
+            if($response['status'] == 200){
+                $resp = $this->DaftarUnitModel->get_add_data();
                 json_output($response['status'],$resp);
             }
         }
@@ -98,6 +113,8 @@ class Persiapan extends CI_Controller
                 $data->TGL_KEUR = $params['TGL_KEUR'];
                 $data->lotnumb = $params['lotnumb'];
                 $data->no_polisi = $params['no_polisi'];
+                $data->id_user = $params['id_user'];
+                $data->abcV = $params['abcV'];
 
                 //print_r($json);
                 $resp = $this->PersiapanModel->post_persiapan_unit($data);

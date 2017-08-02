@@ -132,12 +132,17 @@ class PersiapanModel extends CI_Model
             $row_pgg = $run_pgg->row_array();
             $data->penggerak = $row_pgg['value'];
 
-//            $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
-//                JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan
-//                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
-//
-//            $run_komponen = $this->db->query($query_komponen);
-//            $data->komponen = $run_komponen->result_array();
+            $query_komponen = "SELECT * FROM webid_komponen_pemeriksaan WHERE sts_deleted = 0 AND tampil = 'true' and id_item = '".$id_item."' ORDER BY id_komponenpemeriksaan ASC";
+            $run_komponen = $this->db->query($query_komponen);
+            $count_komponen = $run_komponen->row_array();
+
+            $arrKomponen = array();
+
+            foreach($run_komponen->result_array() as $row_komponen)
+            {
+                    array_push($arrKomponen, $row_komponen);
+            }
+            $data->komponen = $arrKomponen;
 
             $no++;
             $data->no = $no;
@@ -152,7 +157,9 @@ class PersiapanModel extends CI_Model
     {
         $id_item = 6;
         $idauction_item = ''; // var 2
+        $id_user = $data->id_user;
 
+ //       print_r($data);
 //$sumlamp = $data->sumlamp'];
 //$jumbiaya = $data->jumbiaya'];
 
@@ -440,13 +447,13 @@ class PersiapanModel extends CI_Model
                         $lot_numb = $row_numb['lot_numb'];
                     }
 
-                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = '" . $lot_numb . "' , id_schedule = '" . $id_schedule . "' , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "', id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "',sts_lelang = 1 WHERE idauction_item = '" . $idauction_item . "'");
+                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = '" . $lot_numb . "' , id_schedule = '" . $id_schedule . "' , id_user = '" . $id_user . "' , id_cabang = '" . $cabang_taksasi . "', id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "',sts_lelang = 1 WHERE idauction_item = '" . $idauction_item . "'");
                 } else {
-                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = NULL , id_schedule = 0 , id_user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' , id_cabang = '" . $cabang_taksasi . "' , id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "', sts_lelang = 0 WHERE idauction_item = '" . $idauction_item . "'");
+                    $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = NULL , id_schedule = 0 , id_user = '" . $id_user . "' , id_cabang = '" . $cabang_taksasi . "' , id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "', sts_lelang = 0 WHERE idauction_item = '" . $idauction_item . "'");
                 }
 
                 //Update nilai item taksasi
-                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$_SESSION['WEBID_LOGGED_IN']."' WHERE idauction_item = '".$idauction_item."'");
+                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$id_user."' WHERE idauction_item = '".$idauction_item."'");
 
                 $querySvup = "SELECT * FROM webid_msattribute
 			WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
@@ -464,6 +471,8 @@ class PersiapanModel extends CI_Model
 
                 $query_ceksubdetail = $this->db->query("SELECT idauction_item FROM webid_auction_subdetail WHERE idauction_item = '" . $idauction_item . "'");
                 $count_ceksubdetail = $query_ceksubdetail->row_array();
+
+                print_r($count_ceksubdetail);
 
                 if ($count_ceksubdetail == 0) {
 
@@ -496,7 +505,7 @@ class PersiapanModel extends CI_Model
 			WHERE b.`deleted` = 0 AND b.`master_item` = '" . $id_item . "' AND c.name_attribute = 'NO POLISI'
 			AND a.value = '" . $cek_polisi . "' ORDER BY a.`idauction_item`, c.`pst_order`";
                 $run_cekno_polisi = $this->db->query($query_cekno_polisi);
-                $row_cekno_polisi = $run_cekno_polisi->result_array();
+                $row_cekno_polisi = $run_cekno_polisi->row_array();
                 $sold = $row_cekno_polisi['sold'];
                 $unsold_tarik = $row_cekno_polisi['sts_tarik'];
                 //$unsold_tarik = $row_cekno_polisi['unsold_tarik']; // Pilihan antara y dan n
@@ -518,10 +527,10 @@ class PersiapanModel extends CI_Model
 
                         if ($id_schedule != "" or $id_schedule != 0) {
                             $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`lot_numb`,`id_schedule`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`,`sts_lelang`) 
-					VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $_SESSION['WEBID_LOGGED_IN'] . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
+					VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
                         } else {
                             $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`) 
-						VALUES ('" . $idV . "','" . $id_item . "','" . $_SESSION['WEBID_LOGGED_IN'] . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "')";
+						VALUES ('" . $idV . "','" . $id_item . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "')";
                         }
 
                         //var_dump($query_add);exit();
@@ -561,10 +570,10 @@ class PersiapanModel extends CI_Model
 
                     if ($id_schedule != "" or $id_schedule != 0) {
                         $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`lot_numb`,`id_schedule`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`,`sts_lelang`) 
-						VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $_SESSION['WEBID_LOGGED_IN'] . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
+						VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
                     } else {
                         $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`) 
-						VALUES ('" . $idV . "','" . $id_item . "','" . $_SESSION['WEBID_LOGGED_IN'] . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "')";
+						VALUES ('" . $idV . "','" . $id_item . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "')";
                     }
 
                     $run_add = $this->db->query($query_add);
@@ -572,7 +581,7 @@ class PersiapanModel extends CI_Model
                     foreach ($runSv1->result_array() as $rowSv1) {
                         $abcV = str_replace(' ', '_', $rowSv1['name_attribute']);
                         $idSv = $rowSv1['id_attribute'];
-                        $arrayV = trim($_POST["$abcV"]);
+                        $arrayV = trim($data->abcV);
                         if ($abcV == 'no_polisi') {
                             $arrayV = $cek_polisi;
                         }
