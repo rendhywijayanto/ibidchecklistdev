@@ -312,7 +312,7 @@ class UnitListModel extends CI_Model
         }
 
         if ($id_pemeriksaanitem != "") {
-            echo "Update Error||error.$id_pemeriksaanitem";
+//            echo "Update Error||error.$id_pemeriksaanitem";
 //          exit();
 
             $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
@@ -338,15 +338,15 @@ class UnitListModel extends CI_Model
 				ORDER BY pst_order ASC";
             $runSvup = $this->db->query($querySvup);
 
-            while ($rowSvup = $runSvup->row_array())
-            {
-                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
-                $arrayUp = trim($data->$abcUp);
-                $IDUp = $rowSvup['id_attribute'];
-                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."' 
-						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
-                $run_upd = $this->db->query($query_upd);
-            }
+//            while ($rowSvup = $runSvup->row_array())
+//            {
+//                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+//                $arrayUp = trim($data->$abcUp);
+//                $IDUp = $rowSvup['id_attribute'];
+//                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
+//						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+//                $run_upd = $this->db->query($query_upd);
+//            }
 
             $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
 			`tgl_serah_msk` = '".$tglpemeriksaan_msk."',`waktu_msk` = '".$time_msk."',

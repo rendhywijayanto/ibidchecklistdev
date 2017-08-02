@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'ibid_ims',
+	'hostname' => 'http://ibidpdiapidev.azurewebsites.net',
+	'username' => 'b2ffd2425021d6',
+	'password' => '472c5336',
+	'database' => 'ibidpdidev',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'webid_',
 	'pconnect' => FALSE,

@@ -364,23 +364,23 @@ class PersiapanModel extends CI_Model
                 echo $idauction_item . ' ' . "Proses Update Item Gagal||error";
                 exit();
 
-                $no_polisi = trim($data->nopolisi);
+                $no_polisi = trim($data->no_polisi);
                 $cek_polisi = str_replace(' ', '', $no_polisi);
                 //JOIN " . $DBPrefix . "msitem i ON i.`id_item` = b.`master_item`
-                $query_ceknopolisi = "SELECT a.value, b.sold , b.sts_tarik , b.idauction_item FROM webid_auction_detail a
+                $query_cekno_polisi = "SELECT a.value, b.sold , b.sts_tarik , b.idauction_item FROM webid_auction_detail a
 			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
 			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
 			WHERE b.`deleted` = 0 AND b.`master_item` = '" . $id_item . "' AND c.name_attribute = 'NO POLISI'
 			AND a.value = '" . $cek_polisi . "' ORDER BY a.`idauction_item`, c.`pst_order`";
-                $run_ceknopolisi = $this->db->query($query_ceknopolisi);
-                $row_ceknopolisi = $run_ceknopolisi->result_array();
-                $sold = $row_ceknopolisi['sold'];
-                $unsold_tarik = $row_ceknopolisi['sts_tarik'];
-                //$unsold_tarik = $row_ceknopolisi['unsold_tarik']; // Pilihan antara y dan n
-                $count_ceknopolisi = $run_ceknopolisi->row_array();
+                $run_cekno_polisi = $this->db->query($query_cekno_polisi);
+                $row_cekno_polisi = $run_cekno_polisi->result_array();
+                $sold = $row_cekno_polisi['sold'];
+                $unsold_tarik = $row_cekno_polisi['sts_tarik'];
+                //$unsold_tarik = $row_cekno_polisi['unsold_tarik']; // Pilihan antara y dan n
+                $count_cekno_polisi = $run_cekno_polisi->row_array();
 
-                if ($count_ceknopolisi > 0) {
-                    $idAuctionitem = $row_ceknopolisi['idauction_item'];
+                if ($count_cekno_polisi > 0) {
+                    $idAuctionitem = $row_cekno_polisi['idauction_item'];
                     if ($idAuctionitem != $idauction_item and $sold == 'n' and $unsold_tarik == 0) {
                         echo "Maaf !! No Polisi Sudah ada||error";
                         exit();
@@ -446,7 +446,7 @@ class PersiapanModel extends CI_Model
                 }
 
                 //Update nilai item taksasi
-                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->NO_POLISI']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$_SESSION['WEBID_LOGGED_IN']."' WHERE idauction_item = '".$idauction_item."'");
+                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$_SESSION['WEBID_LOGGED_IN']."' WHERE idauction_item = '".$idauction_item."'");
 
                 $querySvup = "SELECT * FROM webid_msattribute
 			WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
@@ -487,22 +487,22 @@ class PersiapanModel extends CI_Model
 
             } else {
 
-                $no_polisi = trim($data->NO_POLISI);
+                $no_polisi = trim($data->no_polisi);
                 $cek_polisi = str_replace(' ', '', $no_polisi);
 
-                $query_ceknopolisi = "SELECT a.value, b.* FROM webid_auction_detail a
+                $query_cekno_polisi = "SELECT a.value, b.* FROM webid_auction_detail a
 			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
 			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
 			WHERE b.`deleted` = 0 AND b.`master_item` = '" . $id_item . "' AND c.name_attribute = 'NO POLISI'
 			AND a.value = '" . $cek_polisi . "' ORDER BY a.`idauction_item`, c.`pst_order`";
-                $run_ceknopolisi = $this->db->query($query_ceknopolisi);
-                $row_ceknopolisi = $run_ceknopolisi->result_array();
-                $sold = $row_ceknopolisi['sold'];
-                $unsold_tarik = $row_ceknopolisi['sts_tarik'];
-                //$unsold_tarik = $row_ceknopolisi['unsold_tarik']; // Pilihan antara y dan n
-                $count_ceknopolisi = $run_ceknopolisi->row_array();
+                $run_cekno_polisi = $this->db->query($query_cekno_polisi);
+                $row_cekno_polisi = $run_cekno_polisi->result_array();
+                $sold = $row_cekno_polisi['sold'];
+                $unsold_tarik = $row_cekno_polisi['sts_tarik'];
+                //$unsold_tarik = $row_cekno_polisi['unsold_tarik']; // Pilihan antara y dan n
+                $count_cekno_polisi = $run_cekno_polisi->row_array();
 
-                if ($count_ceknopolisi > 0) {
+                if ($count_cekno_polisi > 0) {
 
                     if ($sold == 'n' and $unsold_tarik == 0) {
                         // AND ditarik sama dengan n
@@ -532,7 +532,7 @@ class PersiapanModel extends CI_Model
                             $abcV = str_replace(' ', '_', $rowSv1['name_attribute']);
                             $idSv = $rowSv1['id_attribute'];
                             $arrayV = trim($_POST["$abcV"]);
-                            if ($abcV == 'NO_POLISI') {
+                            if ($abcV == 'no_polisi') {
                                 $arrayV = $cek_polisi;
                             }
                             $query_add2 = "INSERT INTO webid_auction_detail (`idauction_item`,`id_attribute`,`value`) 
@@ -573,7 +573,7 @@ class PersiapanModel extends CI_Model
                         $abcV = str_replace(' ', '_', $rowSv1['name_attribute']);
                         $idSv = $rowSv1['id_attribute'];
                         $arrayV = trim($_POST["$abcV"]);
-                        if ($abcV == 'NO_POLISI') {
+                        if ($abcV == 'no_polisi') {
                             $arrayV = $cek_polisi;
                         }
                         $query_add2 = "INSERT INTO webid_auction_detail (`idauction_item`,`id_attribute`,`value`) 

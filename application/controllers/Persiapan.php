@@ -97,11 +97,11 @@ class Persiapan extends CI_Controller
                 $data->STNK_SD = $params['STNK_SD'];
                 $data->TGL_KEUR = $params['TGL_KEUR'];
                 $data->lotnumb = $params['lotnumb'];
-                $data->nopolisi = $params['nopolisi'];
+                $data->no_polisi = $params['no_polisi'];
 
-                print_r($json);
-                //$resp = $this->PersiapanModel->post_persiapan_unit($data);
-                //json_output($response['status'],$resp);
+                //print_r($json);
+                $resp = $this->PersiapanModel->post_persiapan_unit($data);
+                json_output($response['status'],$resp);
             }
         }
     }
