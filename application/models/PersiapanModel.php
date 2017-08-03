@@ -47,7 +47,6 @@ class PersiapanModel extends CI_Model
             $data = new stdClass();
             $data->auction = $row_auc;
             $idauction_item = $row_auc['idauction_item'];
-//            $id_pemeriksaanmasuk = $row_auc['id_pemeriksaanitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -131,6 +130,13 @@ class PersiapanModel extends CI_Model
             $run_pgg = $this->db->query($query_pgg);
             $row_pgg = $run_pgg->row_array();
             $data->penggerak = $row_pgg['value'];
+
+            $query_checklistin = "SELECT id_auctionitem FROM webid_pemeriksaan_item
+								  WHERE id_auctionitem = '".$idauction_item."' and sts_deleted = 0 ";
+            $run_checklistin = $this->db->query($query_checklistin);
+            $count_checklist = $run_checklistin->num_rows();
+
+            $data->count_checklist = $count_checklist;
 
             $query_komponen = "SELECT * FROM webid_komponen_pemeriksaan WHERE sts_deleted = 0 AND tampil = 'true' and id_item = '".$id_item."' ORDER BY id_komponenpemeriksaan ASC";
             $run_komponen = $this->db->query($query_komponen);
@@ -472,7 +478,7 @@ class PersiapanModel extends CI_Model
                 $query_ceksubdetail = $this->db->query("SELECT idauction_item FROM webid_auction_subdetail WHERE idauction_item = '" . $idauction_item . "'");
                 $count_ceksubdetail = $query_ceksubdetail->row_array();
 
-                print_r($count_ceksubdetail);
+                //print_r($count_ceksubdetail);
 
                 if ($count_ceksubdetail == 0) {
 
@@ -606,4 +612,5 @@ class PersiapanModel extends CI_Model
 
         return $data;
     }
+
 }

@@ -9,7 +9,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class DaftarUnitModel extends CI_Model
 {
-    
 
     public function get_add_data()
     {
@@ -20,39 +19,40 @@ class DaftarUnitModel extends CI_Model
 											and a.master_item = 6 order by attributedetail ASC ";
         $run_merk = $this->db->query($query_merk);
 
-        $arrMerk = array();
+        $arrData = array();
 
         foreach($run_merk->result_array() as $row_merk){
-            array_push($arrMerk , $row_merk);
+            array_push($arrData , $row_merk);
         }
-        $data->merk = $arrMerk;
+        $data->merk = $arrData;
 
         $query_subgr = "SELECT b.id_attrdetail , b.attributedetail FROM webid_msattribute a JOIN 
 											webid_msattrdetail b ON b.master_attribute = a.id_attribute WHERE a.id_attribute = 5 
 											and a.master_item = 6 order by attributedetail ASC ";
         $run_subgr = $this->db->query($query_subgr);
 
-        $arrSubgr = array();
+        $arrData = array();
 
         foreach($run_subgr->result_array() as $row_subgr)
         {
-            array_push($arrSubgr , $row_subgr);
+            array_push($arrData , $row_subgr);
         }
-        $this->data->subgr = $arrSubgr;
+        $data->subgr = $arrData;
 
         $query_plat = "SELECT b.id_attrdetail , b.attributedetail FROM webid_msattribute a JOIN 
 											webid_msattrdetail b ON b.master_attribute = a.id_attribute WHERE a.id_attribute = 25 
 											and a.master_item = 6 order by attributedetail ASC ";
         $run_plat = $this->db->query($query_plat);
 
-        $arrPlat = array();
+        $arrData = array();
+
         foreach($run_plat->result_array() as $row_plat)
         {
-            array_push($arrPlat , $row_plat);
+            array_push($arrData , $row_plat);
         }
-        $this->data->plat = $arrPlat;
+        $data->plat = $arrData;
 
-        return $this->data;
+        return $data;
     }
 
 }
