@@ -43,6 +43,26 @@ class Persiapan extends CI_Controller
         }
     }
 
+    public function page()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'GET'){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $response = $this->AuthModel->auth();
+            if($response['status'] == 200){
+
+                $data = new stdClass();
+
+                $data->start = $_GET['start'];
+                $data->limit = $_GET['limit'];
+
+                $resp = $this->PersiapanModel->get_page_list($data);
+                json_output($response['status'],$resp);
+            }
+        }
+    }
+
     public function add_data()
     {
         $method = $_SERVER['REQUEST_METHOD'];

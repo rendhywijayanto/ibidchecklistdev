@@ -34,6 +34,16 @@ class PersiapanModel extends CI_Model
         return $this->get_data($query_auc);
     }
 
+    public function get_page_list($data)
+    {
+        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT $data->start,$data->limit";
+
+        return $this->get_data($query_auc);
+    }
+
     private function get_data($query_auc)
     {
         $run_auc = $this->db->query($query_auc);
@@ -118,7 +128,7 @@ class PersiapanModel extends CI_Model
             foreach($run_km->result_array() as $row2)
             {
                 if ($row2['name_attribute'] == 'KM') {
-                    $data->km = number_format($row2['value'],0,',','.')."";
+                    $data->km = $row2['value']."";
                 } else {
                     $msg[] = $row2['value']."^";
                 }

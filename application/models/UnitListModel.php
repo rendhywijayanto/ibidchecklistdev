@@ -11,31 +11,6 @@ class UnitListModel extends CI_Model
 {
     // METHOD GET //
 
-    public function get_item_list()
-    {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
-
-        return $this->get_data($query_auc);
-    }
-
-    public function get_list_search($id)
-    {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
-
-        if ($id != "")
-        {
-            $query_auc .=" AND b.value LIKE '%".$id."%' ";
-        }
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
-
-        return $this->get_data($query_auc);
-    }
-
     public function get_unitmasuk_list()
     {
         $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
@@ -65,19 +40,16 @@ class UnitListModel extends CI_Model
         return $this->get_data($query_nilai);
     }
 
-    public function get_auction_detail($id)
+    public function get_pagemasuk_list($data)
     {
-        $query_auc = "SELECT a.* , b.value FROM webid_auction_item a
-						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
-						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
+							  ";
 
-        if ($id != "")
-        {
-            $query_auc .=" AND b.value LIKE '%".$id."%' ";
-        }
-        $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT $data->start,$data->limit";
 
-        return $this->get_data($query_auc);
+        return $this->get_data($query_nilai);
     }
 
     public function get_unitkeluar_list()
@@ -109,6 +81,18 @@ class UnitListModel extends CI_Model
         return $this->get_data($query_nilai);
     }
 
+    public function get_pagekeluar_list($data)
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND a.id_pemeriksaan_klr = 1 AND b.deleted = 0
+							  ";
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT $data->start,$data->limit";
+
+        return $this->get_data($query_nilai);
+    }
+
     public function get_stock_list()
     {
         $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
@@ -133,6 +117,18 @@ class UnitListModel extends CI_Model
         }
 
         $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
+
+        return $this->get_data($query_nilai);
+    }
+
+    public function get_pagestock_list($data)
+    {
+        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
+							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
+							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
+							  ";
+
+        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT $data->start,$data->limit";
 
         return $this->get_data($query_nilai);
     }
@@ -417,10 +413,10 @@ class UnitListModel extends CI_Model
 
                 for ($ti = 1; $ti <= $batas_komponen; $ti++) {
                     
-                    $tampilbaik_t =  $cek_tampilkan_baik.$ti;
-                    $tampilrusak_t =  $cek_tampilkan_rusak.$ti;
-                    $tampiltidakada_t =  $cek_tampilkan_tidakada.$ti;
-                    $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan.$ti;
+                    $tampilbaik_t =  $cek_tampilkan_baik[$ti];
+                    $tampilrusak_t =  $cek_tampilkan_rusak[$ti];
+                    $tampiltidakada_t =  $cek_tampilkan_tidakada[$ti];
+                    $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan[$ti];
 
                     $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
 				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
@@ -429,7 +425,6 @@ class UnitListModel extends CI_Model
 
             echo "Proses Penambahan Pemeriksaan Item Masuk berhasil||success";
             exit();
-
             }
         }
         return array('status' => 201,'message' => 'Data has been created.');
