@@ -175,7 +175,7 @@ class PersiapanModel extends CI_Model
         $idauction_item = ''; // var 2
         $id_user = $data->id_user;
 
- //       print_r($data);
+//        print_r($data);
 //$sumlamp = $data->sumlamp'];
 //$jumbiaya = $data->jumbiaya'];
 
@@ -347,7 +347,7 @@ class PersiapanModel extends CI_Model
         foreach ($runSv->result_array() as $rowSv) {
             {
                 $abc = str_replace(' ', '_', $rowSv['name_attribute']);
-                $array = $data->abc;
+                $array = $data->$abc;
                 if (empty($array)
                 ) {
                     $messageEm = "$messageEm $abc,";
@@ -387,7 +387,7 @@ class PersiapanModel extends CI_Model
                 echo $idauction_item . ' ' . "Proses Update Item Gagal||error";
                 exit();
 
-                $no_polisi = trim($data->no_polisi);
+                $no_polisi = trim($data->NO_POLISI);
                 $cek_polisi = str_replace(' ', '', $no_polisi);
                 //JOIN " . $DBPrefix . "msitem i ON i.`id_item` = b.`master_item`
                 $query_cekno_polisi = "SELECT a.value, b.sold , b.sts_tarik , b.idauction_item FROM webid_auction_detail a
@@ -478,7 +478,7 @@ class PersiapanModel extends CI_Model
 
                 foreach ($runSvup->result_array() as $rowSvup) {
                     $abcUp = str_replace(' ', '_', $rowSvup['name_attribute']);
-                    $arrayUp = trim($_POST["$abcUp"]);
+                    $arrayUp = trim($data->$abcUp);
                     $IDUp = $rowSvup['id_attribute'];
                     $query_upd = "UPDATE " . $DBPrefix . "auction_detail SET `value` = '" . trim($arrayUp) . "' 
 						WHERE idauction_item = '" . $idauction_item . "' AND id_attribute = '" . $IDUp . "'";
@@ -597,7 +597,7 @@ class PersiapanModel extends CI_Model
                     foreach ($runSv1->result_array() as $rowSv1) {
                         $abcV = str_replace(' ', '_', $rowSv1['name_attribute']);
                         $idSv = $rowSv1['id_attribute'];
-                        $arrayV = trim($data->abcV);
+                        $arrayV = trim($data->$abcV);
                         if ($abcV == 'no_polisi') {
                             $arrayV = $cek_polisi;
                         }

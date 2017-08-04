@@ -249,6 +249,8 @@ class UnitListModel extends CI_Model
     public function post_unit($data)
     {
 
+        print_r($data);
+
         $id_item = 6;
         $id_pemeriksaanitem = $data->idpemeriksaanitem;
         $id_auctionitem = $data->idauctionitem;
