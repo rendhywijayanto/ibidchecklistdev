@@ -91,7 +91,6 @@ class UnitKeluar extends CI_Controller
                 $data->kotapengemudi= $params['kotapengemudi'];
                 $data->teleponpengemudi= $params['teleponpengemudi'];
 
-                $data->abcup = $params['abcup'];
                 $data->iduser = $params['iduser'];
 
                 $data->cektampilkanbaik = $params['cektampilkanbaik'];

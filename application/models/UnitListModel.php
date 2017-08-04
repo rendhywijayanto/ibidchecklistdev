@@ -267,7 +267,7 @@ class UnitListModel extends CI_Model
         $menit_msk = $data->menitpemeriksaan;
         $time_msk = $jam_msk.':'.$menit_msk.':'.'00';
 
-        $no_polisi = trim($data->nopolisi);
+        $no_polisi = trim($data->NO_POLISI);
         $cek_polisi = str_replace(' ','',$no_polisi);
 
         $nama_pengemudi = $data->namapengemudi;
@@ -278,7 +278,7 @@ class UnitListModel extends CI_Model
         $catatan = $data->catatan;
 
         if($no_polisi == ""){
-            echo "Maaf.'$data->nopolisi'.!! Tidak ada data yang anda masukkan||error";
+            echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda masukkan||error";
             exit();
         }
 
@@ -315,7 +315,6 @@ class UnitListModel extends CI_Model
             $run_soru = $this->db->query($query_soru);
             $row_soru = $run_soru->row_array();
 
-            $abcUp = $data->abcup;
             $id_user = $data->iduser;
 
             if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
@@ -334,15 +333,15 @@ class UnitListModel extends CI_Model
 				ORDER BY pst_order ASC";
             $runSvup = $this->db->query($querySvup);
 
-//            while ($rowSvup = $runSvup->row_array())
-//            {
-//                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
-//                $arrayUp = trim($data->$abcUp);
-//                $IDUp = $rowSvup['id_attribute'];
-//                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
-//						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
-//                $run_upd = $this->db->query($query_upd);
-//            }
+            while ($rowSvup = $runSvup->row_array())
+            {
+                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+                $arrayUp = trim($data->$abcUp);
+                $IDUp = $rowSvup['id_attribute'];
+                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
+						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+                $run_upd = $this->db->query($query_upd);
+            }
 
             $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
 			`tgl_serah_msk` = '".$tglpemeriksaan_msk."',`waktu_msk` = '".$time_msk."',
