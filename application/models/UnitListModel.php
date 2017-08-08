@@ -217,8 +217,8 @@ class UnitListModel extends CI_Model
             foreach($run_km->result_array() as $row2)
             {
                 if ($row2['name_attribute'] == 'KM') {
-                    $msg[] = number_format($row2['value'],0,',','.')."^";
-                    $data->km = number_format($row2['value'],0,',','.');
+                    $msg[] = number_format((float)$row2['value'],0,',','.')."^";
+                    $data->km = number_format((float)$row2['value'],0,',','.');
                 } else {
                     $msg[] = $row2['value']."^";
                 }

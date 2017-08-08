@@ -266,23 +266,14 @@ class PersiapanModel extends CI_Model
         $lokasi_lelang = str_replace(',', '.', $data->lokasilelang);
         $ikutsesi_lelang = $data->ikutseselelang;
 
-        /*$lks_brg_lelang = trim($data->lokasibrglelang); //8
+        $lks_brg_lelang = trim($data->lokasibrglelang); //8
         $almt_brg_lelang = trim($data->alamatbrglelang);
         $kota_brg_lelang = trim($data->kotabrglelang);
         $lks_display = trim($data->lokasidisplay);
         $kota_display = trim($data->kotadisplay);
         $almt_display = trim($data->alamatdisplay);
         $namapic_display = trim($data->namapicdisplay);
-        $telppic_display = trim($data->telppicdisplay);*/
-
-        $lks_brg_lelang = trim($data->lokasibrglelang); //8
-        $almt_brg_lelang = '';
-        $kota_brg_lelang = '';
-        $lks_display = '';
-        $kota_display = '';
-        $almt_display = '';
-        $namapic_display = trim($data->namapicdisplay);
-        $telppic_display = '';
+        $telppic_display = trim($data->telppicdisplay);
 
         $namapic = trim($data->namapic); //9
         $jbtnpic = trim($data->jabatanpic);
