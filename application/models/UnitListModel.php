@@ -259,6 +259,9 @@ class UnitListModel extends CI_Model
         $fuel = trim($data->fuel);
         $cat_body = trim($data->catbody);
         $cttn = trim($data->catatan);
+        $cases = trim($data->cases);
+        $poolkota = trim($data->poolkota);
+        $WEBID_LOGGED_IN = $data->WEBID_LOGGED_IN;
 
         date_default_timezone_set("Asia/Jakarta");
         $time = time();
@@ -402,7 +405,8 @@ class UnitListModel extends CI_Model
                 }
 
                 $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_msk`,`waktu_msk`,`nama_pengemudi_msk`,`alamat_pengemudi_msk`,`kota_msk`,`telepon_msk`,`catatan`,`cases`,`poolkota`, `id_user` , `id_usercreatemsk`) 
-			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_msk."','".$time_msk."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."','".trim($catatan)."','".trim($_POST['cases'])."','".trim($_POST['poolkota'])."','".$_SESSION['WEBID_LOGGED_IN']."' , '".$_SESSION['WEBID_LOGGED_IN']."') ";
+			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_msk."','".$time_msk."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."','".trim($catatan)."',
+			'".$cases."','".$poolkota."','".$WEBID_LOGGED_IN."' , '".$WEBID_LOGGED_IN."') ";
 
                 $run_nilai_item = $this->db->query($query_nilai_item);
 

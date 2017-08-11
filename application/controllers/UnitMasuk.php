@@ -105,6 +105,9 @@ class UnitMasuk extends CI_Controller
                 $data->fuel= $params['fuel'];
                 $data->catbody= $params['catbody'];
                 $data->catatan= $params['catatan'];
+                $data->cases = $params['cases'];
+                $data->poolkota = $params['poolkota'];
+                $data->WEBID_LOGGED_IN = $params['WEBID_LOGGED_IN'];
 
                 $data->tglpemeriksaan= $params['tglpemeriksaan'];
                 $data->jampemeriksaan = $params['jampemeriksaan'];
