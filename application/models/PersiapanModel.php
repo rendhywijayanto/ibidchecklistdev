@@ -175,13 +175,6 @@ class PersiapanModel extends CI_Model
         $idauction_item = ''; // var 2
         $id_user = $data->id_user;
 
-//        print_r($data);
-//$sumlamp = $data->sumlamp'];
-//$jumbiaya = $data->jumbiaya'];
-
-        $iddsbB = 1; //iddsb biaya
-        $iddsbL = 2; //iddsb lampiran
-//$data->status'];
         $sts = 'TERDAFTAR'; //3
         $cabang_taksasi = $data->cabangtaksasi; //Tambahan Untuk Kenza
 
@@ -197,9 +190,9 @@ class PersiapanModel extends CI_Model
             $wrndoc = trim($data->WARNA_DOC);
             $query_idwarna = $this->db->query("SELECT id_warna FROM webid_warna WHERE nama_warna = '" . $wrndoc . "' and id_warnaresmi = 1");
             $count_idwarna = $query_idwarna->row_array();
-            $run_idwarna = $query_idwarna->result_array();
+
             if ($count_idwarna > 0) {
-                $id_warnadoc = $run_idwarna['id_warna'];
+                $id_warnadoc = $count_idwarna['id_warna'];
             } else {
                 $id_warnadoc = 0;
             }
@@ -258,7 +251,6 @@ class PersiapanModel extends CI_Model
         if ($id_biodata == "") {
             $id_biodata = 0;
         }
-
 
         $jdwl_lelang = $data->jadwalelang; //5
         $tgl_lelang = $data->tglelang;
@@ -479,8 +471,6 @@ class PersiapanModel extends CI_Model
                 $query_ceksubdetail = $this->db->query("SELECT idauction_item FROM webid_auction_subdetail WHERE idauction_item = '" . $idauction_item . "'");
                 $count_ceksubdetail = $query_ceksubdetail->row_array();
 
-                //print_r($count_ceksubdetail);
-
                 if ($count_ceksubdetail == 0) {
 
                     $query_addsubA = "INSERT INTO webid_auction_subdetail 
@@ -522,7 +512,7 @@ class PersiapanModel extends CI_Model
 
                     if ($sold == 'n' and $unsold_tarik == 0) {
                         // AND ditarik sama dengan n
-                        echo "Maaf Penambahan Item Sudah Ada||error";
+                        return array('status' => 204,'message' => 'Item sudah ada.');
                         exit();
                     } else {
                         echo "TEST||error";
@@ -564,8 +554,7 @@ class PersiapanModel extends CI_Model
 
                         $run_addsubA = $this->db->query($query_addsubA);
 
-                        echo "Proses Penambahan Item Berhasil||success";
-                        exit();
+                        return array('status' => 200,'message' => 'Proses Penambahan Item Berhasil||success');
                     }
 
                 } else {

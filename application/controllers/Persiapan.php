@@ -134,6 +134,7 @@ class Persiapan extends CI_Controller
                 $data->statuspeserta = $params['statuspeserta'];
                 $data->jenisusaha = $params['jenisusaha'];
                 $data->sebagaiperusahaan = $params['sebagaiperusahaan'];
+
                 $data->teleponpenitip = $params['teleponpenitip'];
                 $data->ponselpenitip = $params['ponselpenitip'];
                 $data->alamatpenitip = $params['alamatpenitip'];
@@ -146,7 +147,14 @@ class Persiapan extends CI_Controller
                 $data->lokasilelang = $params['lokasilelang'];
                 $data->ikutseselelang = $params['ikutseselelang'];
                 $data->lokasibrglelang = $params['lokasibrglelang'];
+                $data->kotabrglelang = $params['kotabrglelang'];
+                $data->alamatbrglelang = $params['alamatbrglelang'];
+
+                $data->lokasidisplay = $params['lokasidisplay'];
+                $data->kotadisplay = $params['kotadisplay'];
+                $data->alamatdisplay = $params['alamatdisplay'];
                 $data->namapicdisplay = $params['namapicdisplay'];
+                $data->telppicdisplay = $params['telppicdisplay'];
                 $data->namapic = $params['namapic'];
                 $data->jabatanpic = $params['jabatanpic'];
                 $data->alamatpic = $params['alamatpic'];

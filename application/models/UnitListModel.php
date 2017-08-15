@@ -249,8 +249,6 @@ class UnitListModel extends CI_Model
     public function post_unit($data)
     {
 
-        print_r($data);
-
         $id_item = 6;
         $id_pemeriksaanitem = $data->idpemeriksaanitem;
         $id_auctionitem = $data->idauctionitem;
@@ -313,8 +311,6 @@ class UnitListModel extends CI_Model
         }
 
         if ($id_pemeriksaanitem != "") {
-//            echo "Update Error||error.$id_pemeriksaanitem";
-//          exit();
 
             $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
             $run_soru = $this->db->query($query_soru);
@@ -367,7 +363,6 @@ class UnitListModel extends CI_Model
                 $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
 				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
                 $run_upd_detail = $this->db->query($query_upd_detail);
-
             }
 
             echo "Proses Update Pemeriksaan Item Masuk berhasil||success";
