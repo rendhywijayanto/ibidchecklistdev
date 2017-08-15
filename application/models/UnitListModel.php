@@ -366,8 +366,7 @@ class UnitListModel extends CI_Model
                 $run_upd_detail = $this->db->query($query_upd_detail);
             }
 
-            echo "Proses Update Pemeriksaan Item Masuk berhasil||success";
-            exit();
+            return array('status' => 200,'message' => 'Proses Update Item Berhasil||success');
 
         } else {
 
