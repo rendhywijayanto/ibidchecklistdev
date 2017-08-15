@@ -114,6 +114,13 @@ class UnitMasuk extends CI_Controller
                 $data->menitpemeriksaan = $params['menitpemeriksaan'];
 
                 $data->NO_POLISI = $params['nopolisi'];
+                $data->MERK = $params['MERK'];
+                $data->SERI = $params['SERI'];
+                $data->SILINDER = $params['SILINDER'];
+                $data->GRADE = $params['GRADE'];
+                $data->SUB_GRADE = $params['SUB_GRADE'];
+                $data->TRANSMISI = $params['TRANSMISI'];
+                $data->KM = $params['KM'];
                 $data->namapengemudi= $params['namapengemudi'];
                 $data->alamatpengemudi= $params['alamatpengemudi'];
                 $data->kotapengemudi= $params['kotapengemudi'];

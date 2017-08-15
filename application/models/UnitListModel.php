@@ -271,6 +271,7 @@ class UnitListModel extends CI_Model
         $time_msk = $jam_msk.':'.$menit_msk.':'.'00';
 
         $no_polisi = trim($data->NO_POLISI);
+
         $cek_polisi = str_replace(' ','',$no_polisi);
 
         $nama_pengemudi = $data->namapengemudi;
@@ -334,7 +335,7 @@ class UnitListModel extends CI_Model
 				ORDER BY pst_order ASC";
             $runSvup = $this->db->query($querySvup);
 
-            while ($rowSvup = $runSvup->row_array())
+            foreach($runSvup->result_array() as $rowSvup)
             {
                 $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
                 $arrayUp = trim($data->$abcUp);
@@ -354,11 +355,11 @@ class UnitListModel extends CI_Model
             $run_nilai_item = $this->db->query($query_nilai_item);
             // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
 
-            for ($ti = 1; $ti <= $batas_komponen; $ti++) {
-                $tampilbaik_t =  $data->cektampilkanbaik.$ti;
-                $tampilrusak_t =  $data->cektampilkanrusak.$ti;
-                $tampiltidakada_t =  $data->cektampilkantidakada.$ti;
-                $id_komponenpemeriksaan_t = $data->idkomponenpemeriksaan.$ti;
+            for ($ti = 1; $ti < $batas_komponen; $ti++) {
+                $tampilbaik_t =  $data->cektampilkanbaik[$ti];
+                $tampilrusak_t =  $data->cektampilkanrusak[$ti];
+                $tampiltidakada_t =  $data->cektampilkantidakada[$ti];
+                $id_komponenpemeriksaan_t = $data->idkomponenpemeriksaan[$ti];
 
                 $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
 				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
