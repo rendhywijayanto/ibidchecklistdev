@@ -12,8 +12,8 @@ class PersiapanModel extends CI_Model
     public function get_item_list()
     {
         $query_auc = "SELECT a.* , b.value AS no_polisi,c.* FROM webid_auction_item a
-						JOIN webid_auction_detail b
-                        JOIN webid_pemeriksaan_item c ON b.idauction_item = a.idauction_item
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+                        LEFT JOIN webid_pemeriksaan_item c ON a.idauction_item = c.id_auctionitem
 						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
         $query_auc .=" ORDER BY a.idauction_item DESC LIMIT 5";
 
@@ -23,8 +23,8 @@ class PersiapanModel extends CI_Model
     public function get_list_search($id)
     {
         $query_auc = "SELECT a.* , b.value AS no_polisi,c.* FROM webid_auction_item a
-						JOIN webid_auction_detail b
-                        JOIN webid_pemeriksaan_item c ON b.idauction_item = a.idauction_item
+						JOIN webid_auction_detail b ON b.idauction_item = a.idauction_item
+                        LEFT JOIN webid_pemeriksaan_item c ON a.idauction_item = c.id_auctionitem
 						WHERE a.deleted = 0 and b.id_attribute = 16 AND a.master_item = 6";
 
         if ($id != "")
@@ -59,6 +59,7 @@ class PersiapanModel extends CI_Model
 
             $data = new stdClass();
             $data->auction = $row_auc;
+
             $idauction_item = $row_auc['idauction_item'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
