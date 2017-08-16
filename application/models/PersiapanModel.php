@@ -322,7 +322,7 @@ class PersiapanModel extends CI_Model
                 $idVlot = $idlot['lot_numb'] + 1;
             }
         }
-        //JOIN " . $DBPrefix . "msitem i ON i.`id_item` = a.`master_item`
+        //JOIN webid_msitem i ON i.`id_item` = a.`master_item`
         $querySv = "SELECT name_attribute FROM webid_msattribute 
 			WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "' and hv_mandatory = 1
 			ORDER BY `pst_order`"; //var_dump($query); exit();
@@ -375,7 +375,7 @@ class PersiapanModel extends CI_Model
 
                 $no_polisi = trim($data->NO_POLISI);
                 $cek_polisi = str_replace(' ', '', $no_polisi);
-                //JOIN " . $DBPrefix . "msitem i ON i.`id_item` = b.`master_item`
+                //JOIN webid_msitem i ON i.`id_item` = b.`master_item`
                 $query_cekno_polisi = "SELECT a.value, b.sold , b.sts_tarik , b.idauction_item FROM webid_auction_detail a
 			JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
 			JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
@@ -455,7 +455,7 @@ class PersiapanModel extends CI_Model
                 }
 
                 //Update nilai item taksasi
-                //$query_updnilaitem = $this->db->query("UPDATE " . $DBPrefix . "nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$id_user."' WHERE idauction_item = '".$idauction_item."'");
+                //$query_updnilaitem = $this->db->query("UPDATE webid_nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$id_user."' WHERE idauction_item = '".$idauction_item."'");
 
                 $querySvup = "SELECT * FROM webid_msattribute
 			WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
@@ -466,7 +466,7 @@ class PersiapanModel extends CI_Model
                     $abcUp = str_replace(' ', '_', $rowSvup['name_attribute']);
                     $arrayUp = trim($data->$abcUp);
                     $IDUp = $rowSvup['id_attribute'];
-                    $query_upd = "UPDATE " . $DBPrefix . "auction_detail SET `value` = '" . trim($arrayUp) . "' 
+                    $query_upd = "UPDATE webid_auction_detail SET `value` = '" . trim($arrayUp) . "' 
 						WHERE idauction_item = '" . $idauction_item . "' AND id_attribute = '" . $IDUp . "'";
                     $run_upd = $this->db->query($query_upd);
                 }
