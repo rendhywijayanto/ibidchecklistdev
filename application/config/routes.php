@@ -64,6 +64,7 @@ $route['auctions']['get']    = 'auctions';
 $route['persiapan']['get']    = 'persiapan';
 $route['unitmasuk']['get']   = 'unitmasuk';
 $route['unitkeluar']['get']  = 'unitkeluar';
+$route['masteritem']['get']  = 'masteritem';
 $route['stockmanagement']['get']   = 'stockmanagement';
 
 $route['persiapan']['post'] = 'persiapan/insert';
