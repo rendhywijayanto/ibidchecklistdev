@@ -403,13 +403,13 @@ class UnitListModel extends CI_Model
 
                 $run_nilai_item = $this->db->query($query_nilai_item);
 
-                $id_pemeriksaan_item = $data->idpemeriksaanitem;
+                $id_pemeriksaan_item = $this->db->insert_id();
                 $cek_tampilkan_baik =  $data->cektampilkanbaik;
                 $cek_tampilkan_rusak = $data->cektampilkanrusak;
                 $cek_tampilkan_tidakada = $data->cektampilkantidakada;
                 $id_komponen_pemeriksaan = $data->idkomponenpemeriksaan;
 
-                for ($ti = 1; $ti <= $batas_komponen; $ti++) {
+                for ($ti = 1; $ti < $batas_komponen; $ti++) {
                     
                     $tampilbaik_t =  $cek_tampilkan_baik[$ti];
                     $tampilrusak_t =  $cek_tampilkan_rusak[$ti];
