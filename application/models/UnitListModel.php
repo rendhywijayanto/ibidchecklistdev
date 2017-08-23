@@ -374,7 +374,7 @@ class UnitListModel extends CI_Model
 
             $run_ceknopolisi = $this->db->query($query_ceknopolisi);
             $row_ceknopolisi = $run_ceknopolisi->row_array();
-            $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
+            $count_ceknopolisi = $row_ceknopolisi->row_array();
 
             if ($count_ceknopolisi > 0) {
                 echo "Maaf Penambahan No Polisi Pemeriksaan Masuk sudah ada||error";
