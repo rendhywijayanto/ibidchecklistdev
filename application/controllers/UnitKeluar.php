@@ -70,7 +70,9 @@ class UnitKeluar extends CI_Controller
         } else {
             $response = $this->AuthModel->auth();
             if($response['status'] == 200){
-                $params = json_decode(file_get_contents('php://input'), TRUE);
+                $json = file_get_contents('php://input');
+                $params = json_decode($json, TRUE);
+
                 $data = new stdClass();
 
                 $data->idpemeriksaanitem= $params['idpemeriksaanitem'];
@@ -80,12 +82,22 @@ class UnitKeluar extends CI_Controller
                 $data->fuel= $params['fuel'];
                 $data->catbody= $params['catbody'];
                 $data->catatan= $params['catatan'];
+                $data->cases = $params['cases'];
+                $data->poolkota = $params['poolkota'];
+                $data->WEBID_LOGGED_IN = $params['WEBID_LOGGED_IN'];
 
                 $data->tglpemeriksaan= $params['tglpemeriksaan'];
                 $data->jampemeriksaan = $params['jampemeriksaan'];
                 $data->menitpemeriksaan = $params['menitpemeriksaan'];
 
-                $data->nopolisi = $params['nopolisi'];
+                $data->NO_POLISI = $params['nopolisi'];
+                $data->MERK = $params['MERK'];
+                $data->SERI = $params['SERI'];
+                $data->SILINDER = $params['SILINDER'];
+                $data->GRADE = $params['GRADE'];
+                $data->SUB_GRADE = $params['SUB_GRADE'];
+                $data->TRANSMISI = $params['TRANSMISI'];
+                $data->KM = $params['KM'];
                 $data->namapengemudi= $params['namapengemudi'];
                 $data->alamatpengemudi= $params['alamatpengemudi'];
                 $data->kotapengemudi= $params['kotapengemudi'];
@@ -98,6 +110,7 @@ class UnitKeluar extends CI_Controller
                 $data->cektampilkantidakada = $params['cektampilkantidakada'];
                 $data->idkomponenpemeriksaan = $params['idkomponenpemeriksaan'];
 
+//                print_r($data);
                 $resp = $this->UnitListModel->post_unit($data);
                 json_output($response['status'],$resp);
             }

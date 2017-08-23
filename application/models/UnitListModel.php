@@ -248,7 +248,6 @@ class UnitListModel extends CI_Model
     // METHOD POST //
     public function post_unit($data)
     {
-
         $id_item = 6;
         $id_pemeriksaanitem = $data->idpemeriksaanitem;
         $id_auctionitem = $data->idauctionitem;
@@ -377,12 +376,10 @@ class UnitListModel extends CI_Model
             $row_ceknopolisi = $run_ceknopolisi->row_array();
             $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
 
-            echo $count_ceknopolisi;
             if ($count_ceknopolisi > 0) {
                 echo "Maaf Penambahan No Polisi Pemeriksaan Masuk sudah ada||error";
                 exit();
             } else {
-
                 // Hanya KM Saja
                 $querySvup = "SELECT * FROM webid_msattribute
 				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 and id_attribute = 24
@@ -406,7 +403,7 @@ class UnitListModel extends CI_Model
 
                 $run_nilai_item = $this->db->query($query_nilai_item);
 
-                $id_pemeriksaan_item = mysql_insert_id();
+                $id_pemeriksaan_item = $data->idpemeriksaanitem;
                 $cek_tampilkan_baik =  $data->cektampilkanbaik;
                 $cek_tampilkan_rusak = $data->cektampilkanrusak;
                 $cek_tampilkan_tidakada = $data->cektampilkantidakada;
@@ -424,11 +421,9 @@ class UnitListModel extends CI_Model
                     $run_add_detail = $this->db->query($query_add_detail);
                 }
 
-            echo "Proses Penambahan Pemeriksaan Item Masuk berhasil||success";
-            exit();
+                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item Masuk berhasil||success');
             }
         }
-        return array('status' => 201,'message' => 'Data has been created.');
     }
 }
 
