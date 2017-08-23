@@ -5,6 +5,7 @@ class AuthModel extends CI_Model {
 
     var $client_service = "frontend-client";
     var $auth_key       = "simplerestapi";
+    var $MD5_PREFIX = "830afea5006de36e41eddb4b33182483";
 
     public function check_auth_client(){
         $client_service = $this->input->get_request_header('Client-Service', TRUE);
@@ -18,16 +19,22 @@ class AuthModel extends CI_Model {
 
     public function login($email,$password)
     {
-        $password = md5($password);
-        $query = "SELECT id, hash, suspended,scan_id_karyawan,setuju_peraturan,level_group FROM webid_users WHERE
+        $password = md5($this->MD5_PREFIX .$password);
+        $query = "SELECT id, hash, suspended, name, scan_id_karyawan,setuju_peraturan,level_group FROM webid_users WHERE
                 email = '" .$email . "'
-                AND password = '" . $password . "'";
+                AND password = '" . $password . "' LIMIT 1";
         $res = $this->db->query($query);
+        $hasil = $res->row_array();
 
-        if($res->row_array() > 0){
-            return array('status' => 200,'message' => 'Successfully login.','email' => $email);
+        $username = $hasil['name'];
+        if($hasil > 0){
+            if ($hasil['suspended'] == 0) {
+                return array('status' => 200, 'message' => 'Successfully login.', 'email' => $email, 'name' => $username);
+            }else{
+                return array('status' => 204, 'message' => 'Account has been suspended', 'email' => $email, 'name' => $username);
+            }
         }else{
-            return array('status' => 204,'message' => 'Wrong password.');
+            return array('status' => 204,'message' => 'Wrong password.', 'name' => $username);
         }
     }
 

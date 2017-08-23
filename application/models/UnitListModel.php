@@ -152,10 +152,10 @@ class UnitListModel extends CI_Model
 								  WHERE c.name_attribute = 'MERK' AND b.idauction_item = '" . $idauction_item . "' ";
             $run_idmerk = $this->db->query($query_idmerk);
             $row_idmerk = $run_idmerk->row_array();
-            $id_merk = $row_idmerk['value'];
+            $data->id_merk = $row_idmerk['value'];
 
             $query_merk = "SELECT attributedetail FROM webid_msattrdetail 
-									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $id_merk . "'";
+									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $data->id_merk . "'";
             $run_merk = $this->db->query($query_merk);
             $row_merk = $run_merk->row_array();
             $data->nama_merk = $row_merk['attributedetail'];
