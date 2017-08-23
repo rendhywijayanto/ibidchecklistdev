@@ -29,7 +29,7 @@ class AuthModel extends CI_Model {
         $username = $hasil['name'];
         if($hasil > 0){
             if ($hasil['suspended'] == 0) {
-                return array('status' => 200, 'message' => 'Successfully login.', 'email' => $email, 'name' => $username);
+                return array('status' => 200, 'message' => 'Successfully login.', 'email' => $email, 'name' => $username, 'user_id' => $hasil['id']);
             }else{
                 return array('status' => 204, 'message' => 'Account has been suspended', 'email' => $email, 'name' => $username);
             }
