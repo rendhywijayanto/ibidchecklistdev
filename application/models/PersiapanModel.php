@@ -83,8 +83,16 @@ class PersiapanModel extends CI_Model
             $seri =  array();
 
             foreach($run_tipe->result_array() as $row_tipe){
-                $join_tipe = $row_tipe['value'];
-                array_push($seri, $join_tipe);
+                $temp = new stdClass();
+                $temp->id_attrdetail = $row_tipe['value'];
+
+                $query_alltipe = "SELECT attributedetail FROM webid_msattrdetail 
+									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $temp->id_attrdetail . "'";
+                $run_alltipe = $this->db->query($query_alltipe);
+                $row_alltipe = $run_alltipe->row_array();
+                $temp->attributedetail = $row_alltipe['attributedetail'];
+
+                array_push($seri, $temp);
             }
             $data->tipe = $seri;
 
