@@ -168,15 +168,16 @@ class UnitListModel extends CI_Model
             $seri =  array();
 
             foreach($run_tipe->result_array() as $row_tipe){
-                $idtipe = $row_tipe['value'];
+                $temp = new stdClass();
+                $temp->id_attrdetail = $row_tipe['value'];
 
                 $query_alltipe = "SELECT attributedetail FROM webid_msattrdetail 
-									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $idtipe . "'";
+									  WHERE `sts_deleted` = 0 AND id_attrdetail = '" . $temp->id_attrdetail . "'";
                 $run_alltipe = $this->db->query($query_alltipe);
                 $row_alltipe = $run_alltipe->row_array();
-                $join_tipe = $row_alltipe['attributedetail'];
+                $temp->attributedetail = $row_alltipe['attributedetail'];
 
-                array_push($seri, $join_tipe);
+                array_push($seri, $temp);
             }
             $data->tipe = $seri;
 
@@ -374,7 +375,7 @@ class UnitListModel extends CI_Model
 
             $run_ceknopolisi = $this->db->query($query_ceknopolisi);
             $row_ceknopolisi = $run_ceknopolisi->row_array();
-            $count_ceknopolisi = $row_ceknopolisi->row_array();
+            $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
 
             if ($count_ceknopolisi > 0) {
                 echo "Maaf Penambahan No Polisi Pemeriksaan Masuk sudah ada||error";
