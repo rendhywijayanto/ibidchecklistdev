@@ -145,7 +145,7 @@ class UnitListModel extends CI_Model
             $data = new stdClass();
             $data->auction = $row_auc;
             $idauction_item = $row_auc['id_auctionitem'];
-            $id_pemeriksaanmasuk = $row_auc['id_pemeriksaanitem'];
+            $id_pemeriksaankeluar = $row_auc['id_pemeriksaanitem'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute
@@ -234,7 +234,7 @@ class UnitListModel extends CI_Model
 
             $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
                 JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
-                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaanmasuk."' ORDER BY a.id_komponenpemeriksaan ASC";
+                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$id_item."' AND b.id_pemeriksaanitem = '".$id_pemeriksaankeluar."' ORDER BY a.id_komponenpemeriksaan ASC";
 
             $run_komponen = $this->db->query($query_komponen);
             $data->komponen = $run_komponen->result_array();
@@ -247,6 +247,184 @@ class UnitListModel extends CI_Model
     }
 
     // METHOD POST //
+
+    public function post_unit_keluar($data){
+        $id_item = 6;
+        $id_pemeriksaanitem = $data->idpemeriksaanitem;
+        $id_auctionitem = $data->idauctionitem;
+        $batas_komponen = $data->bataskomponen;
+
+        $fuel = trim($data->fuel);
+        $cat_body = trim($data->catbody);
+        $cttn = trim($data->catatan);
+        $WEBID_LOGGED_IN = $data->WEBID_LOGGED_IN;
+
+        date_default_timezone_set("Asia/Jakarta");
+        $time = time();
+        $tglall = date("Y-m-d", $time); // dapat digunakan untuk tgl edit dan insert
+
+        $tglpemeriksaan_klr = date('Y-m-d', strtotime($data->tglpemeriksaan));
+        $jam_klr = $data->jampemeriksaan;
+        $menit_klr = $data->menitpemeriksaan;
+        $time_klr = $jam_klr.':'.$menit_klr.':'.'00';
+
+        $no_polisi = trim($data->NO_POLISI);
+
+        $cek_polisi = str_replace(' ','',$no_polisi);
+
+        $nama_pengemudi = $data->namapengemudi;
+        $alamat_pengemudi = $data->alamatpengemudi;
+        $kota_pengemudi = $data->kotapengemudi;
+        $telepon_pengemudi = $data->teleponpengemudi;
+
+        $catatan = $data->catatan;
+
+        if($no_polisi == ""){
+            echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if($tglpemeriksaan_klr == ""){
+            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if($nama_pengemudi == ""){
+            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if($alamat_pengemudi == ""){
+            echo "Maaf Alamat Penyerah !! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if($kota_pengemudi == ""){
+            echo "Maaf Kota Penyerah !! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if($telepon_pengemudi == ""){
+            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda keluarkan||error";
+            exit();
+        }
+
+        if ($id_pemeriksaanitem != "") {
+
+            $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
+            $run_soru = $this->db->query($query_soru);
+            $row_soru = $run_soru->row_array();
+
+            $id_user = $data->iduser;
+
+            if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
+                echo "Maaf !! data unit sudah dilakukan penarikan||error";
+                exit();
+            }
+
+            if ($row_soru['sold'] == 'y' and $row_soru['sts_tarik'] == 0) {
+                echo "Maaf !! data unit sudah terjual||error";
+                exit();
+            }
+
+            // Proses Update Auction Item
+            $querySvup = "SELECT * FROM webid_msattribute a
+				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 AND id_attribute != 10
+				ORDER BY pst_order ASC";
+            $runSvup = $this->db->query($querySvup);
+
+            foreach($runSvup->result_array() as $rowSvup)
+            {
+                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+                $arrayUp = trim($data->$abcUp);
+                $IDUp = $rowSvup['id_attribute'];
+                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
+						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+                $run_upd = $this->db->query($query_upd);
+            }
+
+            $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
+			`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',
+			`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',
+			`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',
+			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
+			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
+
+            $run_nilai_item = $this->db->query($query_nilai_item);
+            // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
+
+            for ($ti = 1; $ti < $batas_komponen; $ti++) {
+                $tampilbaik_t =  $data->cektampilkanbaik[$ti];
+                $tampilrusak_t =  $data->cektampilkanrusak[$ti];
+                $tampiltidakada_t =  $data->cektampilkantidakada[$ti];
+                $id_komponenpemeriksaan_t = $data->idkomponenpemeriksaan[$ti];
+
+                $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
+				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
+                $run_upd_detail = $this->db->query($query_upd_detail);
+            }
+
+            return array('status' => 200,'message' => 'Proses Update Item Berhasil||success');
+
+        } else {
+
+            $query_ceknopolisi = "SELECT * FROM webid_pemeriksaan_item 
+		WHERE sts_deleted = 0 and id_item = '".$id_item."' and id_auctionitem = '".$id_auctionitem."' ";
+
+            $run_ceknopolisi = $this->db->query($query_ceknopolisi);
+            $row_ceknopolisi = $run_ceknopolisi->row_array();
+            $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
+
+            if ($count_ceknopolisi > 0) {
+                echo "Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error";
+                exit();
+            } else {
+                // Hanya KM Saja
+                $querySvup = "SELECT * FROM webid_msattribute
+				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 and id_attribute = 24
+				ORDER BY pst_order ASC";
+                $runSvup = $this->db->query($querySvup);
+                // $system->check_mysql($runSvup, $querySvup, __LINE__, __FILE__);
+
+                foreach($runSvup->result_array() as $rowSvup)
+                {
+                    $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+                    $arrayUp = trim($abcUp);
+                    $IDUp = $rowSvup['id_attribute'];
+                    $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."' 
+						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+                    $run_upd = $this->db->query($query_upd);
+                }
+
+                $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_klr`,`waktu_klr`,`nama_pengemudi_klr`,`alamat_pengemudi_klr`,`kota_klr`,`telepon_klr`,`catatan`, `id_user` , `id_usercreateklr`) 
+			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_klr."','".$time_klr."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."','".trim($catatan)."',
+			'".$WEBID_LOGGED_IN."' , '".$WEBID_LOGGED_IN."') ";
+
+                $run_nilai_item = $this->db->query($query_nilai_item);
+
+                $id_pemeriksaan_item = $this->db->insert_id();
+                $cek_tampilkan_baik =  $data->cektampilkanbaik;
+                $cek_tampilkan_rusak = $data->cektampilkanrusak;
+                $cek_tampilkan_tidakada = $data->cektampilkantidakada;
+                $id_komponen_pemeriksaan = $data->idkomponenpemeriksaan;
+
+                for ($ti = 1; $ti < $batas_komponen; $ti++) {
+
+                    $tampilbaik_t =  $cek_tampilkan_baik[$ti];
+                    $tampilrusak_t =  $cek_tampilkan_rusak[$ti];
+                    $tampiltidakada_t =  $cek_tampilkan_tidakada[$ti];
+                    $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan[$ti];
+
+                    $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
+				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
+                    $run_add_detail = $this->db->query($query_add_detail);
+                }
+
+                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item keluar berhasil||success');
+            }
+        }
+    }
+
     public function post_unit($data)
     {
         $id_item = 6;
@@ -265,7 +443,7 @@ class UnitListModel extends CI_Model
         $time = time();
         $tglall = date("Y-m-d", $time); // dapat digunakan untuk tgl edit dan insert
 
-        $tglpemeriksaan_msk = date('Y-m-d', strtotime($data->tglpemeriksaan));
+        $tglpemeriksaan_ = date('Y-m-d', strtotime($data->tglpemeriksaan));
         $jam_msk = $data->jampemeriksaan;
         $menit_msk = $data->menitpemeriksaan;
         $time_msk = $jam_msk.':'.$menit_msk.':'.'00';
@@ -282,32 +460,32 @@ class UnitListModel extends CI_Model
         $catatan = $data->catatan;
 
         if($no_polisi == ""){
-            echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda masukkan||error";
+            echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda keluarkan||error";
             exit();
         }
 
         if($tglpemeriksaan_msk == ""){
-            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda masukkan||error";
+            echo "Maaf TGL Penyerahan !! Tidak ada data yang anda keluarkan||error";
             exit();
         }
 
         if($nama_pengemudi == ""){
-            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda masukkan||error";
+            echo "Maaf Nama Pengemudi !! Tidak ada data yang anda keluarkan||error";
             exit();
         }
 
         if($alamat_pengemudi == ""){
-                echo "Maaf Alamat Penyerah !! Tidak ada data yang anda masukkan||error";
+                echo "Maaf Alamat Penyerah !! Tidak ada data yang anda keluarkan||error";
                 exit();
         }
 
         if($kota_pengemudi == ""){
-                echo "Maaf Kota Penyerah !! Tidak ada data yang anda masukkan||error";
+                echo "Maaf Kota Penyerah !! Tidak ada data yang anda keluarkan||error";
                 exit();
         }
 
         if($telepon_pengemudi == ""){
-            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda masukkan||error";
+            echo "Maaf Telepon Penyerah !! Tidak ada data yang anda keluarkan||error";
             exit();
         }
 
@@ -378,7 +556,7 @@ class UnitListModel extends CI_Model
             $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
 
             if ($count_ceknopolisi > 0) {
-                echo "Maaf Penambahan No Polisi Pemeriksaan Masuk sudah ada||error";
+                echo "Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error";
                 exit();
             } else {
                 // Hanya KM Saja
@@ -422,7 +600,7 @@ class UnitListModel extends CI_Model
                     $run_add_detail = $this->db->query($query_add_detail);
                 }
 
-                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item Masuk berhasil||success');
+                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item keluar berhasil||success');
             }
         }
     }

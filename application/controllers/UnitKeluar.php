@@ -82,8 +82,6 @@ class UnitKeluar extends CI_Controller
                 $data->fuel= $params['fuel'];
                 $data->catbody= $params['catbody'];
                 $data->catatan= $params['catatan'];
-                $data->cases = $params['cases'];
-                $data->poolkota = $params['poolkota'];
                 $data->WEBID_LOGGED_IN = $params['WEBID_LOGGED_IN'];
 
                 $data->tglpemeriksaan= $params['tglpemeriksaan'];
@@ -111,7 +109,7 @@ class UnitKeluar extends CI_Controller
                 $data->idkomponenpemeriksaan = $params['idkomponenpemeriksaan'];
 
 //                print_r($data);
-                $resp = $this->UnitListModel->post_unit($data);
+                $resp = $this->UnitListModel->post_unit_keluar($data);
                 json_output($response['status'],$resp);
             }
         }
