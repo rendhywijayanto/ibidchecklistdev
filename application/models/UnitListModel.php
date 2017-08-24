@@ -346,7 +346,7 @@ class UnitListModel extends CI_Model
             $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
 			`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',
 			`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',
-			`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',
+			`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',`id_pemeriksaan_klr` = 1,
 			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
@@ -396,8 +396,8 @@ class UnitListModel extends CI_Model
                     $run_upd = $this->db->query($query_upd);
                 }
 
-                $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_klr`,`waktu_klr`,`nama_pengemudi_klr`,`alamat_pengemudi_klr`,`kota_klr`,`telepon_klr`,`catatan`, `id_user` , `id_usercreateklr`) 
-			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_klr."','".$time_klr."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."','".trim($catatan)."',
+                $query_nilai_item = "INSERT INTO webid_pemeriksaan_item (`id_item`,`id_auctionitem`,`no_polisi`,`fuel`,`cat_body`,`tgl_serah_klr`,`waktu_klr`,`nama_pengemudi_klr`,`alamat_pengemudi_klr`,`kota_klr`,`telepon_klr`,`id_pemeriksaan_klr`,`catatan`, `id_user` , `id_usercreateklr`) 
+			VALUES ('".$id_item."','".$id_auctionitem."','".$cek_polisi."','".$fuel."','".$cat_body."','".$tglpemeriksaan_klr."','".$time_klr."','".trim($nama_pengemudi)."','".trim($alamat_pengemudi)."','".trim($kota_pengemudi)."','".trim($telepon_pengemudi)."',1,'".trim($catatan)."',
 			'".$WEBID_LOGGED_IN."' , '".$WEBID_LOGGED_IN."') ";
 
                 $run_nilai_item = $this->db->query($query_nilai_item);
