@@ -22,12 +22,14 @@ class Persiapan extends CI_Controller
             json_output(400,array('status' => 400,'message' => 'Bad request.'));
         } else {
             $check_auth_client = $this->AuthModel->check_auth_client();
-            if($check_auth_client = true){
+            if($check_auth_client == true){
                 $response = $this->AuthModel->auth();
                 if($response['status'] == 200){
                     $resp = $this->PersiapanModel->get_item_list();
                     json_output($response['status'],$resp);
                 }
+            }else{
+                echo json_encode($check_auth_client);
             }
         }
     }

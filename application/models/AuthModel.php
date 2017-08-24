@@ -17,8 +17,7 @@ class AuthModel extends CI_Model {
 //            return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
 //        }
 
-        echo $_GET['api_key'];
-        if($_GET['api_key'] = $this->API_KEY){
+        if($_GET['api_key'] == $this->API_KEY){
             return true;
         }else{
             return json_output(401,array('status' => 401,'message' => 'Unauthorized Key'));
