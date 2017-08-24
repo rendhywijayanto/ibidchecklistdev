@@ -8,7 +8,7 @@
 
 class MasterItemModel extends CI_Model
 {
-    public function get_All_item($param)
+    public function get_all_item($param)
     {
         $itemArr = array();
 
@@ -46,5 +46,26 @@ class MasterItemModel extends CI_Model
         }
 
         return $itemArr;
+    }
+
+    public function get_all_nama($param){
+        if(isset($param->term))
+        {
+            $return_arr = array();
+            $nama= trim($param->term);
+            $query2= $this->db->query("SELECT * FROM webid_biodata WHERE name LIKE '%".$nama."%' LIMIT 10");
+
+            foreach ($query2->result_array() as $row)
+            {
+                $tgl_lahir = date("m/d/Y",strtotime($row['tanggal_lahir']));
+                $return_arr[]=array(
+                    'value'=> $row['name']."||".$row['no_identitas']."||".$row['groupBiodata']."||".$row['alamat']."||".$row['kota']."||".$row['kode_pos']."||".$row['telepon']."||".$row['ext']."||".$row['ponsel']."||".$row['fax']."||".$row['email']."||".$row['catatan']."||".$row['status_peserta']."||".$row['kode_sap']."||".$row['vendor_code']."||".$row['fee']."||".$row['ppn']."||".$row['pph']."||".$row['nama_bank']."||".$row['nama_rekening']."||".$row['nomor_rekening']."||".$row['jenis_perusahaan']."||".$row['pekerjaan']."||".$row['tempat_lahir']."||". $tgl_lahir."||".$row['kode_anggota']."||".$row['id']."||".$row['tipe_identitas']."||".$row['status_biodata']."||".$row['no_npwp'],
+                    'label'=> $row['name']
+                );
+            }
+            return json_encode($return_arr);
+        }else{
+            return array('status' => 204,'message' => 'Nama Penitip Kosong');
+        }
     }
 }

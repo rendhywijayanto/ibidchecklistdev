@@ -351,6 +351,7 @@ class UnitListModel extends CI_Model
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
             $run_nilai_item = $this->db->query($query_nilai_item);
+
             // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
 
             for ($ti = 1; $ti < $batas_komponen; $ti++) {

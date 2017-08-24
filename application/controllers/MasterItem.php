@@ -33,7 +33,7 @@ class MasterItem extends CI_Controller
 
                     $data->id_item = $params['id_attrdetail'];
 
-                    $resp = $this->MasterItemModel->get_All_item($data);
+                    $resp = $this->MasterItemModel->get_all_item($data);
                     json_output($response['status'],$resp);
                 }
             }
@@ -55,6 +55,30 @@ class MasterItem extends CI_Controller
                     $params = json_decode($json, TRUE);
 
                     $resp = $this->MasterItemModel->get_All_warna();
+                    json_output($response['status'],$resp);
+                }
+            }
+        }
+    }
+
+    public function penitip()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'POST'){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $check_auth_client = $this->AuthModel->check_auth_client();
+            if($check_auth_client == true){
+                $response = $this->AuthModel->auth();
+                if($response['status'] == 200){
+
+                    $json = file_get_contents('php://input');
+                    $params = json_decode($json, TRUE);
+
+                    $data = new stdClass();
+                    $data->term = $params['nama_penitip'];
+
+                    $resp = $this->MasterItemModel->get_all_nama($data);
                     json_output($response['status'],$resp);
                 }
             }
