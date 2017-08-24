@@ -6,14 +6,22 @@ class AuthModel extends CI_Model {
     var $client_service = "frontend-client";
     var $auth_key       = "simplerestapi";
     var $MD5_PREFIX = "830afea5006de36e41eddb4b33182483";
+    var $API_KEY = "dws123sdfs23wrwetsdf2234";
 
     public function check_auth_client(){
-        $client_service = $this->input->get_request_header('Client-Service', TRUE);
-        $auth_key  = $this->input->get_request_header('Auth-Key', TRUE);
-        if($client_service == $this->client_service && $auth_key == $this->auth_key){
+//        $client_service = $this->input->get_request_header('Client-Service', TRUE);
+//        $auth_key  = $this->input->get_request_header('Auth-Key', TRUE);
+//        if($client_service == $this->client_service && $auth_key == $this->auth_key){
+//            return true;
+//        } else {
+//            return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
+//        }
+
+        echo $_GET['api_key'];
+        if($_GET['api_key'] = $this->API_KEY){
             return true;
-        } else {
-            return json_output(401,array('status' => 401,'message' => 'Unauthorized.'));
+        }else{
+            return json_output(401,array('status' => 401,'message' => 'Unauthorized Key'));
         }
     }
 

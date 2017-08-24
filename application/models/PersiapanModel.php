@@ -562,7 +562,6 @@ class PersiapanModel extends CI_Model
                 }
 
             } else {
-                echo $idV."update1";
 
                 $querySv1 = "SELECT * FROM webid_msattribute
                     WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'

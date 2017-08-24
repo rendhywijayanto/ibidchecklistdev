@@ -443,7 +443,7 @@ class UnitListModel extends CI_Model
         $time = time();
         $tglall = date("Y-m-d", $time); // dapat digunakan untuk tgl edit dan insert
 
-        $tglpemeriksaan_ = date('Y-m-d', strtotime($data->tglpemeriksaan));
+        $tglpemeriksaan_msk = date('Y-m-d', strtotime($data->tglpemeriksaan));
         $jam_msk = $data->jampemeriksaan;
         $menit_msk = $data->menitpemeriksaan;
         $time_msk = $jam_msk.':'.$menit_msk.':'.'00';
