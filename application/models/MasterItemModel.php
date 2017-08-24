@@ -29,4 +29,22 @@ class MasterItemModel extends CI_Model
         }
         return $itemArr;
     }
+
+    public function get_all_warna()
+    {
+        $itemArr = array();
+
+        $query_warna = $this->db->query("SELECT * FROM webid_warna WHERE sts_deleted = 0 and id_warnaresmi = 1 LIMIT 10");
+        foreach ($query_warna->result_array() as $query3) {
+
+            $data = new stdClass();
+
+            $data->id_attrdetail = $query3['id_warna'];
+            $data->attributedetail = $query3['nama_warna'];
+            array_push($itemArr, $data);
+
+        }
+
+        return $itemArr;
+    }
 }
