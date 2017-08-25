@@ -30,11 +30,11 @@ class MasterItemModel extends CI_Model
         return $itemArr;
     }
 
-    public function get_all_warna()
+    public function get_warna_search($id)
     {
         $itemArr = array();
 
-        $query_warna = $this->db->query("SELECT * FROM webid_warna WHERE sts_deleted = 0 and id_warnaresmi = 1 LIMIT 10");
+        $query_warna = $this->db->query("SELECT * FROM webid_warna WHERE nama_warna LIKE '%".$id."%' and sts_deleted = 0 and id_warnaresmi = 1 LIMIT 10");
         foreach ($query_warna->result_array() as $query3) {
 
             $data = new stdClass();
@@ -58,12 +58,39 @@ class MasterItemModel extends CI_Model
             foreach ($query2->result_array() as $row)
             {
                 $tgl_lahir = date("m/d/Y",strtotime($row['tanggal_lahir']));
-                $return_arr[]=array(
-                    'value'=> $row['name']."||".$row['no_identitas']."||".$row['groupBiodata']."||".$row['alamat']."||".$row['kota']."||".$row['kode_pos']."||".$row['telepon']."||".$row['ext']."||".$row['ponsel']."||".$row['fax']."||".$row['email']."||".$row['catatan']."||".$row['status_peserta']."||".$row['kode_sap']."||".$row['vendor_code']."||".$row['fee']."||".$row['ppn']."||".$row['pph']."||".$row['nama_bank']."||".$row['nama_rekening']."||".$row['nomor_rekening']."||".$row['jenis_perusahaan']."||".$row['pekerjaan']."||".$row['tempat_lahir']."||". $tgl_lahir."||".$row['kode_anggota']."||".$row['id']."||".$row['tipe_identitas']."||".$row['status_biodata']."||".$row['no_npwp'],
-                    'label'=> $row['name']
+                $return_arr[]= array(
+                    'nama_penitip' => $row['name'],
+                    'no_identitas' => $row['no_identitas'],
+                    'groupBiodata' => $row['groupBiodata'],
+                    'alamat' => $row['alamat'],
+                    'kota' => $row['kota'],
+                    'kode_pos' => $row['kode_pos'],
+                    'telepon' => $row['telepon'],
+                    'ext' => $row['ext'],
+                    'ponsel' => $row['ponsel'],
+                    'fax' => $row['fax'],
+                    'email' => $row['email'],
+                    'catatan' => $row['catatan'],
+                    'status_peserta' => $row['status_peserta'],
+                    'kode_sap' => $row['kode_sap'],
+                    'vendor_code' => $row['vendor_code'],
+                    'fee' => $row['fee'],
+                    'ppn' => $row['ppn'],
+                    'pph' => $row['pph'],
+                    'nama_bank' => $row['nama_bank'],
+                    'nama_rekening' => $row['nama_rekening'],
+                    'jenis_perusahaan' => $row['jenis_perusahaan'],
+                    'pekerjaan' => $row['pekerjaan'],
+                    'tempat_lahir' => $row['tempat_lahir'],
+                    'tgl_lahir' => $tgl_lahir,
+                    'kode_anggota' => $row['kode_anggota'],
+                    'id' => $row['id'],
+                    'tipe_identitas' => $row['tipe_identitas'],
+                    'status_biodata' => $row['status_biodata'],
+                    'no_npwp' => $row['no_npwp']
                 );
             }
-            return json_encode($return_arr);
+            return $return_arr;
         }else{
             return array('status' => 204,'message' => 'Nama Penitip Kosong');
         }

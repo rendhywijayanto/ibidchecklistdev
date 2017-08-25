@@ -40,10 +40,10 @@ class MasterItem extends CI_Controller
         }
     }
 
-    public function warna()
+    public function warna($id)
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        if($method != 'GET'){
+        if($method != 'GET' || $this->uri->segment(3) == ''){
             json_output(400,array('status' => 400,'message' => 'Bad request.'));
         } else {
             $check_auth_client = $this->AuthModel->check_auth_client();
@@ -54,7 +54,7 @@ class MasterItem extends CI_Controller
                     $json = file_get_contents('php://input');
                     $params = json_decode($json, TRUE);
 
-                    $resp = $this->MasterItemModel->get_All_warna();
+                    $resp = $this->MasterItemModel->get_warna_search($id);
                     json_output($response['status'],$resp);
                 }
             }
