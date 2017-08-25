@@ -15,8 +15,8 @@
       <file leaf-file-name="MasterItem.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/MasterItem.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="80" column="64" lean-forward="false" selection-start-line="80" selection-start-column="52" selection-end-line="80" selection-end-column="64" />
+            <state relative-caret-position="527">
+              <caret line="77" column="68" lean-forward="false" selection-start-line="77" selection-start-column="68" selection-end-line="77" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -25,18 +25,18 @@
       <file leaf-file-name="MasterItemModel.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/models/MasterItemModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="36" column="89" lean-forward="false" selection-start-line="36" selection-start-column="89" selection-end-line="36" selection-end-column="89" />
+            <state relative-caret-position="102">
+              <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
               <folding>
-                <marker date="1503630179173" expanded="true" signature="366:491" ph="SELECT * FRO... webid_msattrdetail" />
-                <marker date="1503630179173" expanded="true" signature="1037:1069" ph="SELECT id_wa... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1080" ph="SELECT * FRO... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1085" ph="SELECT * FRO... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1093" ph="SELECT * FRO... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1138" ph="SELECT id_wa... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1147" ph="SELECT * FRO... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1037:1246" ph="SELECT * FRO... webid_warna" />
-                <marker date="1503630179173" expanded="true" signature="1647:1713" ph="SELECT * FRO... webid_biodata" />
+                <marker date="1503631172945" expanded="true" signature="366:491" ph="SELECT * FRO... webid_msattrdetail" />
+                <marker date="1503631172945" expanded="true" signature="1037:1069" ph="SELECT id_wa... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1080" ph="SELECT * FRO... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1085" ph="SELECT * FRO... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1093" ph="SELECT * FRO... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1138" ph="SELECT id_wa... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1147" ph="SELECT * FRO... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1037:1246" ph="SELECT * FRO... webid_warna" />
+                <marker date="1503631172945" expanded="true" signature="1556:1620" ph="SELECT * FRO... webid_biodata" />
               </folding>
             </state>
           </provider>
@@ -168,7 +168,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="735" />
@@ -353,15 +353,15 @@
       <workItem from="1503365601996" duration="8451000" />
       <workItem from="1503452558954" duration="9495000" />
       <workItem from="1503540700775" duration="15099000" />
-      <workItem from="1503627903866" duration="2325000" />
+      <workItem from="1503627903866" duration="3283000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263602000" />
+    <option name="totallyTimeSpent" value="264560000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19912152" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -771,26 +771,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/MasterItem.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="80" column="64" lean-forward="false" selection-start-line="80" selection-start-column="52" selection-end-line="80" selection-end-column="64" />
+        <state relative-caret-position="527">
+          <caret line="77" column="68" lean-forward="false" selection-start-line="77" selection-start-column="68" selection-end-line="77" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/models/MasterItemModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="36" column="89" lean-forward="false" selection-start-line="36" selection-start-column="89" selection-end-line="36" selection-end-column="89" />
+        <state relative-caret-position="102">
+          <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
           <folding>
-            <marker date="1503630179173" expanded="true" signature="366:491" ph="SELECT * FRO... webid_msattrdetail" />
-            <marker date="1503630179173" expanded="true" signature="1037:1069" ph="SELECT id_wa... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1080" ph="SELECT * FRO... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1085" ph="SELECT * FRO... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1093" ph="SELECT * FRO... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1138" ph="SELECT id_wa... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1147" ph="SELECT * FRO... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1037:1246" ph="SELECT * FRO... webid_warna" />
-            <marker date="1503630179173" expanded="true" signature="1647:1713" ph="SELECT * FRO... webid_biodata" />
+            <marker date="1503631172945" expanded="true" signature="366:491" ph="SELECT * FRO... webid_msattrdetail" />
+            <marker date="1503631172945" expanded="true" signature="1037:1069" ph="SELECT id_wa... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1080" ph="SELECT * FRO... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1085" ph="SELECT * FRO... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1093" ph="SELECT * FRO... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1138" ph="SELECT id_wa... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1147" ph="SELECT * FRO... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1037:1246" ph="SELECT * FRO... webid_warna" />
+            <marker date="1503631172945" expanded="true" signature="1556:1620" ph="SELECT * FRO... webid_biodata" />
           </folding>
         </state>
       </provider>

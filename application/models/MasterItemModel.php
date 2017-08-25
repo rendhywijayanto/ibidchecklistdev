@@ -48,51 +48,46 @@ class MasterItemModel extends CI_Model
         return $itemArr;
     }
 
-    public function get_all_nama($param){
-        if(isset($param->term))
-        {
-            $return_arr = array();
-            $nama= trim($param->term);
-            $query2= $this->db->query("SELECT * FROM webid_biodata WHERE name LIKE '%".$nama."%' LIMIT 10");
+    public function get_all_nama($id){
 
-            foreach ($query2->result_array() as $row)
-            {
-                $tgl_lahir = date("m/d/Y",strtotime($row['tanggal_lahir']));
-                $return_arr[]= array(
-                    'nama_penitip' => $row['name'],
-                    'no_identitas' => $row['no_identitas'],
-                    'groupBiodata' => $row['groupBiodata'],
-                    'alamat' => $row['alamat'],
-                    'kota' => $row['kota'],
-                    'kode_pos' => $row['kode_pos'],
-                    'telepon' => $row['telepon'],
-                    'ext' => $row['ext'],
-                    'ponsel' => $row['ponsel'],
-                    'fax' => $row['fax'],
-                    'email' => $row['email'],
-                    'catatan' => $row['catatan'],
-                    'status_peserta' => $row['status_peserta'],
-                    'kode_sap' => $row['kode_sap'],
-                    'vendor_code' => $row['vendor_code'],
-                    'fee' => $row['fee'],
-                    'ppn' => $row['ppn'],
-                    'pph' => $row['pph'],
-                    'nama_bank' => $row['nama_bank'],
-                    'nama_rekening' => $row['nama_rekening'],
-                    'jenis_perusahaan' => $row['jenis_perusahaan'],
-                    'pekerjaan' => $row['pekerjaan'],
-                    'tempat_lahir' => $row['tempat_lahir'],
-                    'tgl_lahir' => $tgl_lahir,
-                    'kode_anggota' => $row['kode_anggota'],
-                    'id' => $row['id'],
-                    'tipe_identitas' => $row['tipe_identitas'],
-                    'status_biodata' => $row['status_biodata'],
-                    'no_npwp' => $row['no_npwp']
-                );
-            }
-            return $return_arr;
-        }else{
-            return array('status' => 204,'message' => 'Nama Penitip Kosong');
+        $return_arr = array();
+        $query2= $this->db->query("SELECT * FROM webid_biodata WHERE name LIKE '%".$id."%' LIMIT 10");
+
+        foreach ($query2->result_array() as $row)
+        {
+            $tgl_lahir = date("m/d/Y",strtotime($row['tanggal_lahir']));
+            $return_arr[]= array(
+                'nama_penitip' => $row['name'],
+                'no_identitas' => $row['no_identitas'],
+                'groupBiodata' => $row['groupBiodata'],
+                'alamat' => $row['alamat'],
+                'kota' => $row['kota'],
+                'kode_pos' => $row['kode_pos'],
+                'telepon' => $row['telepon'],
+                'ext' => $row['ext'],
+                'ponsel' => $row['ponsel'],
+                'fax' => $row['fax'],
+                'email' => $row['email'],
+                'catatan' => $row['catatan'],
+                'status_peserta' => $row['status_peserta'],
+                'kode_sap' => $row['kode_sap'],
+                'vendor_code' => $row['vendor_code'],
+                'fee' => $row['fee'],
+                'ppn' => $row['ppn'],
+                'pph' => $row['pph'],
+                'nama_bank' => $row['nama_bank'],
+                'nama_rekening' => $row['nama_rekening'],
+                'jenis_perusahaan' => $row['jenis_perusahaan'],
+                'pekerjaan' => $row['pekerjaan'],
+                'tempat_lahir' => $row['tempat_lahir'],
+                'tgl_lahir' => $tgl_lahir,
+                'kode_anggota' => $row['kode_anggota'],
+                'id' => $row['id'],
+                'tipe_identitas' => $row['tipe_identitas'],
+                'status_biodata' => $row['status_biodata'],
+                'no_npwp' => $row['no_npwp']
+            );
         }
+        return $return_arr;
     }
 }

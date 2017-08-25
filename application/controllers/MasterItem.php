@@ -61,10 +61,10 @@ class MasterItem extends CI_Controller
         }
     }
 
-    public function penitip()
+    public function penitip($id)
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        if($method != 'POST'){
+        if($method != 'GET' || $this->uri->segment(3) == ''){
             json_output(400,array('status' => 400,'message' => 'Bad request.'));
         } else {
             $check_auth_client = $this->AuthModel->check_auth_client();
@@ -75,10 +75,7 @@ class MasterItem extends CI_Controller
                     $json = file_get_contents('php://input');
                     $params = json_decode($json, TRUE);
 
-                    $data = new stdClass();
-                    $data->term = $params['nama_penitip'];
-
-                    $resp = $this->MasterItemModel->get_all_nama($data);
+                    $resp = $this->MasterItemModel->get_all_nama($id);
                     json_output($response['status'],$resp);
                 }
             }
