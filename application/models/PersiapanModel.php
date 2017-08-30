@@ -237,20 +237,20 @@ class PersiapanModel extends CI_Model
 
 //$tglregister = date("Y-m-d", strtotime($data->tgl_register));
 
-        $kode_penitip = $data->penitip['kode_penitip']; //8
-        $nm_penitip = $data->penitip['nama_penitip'];
-        $nmrId_penitip = $data->penitip['nmrid_penitip'];
-        $tipeId_penitip = $data->penitip['tipeid_penitip'];
+        $kode_penitip = $data->kodepenitip; //8
+        $nm_penitip = $data->namapenitip;
+        $nmrId_penitip = $data->nmridpenitip;
+        $tipeId_penitip = $data->tipeidpenitip;
         $nmr_NPWP = $data->nonpwp; //tambah
         $group_biodata = $data->groupbiodata; //
         $status_peserta = $data->statuspeserta; //
         $jenis_usaha = $data->jenisusaha; //
         $sbg_perusahaan = $data->sebagaiperusahaan;    // Status Biodata
-        $telepon_penitip = $data->penitip['telepon_penitip'];
-        $ponsel_penitip = $data->penitip['ponsel_penitip'];
-        $almt_penitip = $data->penitip['alamat_penitip'];
-        $kota_penitip = $data->penitip['kota_penitip'];
-        $kodepos_penitip = $data->penitip['kodepos_penitip'];
+        $telepon_penitip = $data->teleponpenitip;
+        $ponsel_penitip = $data->ponselpenitip;
+        $almt_penitip = $data->alamatpenitip;
+        $kota_penitip = $data->kotapenitip;
+        $kodepos_penitip = $data->kodepospenitip;
         $id_biodata = $data->idbiodata;
 
         if ($id_biodata == "") {
@@ -348,7 +348,7 @@ class PersiapanModel extends CI_Model
                 $acdA = 'DATA PIC PONSEl,';
             }
 
-            if (empty($nm_penitip)) {
+            if (empty($data->namapenitip)) {
                 $acdA = 'NAMA PENITIP,';
             }
 
@@ -357,7 +357,7 @@ class PersiapanModel extends CI_Model
 
         } else {
 
-            if (empty($nm_penitip)) {
+            if (empty($data->namapenitip)) {
                 $acdC = 'NAMA PENITIP,';
                 echo "Maaf $acdC !! Tidak ada data yang anda masukkan||error";
                 exit();
