@@ -211,9 +211,9 @@ class PersiapanModel extends CI_Model
             $wrndoc = trim($data->WARNA);
             $query_idwarna = $this->db->query("SELECT id_warna FROM webid_warna WHERE nama_warna = '" . $wrndoc . "' and id_warnaresmi = 1");
             $count_idwarna = $query_idwarna->row_array();
-            $run_idwarna = $query_idwarna->result_array();
+
             if ($count_idwarna > 0) {
-                $id_warnafisik = $run_idwarna['id_warna'];
+                $id_warnafisik = $count_idwarna['id_warna'];
             } else {
                 $id_warnafisik = 0;
             }
@@ -379,10 +379,10 @@ class PersiapanModel extends CI_Model
             $cek_polisi = str_replace(' ', '', $no_polisi);
             //JOIN webid_msitem i ON i.`id_item` = b.`master_item`
             $query_cekno_polisi = "SELECT a.value, b.sold , b.sts_tarik , b.idauction_item FROM webid_auction_detail a
-        JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
-        JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
-        WHERE b.`deleted` = 0 AND b.`master_item` = '" . $id_item . "' AND c.name_attribute = 'NO POLISI'
-        AND a.value = '" . $cek_polisi . "' ORDER BY a.`idauction_item`, c.`pst_order`";
+                JOIN webid_auction_item b ON b.`idauction_item` = a.`idauction_item`
+                JOIN webid_msattribute c ON c.`id_attribute` = a.`id_attribute`
+                WHERE b.`deleted` = 0 AND b.`master_item` = '" . $id_item . "' AND c.name_attribute = 'NO POLISI'
+                AND a.value = '" . $cek_polisi . "' ORDER BY a.`idauction_item`, c.`pst_order`";
             $run_cekno_polisi = $this->db->query($query_cekno_polisi);
             $row_cekno_polisi = $run_cekno_polisi->result_array();
             $sold = $row_cekno_polisi['sold'];
@@ -456,9 +456,6 @@ class PersiapanModel extends CI_Model
                 $query_updauc = $this->db->query("UPDATE webid_auction_item SET lot_numb = NULL , id_schedule = 0 , id_user = '" . $id_user . "' , id_cabang = '" . $cabang_taksasi . "' , id_warnadoc = '" . $id_warnadoc . "' , id_warnafisik = '" . $id_warnafisik . "', sts_lelang = 0 WHERE idauction_item = '" . $idauction_item . "'");
             }
 
-            //Update nilai item taksasi
-            //$query_updnilaitem = $this->db->query("UPDATE webid_nilai_item SET no_polisi = '".$data->no_polisi']."' , stnk_an = '".$data->STNK_AN']."' , kota = '".$data->KOTA']."', id_user = '".$id_user."' WHERE idauction_item = '".$idauction_item."'");
-
             $querySvup = "SELECT * FROM webid_msattribute
         WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
         ORDER BY `pst_order`"; //var_dump($query); exit();
@@ -519,15 +516,15 @@ class PersiapanModel extends CI_Model
                     echo "TEST||error";
                     exit();
                     $querySv1 = "SELECT * FROM webid_msattribute
-                WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
-                ORDER BY `pst_order`";
+                        WHERE `sts_deleted` = 0 AND `master_item` = '" . $id_item . "'
+                        ORDER BY `pst_order`";
                     $runSv1 = $this->db->query($querySv1);
 
                     echo $idV;
 
                     if ($id_schedule != "" or $id_schedule != 0) {
                         $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`lot_numb`,`id_schedule`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`,`sts_lelang`) 
-                VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
+                    VALUES ('" . $idV . "','" . $id_item . "','" . $idVlot . "','" . $id_schedule . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "',1)";
                     } else {
                         $query_add = "INSERT INTO webid_auction_item (`idauction_item`,`master_item`,`id_user`,`id_cabang`,`id_warnadoc`,`id_warnafisik`) 
                     VALUES ('" . $idV . "','" . $id_item . "','" . $id_user . "','" . $cabang_taksasi . "','" . $id_warnadoc . "','" . $id_warnafisik . "')";
@@ -553,8 +550,8 @@ class PersiapanModel extends CI_Model
                     }
 
                     $query_addsubA = "INSERT INTO webid_auction_subdetail 
-            (`idauction_item`,`taksasi`,`biaya_admin`,`status`,`kode_anggota_pntp`, `name_pntp`,`nomor_idents_pntp`,`tipe_idents_pntp`,`telepon_pntp`,`ponsel_pntp`,`alamat_pntp`,`kota_pntp`,`kodepos_pntp`,`jadwal_lelang`,`tgl_lelang`,`cbng_lelang`,`lokasi_lelang`,`ikut_sesi`,`lokasi_brg_lelang`,`alamat_brg_lelang`,`kota_brg_lelang`,`lokasi_display_lelang`,`alamat_display_lelang`,`kota_display_lelang`,`namapic_display`,`telppic_display`,`nama_pic`,`jabatan_pic`,`ponsel_pic`,`mail_pic`,`cttn_pndftrn`,`tgl_register`,`status_biodata`,`status_peserta`,`jenis_usaha`,`no_npwp`,`groupBiodata`,id_biodata,biaya_parkir) 
-            VALUES ('" . $idV . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
+                        (`idauction_item`,`taksasi`,`biaya_admin`,`status`,`kode_anggota_pntp`, `name_pntp`,`nomor_idents_pntp`,`tipe_idents_pntp`,`telepon_pntp`,`ponsel_pntp`,`alamat_pntp`,`kota_pntp`,`kodepos_pntp`,`jadwal_lelang`,`tgl_lelang`,`cbng_lelang`,`lokasi_lelang`,`ikut_sesi`,`lokasi_brg_lelang`,`alamat_brg_lelang`,`kota_brg_lelang`,`lokasi_display_lelang`,`alamat_display_lelang`,`kota_display_lelang`,`namapic_display`,`telppic_display`,`nama_pic`,`jabatan_pic`,`ponsel_pic`,`mail_pic`,`cttn_pndftrn`,`tgl_register`,`status_biodata`,`status_peserta`,`jenis_usaha`,`no_npwp`,`groupBiodata`,id_biodata,biaya_parkir) 
+                        VALUES ('" . $idV . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
 
                     $run_addsubA = $this->db->query($query_addsubA);
 
@@ -582,7 +579,7 @@ class PersiapanModel extends CI_Model
                     $abcV = str_replace(' ', '_', $rowSv1['name_attribute']);
                     $idSv = $rowSv1['id_attribute'];
                     $arrayV = trim($data->$abcV);
-                    echo " ". $idSv. " ".$abcV;
+
                     if ($abcV == 'no_polisi') {
                         $arrayV = $cek_polisi;
                     }
@@ -593,8 +590,8 @@ class PersiapanModel extends CI_Model
                 }
 
                 $query_addsubA = "INSERT INTO webid_auction_subdetail 
-            (`idauction_item`,`taksasi`,`biaya_admin`,`status`,`kode_anggota_pntp`, `name_pntp`,`nomor_idents_pntp`,`tipe_idents_pntp`,`telepon_pntp`,`ponsel_pntp`,`alamat_pntp`,`kota_pntp`,`kodepos_pntp`,`jadwal_lelang`,`tgl_lelang`,`cbng_lelang`,`lokasi_lelang`,`ikut_sesi`,`lokasi_brg_lelang`,`alamat_brg_lelang`,`kota_brg_lelang`,`lokasi_display_lelang`,`alamat_display_lelang`,`kota_display_lelang`,`namapic_display`,`telppic_display`,`nama_pic`,`jabatan_pic`,`ponsel_pic`,`mail_pic`,`cttn_pndftrn`,`tgl_register`,`status_biodata`,`status_peserta`,`jenis_usaha`,`no_npwp`,`groupBiodata`,`id_biodata`,`biaya_parkir`) 
-            VALUES ('" . $idV . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
+                    (`idauction_item`,`taksasi`,`biaya_admin`,`status`,`kode_anggota_pntp`, `name_pntp`,`nomor_idents_pntp`,`tipe_idents_pntp`,`telepon_pntp`,`ponsel_pntp`,`alamat_pntp`,`kota_pntp`,`kodepos_pntp`,`jadwal_lelang`,`tgl_lelang`,`cbng_lelang`,`lokasi_lelang`,`ikut_sesi`,`lokasi_brg_lelang`,`alamat_brg_lelang`,`kota_brg_lelang`,`lokasi_display_lelang`,`alamat_display_lelang`,`kota_display_lelang`,`namapic_display`,`telppic_display`,`nama_pic`,`jabatan_pic`,`ponsel_pic`,`mail_pic`,`cttn_pndftrn`,`tgl_register`,`status_biodata`,`status_peserta`,`jenis_usaha`,`no_npwp`,`groupBiodata`,`id_biodata`,`biaya_parkir`) 
+                    VALUES ('" . $idV . "','" . $taks . "','" . $biaya . "','" . $sts . "','" . $kode_penitip . "','" . $nm_penitip . "','" . $nmrId_penitip . "','" . $tipeId_penitip . "','" . $telepon_penitip . "','" . $ponsel_penitip . "','" . $almt_penitip . "','" . $kota_penitip . "','" . $kodepos_penitip . "','" . $jdwl_lelang . "','" . $tgl_lelang . "','" . $cbng_lelang . "','" . $lokasi_lelang . "','" . $ikutsesi_lelang . "','" . $lks_brg_lelang . "','" . $almt_brg_lelang . "','" . $kota_brg_lelang . "','" . $lks_display . "','" . $almt_display . "','" . $kota_display . "','" . $namapic_display . "','" . $telppic_display . "','" . $namapic . "','" . $jbtnpic . "','" . $ponselpic . "','" . $mailpic . "','" . $cttn . "','" . $tglall . "','" . $sbg_perusahaan . "','" . $status_peserta . "','" . $jenis_usaha . "','" . $nmr_NPWP . "','" . $group_biodata . "','" . $id_biodata . "','" . $biayaparkir . "')";
 
                 $run_addsubA = $this->db->query($query_addsubA);
 
