@@ -459,6 +459,8 @@ class UnitListModel extends CI_Model
         $telepon_pengemudi = $data->teleponpengemudi;
 
         $catatan = $data->catatan;
+        $sign_ibid_msk =$data->signibidmsk;
+        $sign_cust_msk = $data->signcustmsk;
 
         if($no_polisi == ""){
             echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda keluarkan||error";
@@ -528,7 +530,7 @@ class UnitListModel extends CI_Model
 			`tgl_serah_msk` = '".$tglpemeriksaan_msk."',`waktu_msk` = '".$time_msk."',
 			`nama_pengemudi_msk` = '".trim($nama_pengemudi)."',`alamat_pengemudi_msk` = '".trim($alamat_pengemudi)."',
 			`kota_msk` = '".trim($kota_pengemudi)."', `telepon_msk` = '".trim($telepon_pengemudi)."',
-			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
+			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."', sign_ibid_msk = '".$sign_ibid_msk."', sign_cust_msk = '".$sign_cust_msk."'
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
             $run_nilai_item = $this->db->query($query_nilai_item);

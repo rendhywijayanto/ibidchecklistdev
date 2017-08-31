@@ -343,6 +343,7 @@ class PersiapanModel extends CI_Model
         }
         if (!empty($messageEm)
         ) {
+            $acdA = "";
 
             if (empty($data->ponselpic)) {
                 $acdA = 'DATA PIC PONSEl,';
