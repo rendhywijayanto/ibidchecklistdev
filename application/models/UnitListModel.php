@@ -418,8 +418,6 @@ class UnitListModel extends CI_Model
         $telepon_pengemudi = $data->teleponpengemudi;
 
         $catatan = $data->catatan;
-        $sign_ibid_msk =$data->signibidmsk;
-        $sign_cust_msk = $data->signcustmsk;
 
         $arrLampiran = array();
         array_push($arrLampiran, $data->lampiran);
@@ -494,7 +492,7 @@ class UnitListModel extends CI_Model
 			`tgl_serah_msk` = '".$tglpemeriksaan_msk."',`waktu_msk` = '".$time_msk."',
 			`nama_pengemudi_msk` = '".trim($nama_pengemudi)."',`alamat_pengemudi_msk` = '".trim($alamat_pengemudi)."',
 			`kota_msk` = '".trim($kota_pengemudi)."', `telepon_msk` = '".trim($telepon_pengemudi)."',
-			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."', sign_ibid_msk = '".$sign_ibid_msk."', sign_cust_msk = '".$sign_cust_msk."'
+			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
             $run_nilai_item = $this->db->query($query_nilai_item);
@@ -561,8 +559,8 @@ class UnitListModel extends CI_Model
                     $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan[$ti];
 
                     $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
-				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
-                    $run_add_detail = $this->db->query($query_add_detail);
+                        VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
+                            $run_add_detail = $this->db->query($query_add_detail);
                 }
 
                 return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item berhasil||success');
