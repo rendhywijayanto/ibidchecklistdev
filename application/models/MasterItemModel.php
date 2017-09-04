@@ -113,4 +113,24 @@ class MasterItemModel extends CI_Model
 
         return $lamp;
     }
+
+    public function post_lamp_img($data){
+        print_r($data);
+        if (!empty($data)) {
+            for ($j = 0; $j < 2; $j++) {
+
+                $id_pemeriksaanitem = $data[$j]['idpemeriksaan_item'];
+                $lampiran_namaimg = trim($data[$j]['nama_lampiran']);
+                $nmimage = $data[$j]['base64img'];
+
+                $query_lamp_a = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`) 
+                            VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
+                $run_lamp_a = $this->db->query($query_lamp_a);
+            }
+            return array('status' => 201,'message' => 'Proses penambahan image berhasil||success');
+        }else{
+            return array('status' => 204,'message' => 'Proses penambahan image gagal||gagal');
+        }
+    }
+
 }

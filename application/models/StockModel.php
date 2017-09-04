@@ -75,6 +75,7 @@ class StockModel extends CI_Model
             $idauction_item = $row_auc['id_auctionitem'];
             $data->cabang = $row_auc['poolkota'];
             $data->nopol = $row_auc['no_polisi'];
+            $data->tgl_serah_msk = $row_auc['tgl_serah_msk'];
 
             $query_idmerk = "SELECT b.value FROM webid_auction_detail b 
 								  JOIN webid_msattribute c ON c.id_attribute = b.id_attribute

@@ -116,7 +116,6 @@ class UnitKeluar extends CI_Controller
                     $data->cektampilkantidakada = $params['cektampilkantidakada'];
                     $data->idkomponenpemeriksaan = $params['idkomponenpemeriksaan'];
 
-//                print_r($data);
                     $resp = $this->UnitListModel->post_unit_keluar($data);
                     json_output($response['status'],$resp);
                 }

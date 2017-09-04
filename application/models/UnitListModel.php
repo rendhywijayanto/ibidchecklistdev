@@ -424,6 +424,8 @@ class UnitListModel extends CI_Model
         $arrLampiran = array();
         array_push($arrLampiran, $data->lampiran);
 
+        print_r($arrLampiran);
+
         if($no_polisi == ""){
             echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda keluarkan||error";
             exit();
@@ -508,16 +510,6 @@ class UnitListModel extends CI_Model
                 $run_upd_detail = $this->db->query($query_upd_detail);
             }
 
-            for ($j= 0; $j < 2; $j++) {
-
-                $lampiran_namaimg = trim($arrLampiran[$j]['nama_lampiran']);
-                $nmimage = $arrLampiran[$j]['base64img'];
-
-                $query_lamp_a = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`) 
-                            VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
-                $run_lamp_a = $this->db->query($query_lamp_a);
-            }
-
             return array('status' => 200,'message' => 'Proses Update Item Berhasil||success');
 
         } else {
@@ -573,18 +565,7 @@ class UnitListModel extends CI_Model
                     $run_add_detail = $this->db->query($query_add_detail);
                 }
 
-                for ($j= 0; $j < 2; $j++) {
-
-                    $lampiran_namaimg = trim($arrLampiran[$j]['nama_lampiran']);
-                    $nmimage = $arrLampiran[$j]['base64img'];
-
-                    $query_lamp_a = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`) 
-                            VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
-                    $run_lamp_a = $this->db->query($query_lamp_a);
-
-                }
-
-                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item keluar berhasil||success');
+                return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item berhasil||success');
             }
         }
     }

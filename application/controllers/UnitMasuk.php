@@ -126,9 +126,6 @@ class UnitMasuk extends CI_Controller
                     $data->signibidmsk = $params['signibidmsk'];
                     $data->signcustmsk = $params['signcustmsk'];
 
-                    $data->lampiran = $params['lampiran'];
-
-//                print_r($data);
                     $resp = $this->UnitListModel->post_unit_masuk($data);
                     json_output($response['status'],$resp);
                 }
