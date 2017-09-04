@@ -90,4 +90,27 @@ class MasterItemModel extends CI_Model
         }
         return $return_arr;
     }
+
+    public function get_lampiran_image($id_pemeriksaanitem){
+
+        $query_lamp = "SELECT * FROM webid_pemeriksaan_item_subdetail 
+                        WHERE id_pemeriksaanitem = '.$id_pemeriksaanitem.' LIMIT 2";
+//        $query_lamp = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`)
+//                        VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
+        $run_lamp = $this->db->query($query_lamp);
+
+        $lamp = array();
+
+        foreach($run_lamp->result_array() as $row_lamp) {
+
+            $data = new stdClass();
+
+            $data->nama_lampiran = $row_lamp['deskripsi_lampiran'];
+            $data->base64img = $row_lamp['url_lampiran'];
+
+            array_push($lamp, $data);
+        }
+
+        return $lamp;
+    }
 }

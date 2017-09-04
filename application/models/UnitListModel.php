@@ -93,46 +93,6 @@ class UnitListModel extends CI_Model
         return $this->get_data($query_nilai);
     }
 
-    public function get_stock_list()
-    {
-        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
-							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
-							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
-							  ";
-
-        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
-
-        return $this->get_data($query_nilai);
-    }
-
-    public function get_stock_search($id)
-    {
-        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
-							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
-							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
-							  ";
-        if ($id != "") {
-            $str = str_replace(' ','',trim($id));
-            $query_nilai .= "AND a.no_polisi LIKE '%".$str."%'";
-        }
-
-        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT 5";
-
-        return $this->get_data($query_nilai);
-    }
-
-    public function get_pagestock_list($data)
-    {
-        $query_nilai = "SELECT a.* FROM webid_pemeriksaan_item a
-							  JOIN webid_auction_item b ON b.idauction_item = a.id_auctionitem
-							  WHERE a.`sts_deleted` = 0 AND a.id_item = 6 AND b.deleted = 0
-							  ";
-
-        $query_nilai .= " ORDER BY a.`id_pemeriksaanitem` DESC LIMIT $data->start,$data->limit";
-
-        return $this->get_data($query_nilai);
-    }
-
     private function get_data($query_nilai){
         $run_auc = $this->db->query($query_nilai);
         $no = 1;
@@ -426,7 +386,7 @@ class UnitListModel extends CI_Model
         }
     }
 
-    public function post_unit($data)
+    public function post_unit_masuk($data)
     {
         $id_item = 6;
         $id_pemeriksaanitem = $data->idpemeriksaanitem;
@@ -435,7 +395,6 @@ class UnitListModel extends CI_Model
 
         $fuel = trim($data->fuel);
         $cat_body = trim($data->catbody);
-        $cttn = trim($data->catatan);
         $cases = trim($data->cases);
         $poolkota = trim($data->poolkota);
         $WEBID_LOGGED_IN = $data->WEBID_LOGGED_IN;
@@ -461,6 +420,9 @@ class UnitListModel extends CI_Model
         $catatan = $data->catatan;
         $sign_ibid_msk =$data->signibidmsk;
         $sign_cust_msk = $data->signcustmsk;
+
+        $arrLampiran = array();
+        array_push($arrLampiran, $data->lampiran);
 
         if($no_polisi == ""){
             echo "Maaf.'$data->NO_POLISI'.!! Tidak ada data yang anda keluarkan||error";
@@ -534,7 +496,6 @@ class UnitListModel extends CI_Model
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
             $run_nilai_item = $this->db->query($query_nilai_item);
-            // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
 
             for ($ti = 1; $ti < $batas_komponen; $ti++) {
                 $tampilbaik_t =  $data->cektampilkanbaik[$ti];
@@ -545,6 +506,16 @@ class UnitListModel extends CI_Model
                 $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
 				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
                 $run_upd_detail = $this->db->query($query_upd_detail);
+            }
+
+            for ($j= 0; $j < 2; $j++) {
+
+                $lampiran_namaimg = trim($arrLampiran[$j]['nama_lampiran']);
+                $nmimage = $arrLampiran[$j]['base64img'];
+
+                $query_lamp_a = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`) 
+                            VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
+                $run_lamp_a = $this->db->query($query_lamp_a);
             }
 
             return array('status' => 200,'message' => 'Proses Update Item Berhasil||success');
@@ -567,7 +538,6 @@ class UnitListModel extends CI_Model
 				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 and id_attribute = 24
 				ORDER BY pst_order ASC";
                 $runSvup = $this->db->query($querySvup);
-                // $system->check_mysql($runSvup, $querySvup, __LINE__, __FILE__);
 
                 foreach($runSvup->result_array() as $rowSvup)
                 {
@@ -601,6 +571,17 @@ class UnitListModel extends CI_Model
                     $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
 				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
                     $run_add_detail = $this->db->query($query_add_detail);
+                }
+
+                for ($j= 0; $j < 2; $j++) {
+
+                    $lampiran_namaimg = trim($arrLampiran[$j]['nama_lampiran']);
+                    $nmimage = $arrLampiran[$j]['base64img'];
+
+                    $query_lamp_a = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`) 
+                            VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
+                    $run_lamp_a = $this->db->query($query_lamp_a);
+
                 }
 
                 return array('status' => 201,'message' => 'Proses Penambahan Pemeriksaan Item keluar berhasil||success');

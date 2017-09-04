@@ -11,7 +11,7 @@ class StockManagement extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('UnitListModel');
+        $this->load->model('StockModel');
     }
 
     public function index()
@@ -24,7 +24,7 @@ class StockManagement extends CI_Controller
             if($check_auth_client == true){
                 $response = $this->AuthModel->auth();
                 if($response['status'] == 200){
-                    $resp = $this->UnitListModel->get_stock_list();
+                    $resp = $this->StockModel->get_stock_list();
                     json_output($response['status'],$resp);
                 }
             }
@@ -41,7 +41,7 @@ class StockManagement extends CI_Controller
             if($check_auth_client == true){
                 $response = $this->AuthModel->auth();
                 if($response['status'] == 200){
-                    $resp = $this->UnitListModel->get_stock_search($id);
+                    $resp = $this->StockModel->get_stock_search($id);
                     json_output($response['status'],$resp);
                 }
             }
