@@ -156,8 +156,7 @@ class StockModel extends CI_Model
             $query_expedisi = "SELECT deskripsi_biaya FROM webid_auction_subdetail_lampiran
 										WHERE del = 0 AND id_dsb = 1 AND idauction_item = '" . $idauction_item . "' order by idauction_subdetail_lamp DESC LIMIT 1";
             $run_expedisi = $this->db->query($query_expedisi);
-            $row_expedisi = $run_expedisi->row_array();
-            $count_exps = $row_expedisi['COUNT(*)'];
+            $count_exps = $run_expedisi->num_rows();
 
             if ($count_exps > 0) {
                 $row_expedisi = $run_expedisi->row_array();
@@ -178,7 +177,7 @@ class StockModel extends CI_Model
                 $tglsold = date('d M Y', strtotime($row_schd['tglsold']));
             }
 
-            $data->tglsold = $tglsold;
+            $data->tgl_sold = $tglsold;
 
             if ($row_auc['tgl_serah_klr'] == '') {
                 $tgl_out = '-';
@@ -194,8 +193,7 @@ class StockModel extends CI_Model
             $query_auct = "SELECT id_schedule FROM webid_auctions 
 							  WHERE idauction_item = '" . $idauction_item . "' AND status_item != 2 ";
             $run_auct = $this->db->query($query_auct);
-            $row_auct = $run_auct->row_array();
-            $ikutlelang = $row_auct['COUNT(*)']; // Berapa Kali Ikut Lelang
+            $ikutlelang =  $run_auct->num_rows(); // Berapa Kali Ikut Lelang
 
             if ($ikutlelang == null) {
                 $ikutlelang = 0;

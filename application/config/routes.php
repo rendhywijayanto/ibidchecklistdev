@@ -69,7 +69,7 @@ $route['stockmanagement']['get']   = 'stockmanagement';
 $route['persiapan']['post'] = 'persiapan/insert';
 $route['unitmasuk']['post'] = 'unitmasuk/insert';
 $route['unitkeluar']['post'] = 'unitkeluar/insert';
-$route['masteritem']['post'] = 'masteritem/post_lampiran';
+$route['masteritem']['post'] = 'masteritem';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

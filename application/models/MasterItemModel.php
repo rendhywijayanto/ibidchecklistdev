@@ -95,8 +95,8 @@ class MasterItemModel extends CI_Model
 
     public function get_sign_img_msk($data){
 
-        $id_pemeriksaanitem = $data->id_pemeriksaanitem;
-        $id_auctionitem = $data->id_auctionitem;
+        $id_pemeriksaanitem = $data['id_pemeriksaanitem'];
+        $id_auctionitem = $data['id_auctionitem'];
 
         $query_nilai_item = "SELECT sign_ibid_msk, sign_cust_msk FROM webid_pemeriksaan_item
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
@@ -110,8 +110,8 @@ class MasterItemModel extends CI_Model
 
     public function get_sign_img_klr($data){
 
-        $id_pemeriksaanitem = $data->id_pemeriksaanitem;
-        $id_auctionitem = $data->id_auctionitem;
+        $id_pemeriksaanitem = $data['id_pemeriksaanitem'];
+        $id_auctionitem = $data['id_auctionitem'];
 
         $query_nilai_item = "SELECT sign_ibid_klr, sign_cust_klr FROM webid_pemeriksaan_item
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
@@ -122,12 +122,11 @@ class MasterItemModel extends CI_Model
         return $row_sign;
     }
 
-    public function get_lampiran_image($id_pemeriksaanitem){
+    public function get_lamp_img($id_pemeriksaanitem){
 
         $query_lamp = "SELECT * FROM webid_pemeriksaan_item_subdetail 
                         WHERE id_pemeriksaanitem = '.$id_pemeriksaanitem.' LIMIT 2";
-//        $query_lamp = "INSERT INTO webid_pemeriksaan_item_subdetail (`id_pemeriksaanitem`,`deskripsi_lampiran`,`url_lampiran`)
-//                        VALUES ('" . $id_pemeriksaanitem . "','" . $lampiran_namaimg . "','" . $nmimage . "')";
+
         $run_lamp = $this->db->query($query_lamp);
 
         $lamp = array();
@@ -147,34 +146,38 @@ class MasterItemModel extends CI_Model
 
     public function post_sign_img_msk($data){
 
-        $id_pemeriksaanitem = $data->id_pemeriksaanitem;
-        $id_auctionitem = $data->id_auctionitem;
-        $sign_ibid_msk = $data->sign_ibid_msk;
-        $sign_cust_msk = $data->sign_cust_msk;
+        $id_pemeriksaanitem = $data['id_pemeriksaanitem'];
+        $id_auctionitem = $data['id_auctionitem'];
+        $sign_ibid_msk = $data['sign_ibid_msk'];
+        $sign_cust_msk = $data['sign_cust_msk'];
 
         $query_nilai_item = "UPDATE webid_pemeriksaan_item SET sign_ibid_msk = '".$sign_ibid_msk."' , sign_cust_msk = '".$sign_cust_msk."' 
 			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
         $run_nilai_item = $this->db->query($query_nilai_item);
 
+        return array('status' => 200,'message' => 'Proses Update Image Berhasil||success');
     }
 
     public function post_sign_img_klr($data){
 
-        $id_pemeriksaanitem = $data->id_pemeriksaanitem;
-        $id_auctionitem = $data->id_auctionitem;
-        $sign_ibid_klr = $data->sign_ibid_klr;
-        $sign_cust_klr = $data->sign_cust_klr;
+        print_r($data);
+
+        $id_pemeriksaanitem = $data['id_pemeriksaanitem'];
+        $id_auctionitem = $data['id_auctionitem'];
+        $sign_ibid_klr = $data['sign_ibid_klr'];
+        $sign_cust_klr = $data['sign_cust_klr'];
 
         $query_nilai_item = "UPDATE webid_pemeriksaan_item SET sign_ibid_msk = '".$sign_ibid_klr."' , sign_cust_msk = '".$sign_cust_klr."' 
         WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
         $run_nilai_item = $this->db->query($query_nilai_item);
 
+        return array('status' => 200,'message' => 'Proses Update Image Berhasil||success');
     }
 
     public function post_lamp_img($data){
-        print_r($data);
+
         if (!empty($data)) {
             for ($j = 0; $j < 2; $j++) {
 

@@ -81,7 +81,7 @@ class MasterItem extends CI_Controller
 
     public function get_sign_masuk(){
         $method = $_SERVER['REQUEST_METHOD'];
-        if($method != 'GET'){
+        if($method != 'POST'){
             json_output(400,array('status' => 400,'message' => 'Bad request.'));
         } else {
             $check_auth_client = $this->AuthModel->check_auth_client();
@@ -162,7 +162,7 @@ class MasterItem extends CI_Controller
     public function get_lampiran($id_pemeriksaanitem)
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        if($method != 'POST'){
+        if($method != 'GET' || $this->uri->segment(3) == ''){
             json_output(400,array('status' => 400,'message' => 'Bad request.'));
         } else {
             $check_auth_client = $this->AuthModel->check_auth_client();
@@ -170,7 +170,7 @@ class MasterItem extends CI_Controller
                 $response = $this->AuthModel->auth();
                 if($response['status'] == 200){
 
-                    $resp = $this->MasterItemModel->get_lampiran_image($id_pemeriksaanitem);
+                    $resp = $this->MasterItemModel->get_lamp_img($id_pemeriksaanitem);
                     json_output($response['status'],$resp);
                 }
             }
