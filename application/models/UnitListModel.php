@@ -109,6 +109,15 @@ class UnitListModel extends CI_Model
                 if ($count_nilaitemC == 1) {
                     $data = $this->get_data_auto($query_nilaitemC);
                     $data->auction = $row;
+                    $data->id_pemeriksaanitem = $row_dokA['id_pemeriksaanitem'];
+
+                    $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
+                JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
+                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$this->id_item."' AND b.id_pemeriksaanitem = '".$row_dokA['id_pemeriksaanitem']."' ORDER BY a.id_komponenpemeriksaan ASC";
+
+                    $run_komponen = $this->db->query($query_komponen);
+                    $data->komponen = $run_komponen->result_array();
+
                     array_push($arrData, $data);
                 }else {
                     $query_nilaitemS = "SELECT a.*, a.idauction_item AS id_auctionitem FROM webid_auctions a WHERE status_item = 0 AND num_bids > 0 AND 
@@ -120,6 +129,15 @@ class UnitListModel extends CI_Model
                     if ($count_nilaitemS == 1) {
                         $data = $this->get_data_auto($query_nilaitemS);
                         $data->auction = $row;
+                        $data->id_pemeriksaanitem = $row_dokA['id_pemeriksaanitem'];
+
+                        $query_komponen = "SELECT a.* , b.* FROM webid_komponen_pemeriksaan a
+                JOIN webid_pemeriksaan_item_detail b on b.id_komponenpemeriksaan = a.id_komponenpemeriksaan 
+                WHERE a.sts_deleted = 0 AND a.tampil = 'true' AND a.id_item = '".$this->id_item."' AND b.id_pemeriksaanitem = '".$row_dokA['id_pemeriksaanitem']."' ORDER BY a.id_komponenpemeriksaan ASC";
+
+                        $run_komponen = $this->db->query($query_komponen);
+                        $data->komponen = $run_komponen->result_array();
+
                         array_push($arrData, $data);
                     }
                 }
@@ -522,18 +540,17 @@ class UnitListModel extends CI_Model
 
             $run_ceknopolisi = $this->db->query($query_ceknopolisi);
             $row_ceknopolisi = $run_ceknopolisi->row_array();
-            $count_ceknopolisi = $row_ceknopolisi['COUNT(*)'];
+            $count_ceknopolisi = $run_ceknopolisi->num_rows();
 
             if ($count_ceknopolisi > 0) {
-                echo "Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error";
-                exit();
+                return array('status' => 204,'message' => 'Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error',
+                    'id_pemeriksaan_item' => $id_pemeriksaanitem);
             } else {
                 // Hanya KM Saja
                 $querySvup = "SELECT * FROM webid_msattribute
 				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 and id_attribute = 24
 				ORDER BY pst_order ASC";
                 $runSvup = $this->db->query($querySvup);
-                // $system->check_mysql($runSvup, $querySvup, __LINE__, __FILE__);
 
                 foreach($runSvup->result_array() as $rowSvup)
                 {

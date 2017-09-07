@@ -341,35 +341,17 @@ class PersiapanModel extends CI_Model
                 $messageEm = "$messageEm $abc,";
             }
         }
-        if (!empty($messageEm)
-        ) {
-            $acdA = "";
 
-            if (empty($data->ponselpic)) {
-                $acdA = 'DATA PIC PONSEl,';
-            }
-
-            if (empty($data->namapenitip)) {
-                $acdA = 'NAMA PENITIP,';
-            }
-
-            echo "Maaf $acdA $messageEm $acdA !! Tidak ada data yang anda masukkan||error";
+        if (empty($data->namapenitip)) {
+            $acdC = 'NAMA PENITIP,';
+            echo "Maaf $acdC !! Tidak ada data PENITIP yang anda masukkan||error";
             exit();
+        }
 
-        } else {
-
-            if (empty($data->namapenitip)) {
-                $acdC = 'NAMA PENITIP,';
-                echo "Maaf $acdC !! Tidak ada data yang anda masukkan||error";
-                exit();
-            }
-
-            if (empty($data->ponselpic)) {
-                $acdA = 'DATA PIC PONSEl,';
-                echo "Maaf $acdA !! Tidak ada data yang anda masukkan||error";
-                exit();
-            }
-
+        if (empty($data->ponselpic)) {
+            $acdA = 'DATA PIC PONSEl,';
+            echo "Maaf $acdA !! Tidak ada data PENITIP yang anda masukkan||error";
+            exit();
         }
 
         if ($idauction_item != "") {
@@ -596,7 +578,7 @@ class PersiapanModel extends CI_Model
 
                 $run_addsubA = $this->db->query($query_addsubA);
 
-                return array('status' => 202,'message' => 'Proses Penambahan Item Berhasil||success');
+                return array('status' => 200,'message' => 'Proses Penambahan Item Berhasil||success');
             }
         }
     }

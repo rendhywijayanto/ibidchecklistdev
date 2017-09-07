@@ -91,6 +91,36 @@ class MasterItemModel extends CI_Model
         return $return_arr;
     }
 
+    public function get_all_model($id){
+        $return_arr = array();
+
+        $query2=$this->db->query("SELECT * FROM webid_msmodel WHERE nama LIKE '%".$id."%' and sts_deleted = 0 LIMIT 10");
+        foreach ($query2->result_array() as $query3)
+        {
+            $return_arr[]=array(
+                'value'=> $query3['id_model'],
+                'label'=> $query3['nama']
+            );
+        }
+
+        return $return_arr;
+    }
+
+    public function get_all_kota($id){
+        $return_arr = array();
+
+        $query2=$this->db->query("SELECT * FROM webid_ms_kota WHERE nama_kota LIKE '%".$id."%' and sts_deleted = 0 LIMIT 10");
+        foreach ($query2->result_array() as $query3)
+        {
+            $return_arr[]=array(
+                'value'=> $query3['id'],
+                'label'=> $query3['nama_kota']
+            );
+        }
+
+        return $return_arr;
+    }
+
     //=============================================
 
     public function get_sign_img_msk($data){

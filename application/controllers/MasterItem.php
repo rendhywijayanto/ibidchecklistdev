@@ -79,6 +79,40 @@ class MasterItem extends CI_Controller
         }
     }
 
+    public function model($id){
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'GET' || $this->uri->segment(3) == ''){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $check_auth_client = $this->AuthModel->check_auth_client();
+            if($check_auth_client == true){
+                $response = $this->AuthModel->auth();
+                if($response['status'] == 200){
+
+                    $resp = $this->MasterItemModel->get_all_model($id);
+                    json_output($response['status'],$resp);
+                }
+            }
+        }
+    }
+
+    public function kota($id){
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method != 'GET' || $this->uri->segment(3) == ''){
+            json_output(400,array('status' => 400,'message' => 'Bad request.'));
+        } else {
+            $check_auth_client = $this->AuthModel->check_auth_client();
+            if($check_auth_client == true){
+                $response = $this->AuthModel->auth();
+                if($response['status'] == 200){
+
+                    $resp = $this->MasterItemModel->get_all_kota($id);
+                    json_output($response['status'],$resp);
+                }
+            }
+        }
+    }
+
     public function get_sign_masuk(){
         $method = $_SERVER['REQUEST_METHOD'];
         if($method != 'POST'){
