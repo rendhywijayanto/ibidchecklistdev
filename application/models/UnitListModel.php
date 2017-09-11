@@ -477,48 +477,70 @@ class UnitListModel extends CI_Model
 
         if ($id_pemeriksaanitem != "") {
 
-            $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
-            $run_soru = $this->db->query($query_soru);
-            $row_soru = $run_soru->row_array();
+//            $query_soru = "SELECT sold , sts_tarik FROM webid_auction_item WHERE idauction_item = '".$id_auctionitem."' ";
+//            $run_soru = $this->db->query($query_soru);
+//            $row_soru = $run_soru->row_array();
+//
+//            $id_user = $data->iduser;
+//
+//            if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
+//                return array('status' => 204,'message' => 'Maaf !! data unit sudah terjual dan ditarik||error');
+//            }
+//
+//            if ($row_soru['sold'] == 'y' and $row_soru['sts_tarik'] == 0) {
+//                return array('status' => 204,'message' => 'Maaf !! data unit sudah terjual||error');
+//            }
+//
+//            // Proses Update Auction Item
+//            $querySvup = "SELECT * FROM webid_msattribute a
+//				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 AND id_attribute != 10
+//				ORDER BY pst_order ASC";
+//            $runSvup = $this->db->query($querySvup);
+//
+//            foreach($runSvup->result_array() as $rowSvup)
+//            {
+//                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
+//                $arrayUp = trim($data->$abcUp);
+//                $IDUp = $rowSvup['id_attribute'];
+//                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
+//						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
+//                $run_upd = $this->db->query($query_upd);
+//            }
+//            $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
+//			`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',
+//			`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',
+//			`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',`id_pemeriksaan_klr` = 1,
+//			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
+//			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
+//
+//            $run_nilai_item = $this->db->query($query_nilai_item);
 
-            $id_user = $data->iduser;
+            $query_periksa = $this->db->query("SELECT * FROM webid_pemeriksaan_item WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' 
+			and id_auctionitem = '".$id_auctionitem."' and sts_deleted_klr = 0 ");
+            $row_periksa = $query_periksa->row_array();
 
-            if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
-                echo "Maaf !! data unit sudah dilakukan penarikan||error";
-                exit();
+            if ($row_periksa['id_pemeriksaan_klr'] != 0) {
+
+                $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel_klr = '".$fuel."' , cat_body_klr = '".$cat_body."' ,
+				`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',
+				`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',`kota_klr` = '".trim($kota_pengemudi)."', 
+				`telepon_klr` = '".trim($telepon_pengemudi)."',`catatan_klr` = '".trim($catatan)."' , 
+				id_usercreateklr = '".$WEBID_LOGGED_IN."'
+				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' and id_pemeriksaan_klr = 1 ";
+
+            } else {
+
+                $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel_klr = '".$fuel."' , cat_body_klr = '".$cat_body."' ,
+				`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',
+				`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',
+				`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',
+				`catatan_klr` = '".trim($catatan)."' , `id_pemeriksaan_klr` = 1, id_user = '".$WEBID_LOGGED_IN."' , 
+				id_usercreateklr = '".$WEBID_LOGGED_IN."'
+				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
+
             }
-
-            if ($row_soru['sold'] == 'y' and $row_soru['sts_tarik'] == 0) {
-                echo "Maaf !! data unit sudah terjual||error";
-                exit();
-            }
-
-            // Proses Update Auction Item
-            $querySvup = "SELECT * FROM webid_msattribute a
-				WHERE `sts_deleted` = 0 AND `master_item` = '".$id_item."' AND hv_periksa = 1 AND id_attribute != 10
-				ORDER BY pst_order ASC";
-            $runSvup = $this->db->query($querySvup);
-
-            foreach($runSvup->result_array() as $rowSvup)
-            {
-                $abcUp = str_replace(' ','_',$rowSvup['name_attribute']);
-                $arrayUp = trim($data->$abcUp);
-                $IDUp = $rowSvup['id_attribute'];
-                $query_upd = "UPDATE webid_auction_detail SET `value` = '".$arrayUp."'
-						WHERE idauction_item = '".$id_auctionitem."' AND id_attribute = '".$IDUp."'";
-                $run_upd = $this->db->query($query_upd);
-            }
-
-            $query_nilai_item = "UPDATE webid_pemeriksaan_item SET no_polisi = '".$cek_polisi."' , fuel = '".$fuel."' , cat_body = '".$cat_body."' ,
-			`tgl_serah_klr` = '".$tglpemeriksaan_klr."',`waktu_klr` = '".$time_klr."',
-			`nama_pengemudi_klr` = '".trim($nama_pengemudi)."',`alamat_pengemudi_klr` = '".trim($alamat_pengemudi)."',
-			`kota_klr` = '".trim($kota_pengemudi)."', `telepon_klr` = '".trim($telepon_pengemudi)."',`id_pemeriksaan_klr` = 1,
-			`catatan` = '".trim($catatan)."' , id_user = '".$id_user."'
-			WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
             $run_nilai_item = $this->db->query($query_nilai_item);
-
-            // $system->check_mysql($run_nilai_item, $query_nilai_item, __LINE__, __FILE__);
 
             for ($ti = 1; $ti < $batas_komponen; $ti++) {
                 $tampilbaik_t =  $data->cektampilkanbaik[$ti];
@@ -526,7 +548,7 @@ class UnitListModel extends CI_Model
                 $tampiltidakada_t =  $data->cektampilkantidakada[$ti];
                 $id_komponenpemeriksaan_t = $data->idkomponenpemeriksaan[$ti];
 
-                $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b` = '".$tampilbaik_t."' ,`tampil_r` = '".$tampilrusak_t."' ,`tampil_t` = '".$tampiltidakada_t."' 
+                $query_upd_detail = "UPDATE webid_pemeriksaan_item_detail SET `tampil_b_klr` = '".$tampilbaik_t."' ,`tampil_r_klr` = '".$tampilrusak_t."' ,`tampil_t_klr` = '".$tampiltidakada_t."' 
 				WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' and id_komponenpemeriksaan = '".$id_komponenpemeriksaan_t."' ";
                 $run_upd_detail = $this->db->query($query_upd_detail);
             }
@@ -543,8 +565,7 @@ class UnitListModel extends CI_Model
             $count_ceknopolisi = $run_ceknopolisi->num_rows();
 
             if ($count_ceknopolisi > 0) {
-                return array('status' => 204,'message' => 'Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error',
-                    'id_pemeriksaan_item' => $id_pemeriksaanitem);
+                return array('status' => 204,'message' => 'Maaf Penambahan No Polisi Pemeriksaan keluar sudah ada||error');
             } else {
                 // Hanya KM Saja
                 $querySvup = "SELECT * FROM webid_msattribute
@@ -581,7 +602,7 @@ class UnitListModel extends CI_Model
                     $tampiltidakada_t =  $cek_tampilkan_tidakada[$ti];
                     $id_komponenpemeriksaan_t = $id_komponen_pemeriksaan[$ti];
 
-                    $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b`,`tampil_r`,`tampil_t`) 
+                    $query_add_detail = "INSERT INTO webid_pemeriksaan_item_detail (`id_pemeriksaanitem`,`id_komponenpemeriksaan`,`tampil_b_klr`,`tampil_r_klr`,`tampil_t_klr`) 
 				VALUES ('".$id_pemeriksaan_item."','".$id_komponenpemeriksaan_t."','".$tampilbaik_t."','".$tampilrusak_t."','".$tampiltidakada_t."')";
                     $run_add_detail = $this->db->query($query_add_detail);
                 }
@@ -664,8 +685,7 @@ class UnitListModel extends CI_Model
             $id_user = $data->iduser;
 
             if ($row_soru['sold'] == 'n' and $row_soru['sts_tarik'] == 1) {
-                return array('status' => 204,'message' => 'Maaf !! data unit sudah terjual||error');
-                exit();
+                return array('status' => 204,'message' => 'Maaf !! data unit sudah terjual dan ditarik||error');
             }
 
             if ($row_soru['sold'] == 'y' and $row_soru['sts_tarik'] == 0) {

@@ -191,8 +191,6 @@ class MasterItemModel extends CI_Model
 
     public function post_sign_img_klr($data){
 
-        print_r($data);
-
         $id_pemeriksaanitem = $data['id_pemeriksaanitem'];
         $id_auctionitem = $data['id_auctionitem'];
         $sign_ibid_klr = $data['sign_ibid_klr'];
