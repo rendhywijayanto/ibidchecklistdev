@@ -542,7 +542,7 @@ class UnitListModel extends CI_Model
 
             $run_nilai_item = $this->db->query($query_nilai_item);
 
-            for ($ti = 1; $ti < $batas_komponen; $ti++) {
+            for ($ti = 0; $ti < $batas_komponen; $ti++) {
                 $tampilbaik_t =  $data->cektampilkanbaik[$ti];
                 $tampilrusak_t =  $data->cektampilkanrusak[$ti];
                 $tampiltidakada_t =  $data->cektampilkantidakada[$ti];

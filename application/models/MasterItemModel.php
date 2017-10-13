@@ -196,7 +196,7 @@ class MasterItemModel extends CI_Model
         $sign_ibid_klr = $data['sign_ibid_klr'];
         $sign_cust_klr = $data['sign_cust_klr'];
 
-        $query_nilai_item = "UPDATE webid_pemeriksaan_item SET sign_ibid_msk = '".$sign_ibid_klr."' , sign_cust_msk = '".$sign_cust_klr."' 
+        $query_nilai_item = "UPDATE webid_pemeriksaan_item SET sign_ibid_klr = '".$sign_ibid_klr."' , sign_cust_klr = '".$sign_cust_klr."' 
         WHERE id_pemeriksaanitem = '".$id_pemeriksaanitem."' AND id_auctionitem = '".$id_auctionitem."' ";
 
         $run_nilai_item = $this->db->query($query_nilai_item);
